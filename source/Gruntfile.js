@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-plato');
 	grunt.loadNpmTasks('grunt-ngdocs');
 	grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-eslint');
-	
+	grunt.loadNpmTasks('grunt-eslint');
+
 	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'plato', 'ngdocs', 'jsdoc']);
 };
