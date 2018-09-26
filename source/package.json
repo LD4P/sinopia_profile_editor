@@ -21,10 +21,11 @@
     "grunt-jsdoc": "^2.2.1",
     "grunt-ng-annotate": "^3.0.0",
     "grunt-ngdocs": "^0.2.11",
-    "grunt-plato": "^1.4.0"
+    "grunt-plato": "^1.4.0",
+    "jest": "^23.6.0"
   },
   "scripts": {
-    "test": "grunt test",
+    "test": "jest",
     "grunt-dev": "grunt ngAnnotate uglify"
   },
   "author": "rsmith, rsegura",
