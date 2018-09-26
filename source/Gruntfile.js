@@ -93,7 +93,10 @@ module.exports = function(grunt) {
 					destination: 'documentation/jsdoc'
 				}
 			}
-		}
+		},
+        eslint: {
+            target: ['assets/js/modules/**/*.js']
+        }
 	});
 
 	grunt.loadNpmTasks('grunt-ng-annotate');
@@ -102,6 +105,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-plato');
 	grunt.loadNpmTasks('grunt-ngdocs');
 	grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-eslint');
 	
 	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'plato', 'ngdocs', 'jsdoc']);
 };
