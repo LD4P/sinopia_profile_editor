@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/LD4P/sinopia_profile_editor.svg?style=svg)](https://circleci.com/gh/LD4P/sinopia_profile_editor)
+
 # BIBRAME Profile Editor
 
 ## Overview
