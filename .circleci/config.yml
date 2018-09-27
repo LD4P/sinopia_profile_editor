@@ -1,0 +1,35 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.0.0
+
+    working_directory: ~/sinopia_profile_editor
+
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "source/package.json" }}
+      - run:
+          name: npm-install
+          command: cd source && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "source/package.json" }}
+          paths:
+            - ./source/node_modules
+      - run:
+          name: test
+          command: cd source && npm test
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build

@@ -30,7 +30,7 @@
     "jest": "^23.6.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --colors --coverage",
     "grunt-dev": "grunt ngAnnotate uglify"
   },
   "author": "rsmith, rsegura",
