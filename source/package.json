@@ -1,6 +1,7 @@
 {
-  "name": "profile-editor",
-  "version": "1.1.1",
+  "name": "sinopia_profile_editor",
+  "description": "Editor for BIBFRAME *profiles* forked from http://github.com/lcnetdev/profile-edit",
+  "version": "0.0.1",
   "description": "Bibframe Profile Editor",
   "main": "Gruntfile.js",
   "dependencies": {
@@ -33,17 +34,22 @@
     "test": "jest --colors --coverage",
     "grunt-dev": "grunt ngAnnotate uglify"
   },
-  "author": "rsmith, rsegura",
+  "contributors": [
+     "rsmith",
+     "rsegura",
+     "Jeremy Nelson",
+     "Josh Greben"
+  ],
   "license": "CC0-1.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lcnetdev/profile-edit.git"
+    "url": "git+https://github.com/LD4P/sinopia_profile_editor.git"
   },
   "keywords": [
     "bibframe"
   ],
   "bugs": {
-    "url": "https://github.com/lcnetdev/profile-edit/issues"
+    "url": "http://github.com/LD4P/sinopia_profile_editor/issues"
   },
-  "homepage": "https://github.com/lcnetdev/profile-edit#readme"
+  "homepage": "http://github.com/LD4P/sinopia_profile_editor"
 }
