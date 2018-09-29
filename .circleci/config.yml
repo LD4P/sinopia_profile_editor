@@ -18,6 +18,9 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "source/package.json" }}
       - run:
+          name: Workaround for GoogleChrome/puppeteer#290
+          command: 'sh .circleci/setup_puppeteer.sh'
+      - run:
           name: npm-install
           command: cd source && npm install
       - save_cache:
@@ -28,8 +31,11 @@ jobs:
           name: eslint
           command: cd source && npm run eslint
       - run:
+          name: Run gruntjs
+          command: cd source && npm run grunt-dev
+      - run:
           name: test
-          command: cd source && npm test
+          command: cd source && npm run jest-ci
 
 workflows:
   version: 2
