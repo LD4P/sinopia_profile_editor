@@ -10,6 +10,11 @@ All of the JavaScript code comes with comments explaining what each bit does. Do
 
 The Profile Editor is now a submodule of [Recto](http://github.com/lcnetdev/recto), which is an Express-based web service which uses [Verso](http://github.com/lcnetdev/verso) to store data. The PHP files in 1.2 have been removed and have been replaced with api methods in recto, or loopback functions in verso. To use the Profile Editor, Verso should be installed and configured, then Recto should be installed and configured which will install the profile-editor as a submodule.
 
+## Sinopia Profile Editor
+Technical documentation for specific to the Sinopia Profile Editor
+[wiki](https://github.com/LD4P/sinopia_profile_editor/wiki/Sinopia-Profile-Editor) including
+running with Docker.
+
 ## Installation
 
 1.	Clone recto w/submodules: `git clone --recursive https://github.com/lcnetdev/recto`
@@ -17,11 +22,11 @@ The Profile Editor is now a submodule of [Recto](http://github.com/lcnetdev/rect
 3.	Run 'npm init', and follow the instructions that follow.
 4.	Run 'npm install'. This installs everything needed for Grunt to run successfully.
 5.	Run 'grunt' to generate the minified javascript and css files that run the site, as well as several files that document the code in the editor.
-6.	In index.html, change the 'base' property to the base for your webserver. 
+6.	In index.html, change the 'base' property to the base for your webserver.
 
 ## Data References
 
-Profiles, templates, properties, vocabularies, and ontologies are all stored in the "config" database in Verso. 
+Profiles, templates, properties, vocabularies, and ontologies are all stored in the "config" database in Verso.
 
 ## Acknowledgements
 
