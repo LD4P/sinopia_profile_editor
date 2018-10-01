@@ -15,7 +15,7 @@ module.exports = {
             "no-undef": "warn",
             "no-unreachable": "warn",
             "no-unused-vars": "warn",
-            "no-useless-escape": "error"
+            "no-useless-escape": "warn"
         }
       }
   ]
