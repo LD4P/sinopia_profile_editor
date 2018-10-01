@@ -1,0 +1,5 @@
+/documentation/**
+/coverage/**
+/assets/js/lib/**
+/assets/js/dist/**
+/assets/js/dropzone.min.js
