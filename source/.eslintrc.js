@@ -1,6 +1,3 @@
-const ERROR = 2;
-const WARN = 1;
-
 module.exports = {
     extends: [ "eslint:recommended", "plugin:node/recommended", "plugin:security/recommended"],
     overrides: [
@@ -13,17 +10,12 @@ module.exports = {
           "jest", "security"
         ],
         rules: {
-          "jest/no-disabled-tests": "warn",
-          "jest/no-focused-tests": "error",
-          "jest/no-identical-title": "error",
-          "jest/prefer-to-have-length": "warn",
-          "jest/valid-expect": "error",
-          "node/exports-style": ["error", "module.exports"],
-          "node/prefer-global/buffer": ["error", "always"],
-          "node/prefer-global/console": ["error", "always"],
-          "node/prefer-global/process": ["error", "always"],
-          "node/prefer-global/url-search-params": ["error", "always"],
-          "node/prefer-global/url": ["error", "always"],
+            "no-console": "warn",
+            "no-extra-semi": "warn",
+            "no-undef": "warn",
+            "no-unreachable": "warn",
+            "no-unused-vars": "warn",
+            "no-useless-escape": "warn"
         }
       }
   ]

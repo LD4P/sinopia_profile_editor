@@ -25,6 +25,9 @@ jobs:
           paths:
             - ./source/node_modules
       - run:
+          name: eslint
+          command: cd source && npm run eslint
+      - run:
           name: test
           command: cd source && npm test
 

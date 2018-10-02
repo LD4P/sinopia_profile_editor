@@ -32,7 +32,8 @@
   },
   "scripts": {
     "test": "jest --colors --coverage",
-    "grunt-dev": "grunt ngAnnotate uglify"
+    "grunt-dev": "grunt ngAnnotate uglify",
+    "eslint": "eslint -c .eslintrc.js ."
   },
   "contributors": [
      "rsmith",
