@@ -1,3 +1,5 @@
+/*global page*/
+
 describe('Sinopia Profile Editor Homepage', () => {
 
   beforeAll(async () => {
