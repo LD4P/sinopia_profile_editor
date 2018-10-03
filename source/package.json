@@ -2,11 +2,11 @@
   "name": "sinopia_profile_editor",
   "description": "Editor for BIBFRAME *profiles* forked from http://github.com/lcnetdev/profile-edit",
   "version": "0.0.1",
-  "description": "Bibframe Profile Editor",
   "main": "Gruntfile.js",
   "dependencies": {
     "angular-local-storage": "~0.2.2",
     "angular-spinner": "~0.6.1",
+    "express": "^4.16.3",
     "findup-sync": "^2.0.0",
     "grunt": "^1.0.3",
     "grunt-contrib-uglify-es": "^3.3.0",
@@ -28,18 +28,28 @@
     "grunt-ng-annotate": "^3.0.0",
     "grunt-ngdocs": "^0.2.11",
     "grunt-plato": "^1.4.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-puppeteer": "^3.4.0",
+    "jest-junit": "^5.2.0",
+    "puppeteer": "^1.8.0"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
   },
   "scripts": {
     "test": "jest --colors --coverage",
+    "jest-ci": "jest --ci --runInBand --colors --coverage --verbose",
     "grunt-dev": "grunt ngAnnotate uglify",
     "eslint": "eslint -c .eslintrc.js ."
   },
+  "engines": {
+    "node": "10.11.x"
+  },
   "contributors": [
-     "rsmith",
-     "rsegura",
-     "Jeremy Nelson",
-     "Josh Greben"
+    "rsmith",
+    "rsegura",
+    "Jeremy Nelson",
+    "Josh Greben"
   ],
   "license": "CC0-1.0",
   "repository": {
