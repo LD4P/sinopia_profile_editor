@@ -16,6 +16,7 @@
     "uglify-es": "^3.3.9"
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "eslint": "^5.6.0",
     "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-node": "^7.0.1",
@@ -29,16 +30,23 @@
     "grunt-ngdocs": "^0.2.11",
     "grunt-plato": "^1.4.0",
     "jest": "^23.6.0",
-    "jest-puppeteer": "^3.4.0",
     "jest-junit": "^5.2.0",
+    "jest-puppeteer": "^3.4.0",
     "puppeteer": "^1.8.0"
   },
   "jest": {
-    "preset": "jest-puppeteer"
+    "preset": "jest-puppeteer",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "assets/js/**/*.js",
+      "!assets/js/dist/**",
+      "!assets/js/lib/**",
+      "!assets/js/dropzone.min.js"
+    ]
   },
   "scripts": {
-    "test": "jest --colors --coverage",
-    "jest-ci": "jest --ci --runInBand --colors --coverage --verbose",
+    "test": "jest --coverage --colors",
+    "jest-ci": "jest --coverage --colors && cat ./coverage/lcov.info | coveralls",
     "grunt-dev": "grunt ngAnnotate uglify",
     "eslint": "eslint -c .eslintrc.js ."
   },
