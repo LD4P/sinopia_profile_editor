@@ -48,7 +48,7 @@
     "test": "jest --coverage --colors",
     "jest-ci": "jest --coverage --colors && cat ./coverage/lcov.info | coveralls",
     "grunt-dev": "grunt ngAnnotate uglify",
-    "eslint": "eslint -c .eslintrc.js ."
+    "eslint": "eslint --color --max-warnings 244 -c .eslintrc.js ."
   },
   "engines": {
     "node": "10.11.x"
