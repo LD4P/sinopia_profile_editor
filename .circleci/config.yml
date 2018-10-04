@@ -36,6 +36,13 @@ jobs:
       - run:
           name: test
           command: cd source && npm run jest-ci
+          environment:
+            JEST_JUNIT_OUTPUT: "../test-results/jest/jest-results.xml"
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: source/coverage
+          destination: jest-coverage
 
 workflows:
   version: 2

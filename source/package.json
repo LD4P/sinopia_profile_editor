@@ -36,17 +36,21 @@
   },
   "jest": {
     "preset": "jest-puppeteer",
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "assets/js/**/*.js",
       "!assets/js/dist/**",
       "!assets/js/lib/**",
       "!assets/js/dropzone.min.js"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
     ]
   },
   "scripts": {
     "test": "jest --colors",
-    "jest-ci": "jest --coverage --colors && cat ./coverage/lcov.info | coveralls",
+    "jest-ci": "jest --coverage --ci --runInBand --reporters=default --reporters=jest-junit --colors && cat ./coverage/lcov.info | coveralls",
+    "jest-cov": "jest --coverage --colors",
     "grunt-dev": "grunt ngAnnotate uglify",
     "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js ."
   },
