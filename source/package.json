@@ -45,10 +45,10 @@
     ]
   },
   "scripts": {
-    "test": "jest --coverage --colors",
+    "test": "jest --colors",
     "jest-ci": "jest --coverage --colors && cat ./coverage/lcov.info | coveralls",
     "grunt-dev": "grunt ngAnnotate uglify",
-    "eslint": "eslint --color --max-warnings 244 -c .eslintrc.js ."
+    "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js ."
   },
   "engines": {
     "node": "10.11.x"
