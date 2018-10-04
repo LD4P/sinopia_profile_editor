@@ -13,7 +13,7 @@
 *'npm install grunt-contrib-uglify --save-dev',
 *'npm install grunt-contrib-cssmin --save-dev',
 * and 'npm install grunt-plato --save-dev' to
-*finish generating the proper package.json file 
+*finish generating the proper package.json file
 *for the project'
 */
 module.exports = function(grunt) {
@@ -59,11 +59,6 @@ module.exports = function(grunt) {
 			},
 		},
 		cssmin: {
-			add_banner: {
-				options: {
-					banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
-				},
-			},
 			combine: {
 				//For some reason, this one is dest then src
 				files: {
