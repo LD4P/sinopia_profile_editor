@@ -4,4 +4,4 @@ source/assets/js/dist/
 source/documentation/
 source/node_modules/
 source/coverage/
-
+static-analysis

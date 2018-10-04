@@ -11,9 +11,8 @@
 *Once the package.json file has been created
 *run 'npm install grunt-ng-annotate --save-dev',
 *'npm install grunt-contrib-uglify --save-dev',
-*'npm install grunt-contrib-cssmin --save-dev',
-* and 'npm install grunt-plato --save-dev' to
-*finish generating the proper package.json file 
+* and 'npm install grunt-contrib-cssmin --save-dev' to
+*finish generating the proper package.json file
 *for the project'
 */
 module.exports = function(grunt) {
@@ -59,24 +58,10 @@ module.exports = function(grunt) {
 			},
 		},
 		cssmin: {
-			add_banner: {
-				options: {
-					banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */'
-				},
-			},
 			combine: {
 				//For some reason, this one is dest then src
 				files: {
 					'assets/css/dist/<%= pkg.name %>.min.css': ['assets/css/**/*.css', '!assets/css/explorer8.css', '!assets/css/explorer9.css', '!**/*.min.css']
-				},
-			},
-		},
-		plato: {
-			options: {
-			},
-			tests: {
-				files: {
-					'documentation/plato': ['assets/js/modules/**/*.js']
 				},
 			},
 		},
@@ -102,10 +87,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ng-annotate');
 	grunt.loadNpmTasks('grunt-contrib-uglify-es');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-plato');
 	grunt.loadNpmTasks('grunt-ngdocs');
 	grunt.loadNpmTasks('grunt-jsdoc');
 	grunt.loadNpmTasks('grunt-eslint');
 
-	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'plato', 'ngdocs', 'jsdoc']);
+	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'ngdocs', 'jsdoc']);
 };
