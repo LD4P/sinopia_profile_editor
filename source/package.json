@@ -52,7 +52,8 @@
     "jest-ci": "jest --coverage --ci --runInBand --reporters=default --reporters=jest-junit --colors && cat ./coverage/lcov.info | coveralls",
     "jest-cov": "jest --coverage --colors",
     "grunt-dev": "grunt ngAnnotate uglify",
-    "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js ."
+    "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js .",
+    "analysis": "es6-plato -d static-analysis -n -e .eslintrc.js assets/js/modules/help assets/js/modules/profile assets/js/ng-app.js"
   },
   "engines": {
     "node": "10.11.x"

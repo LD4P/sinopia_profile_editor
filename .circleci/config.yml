@@ -43,6 +43,12 @@ jobs:
       - store_artifacts:
           path: source/coverage
           destination: jest-coverage
+      - run:
+          name: Run static analysis
+          command: cd source && npm run analysis
+      - store_artifacts:
+          path: source/static-analysis
+          destination: static-analysis
 
 workflows:
   version: 2
