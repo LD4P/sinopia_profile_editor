@@ -36,7 +36,6 @@
   },
   "jest": {
     "preset": "jest-puppeteer",
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "assets/js/**/*.js",
       "!assets/js/dist/**",
@@ -47,6 +46,7 @@
   "scripts": {
     "test": "jest --colors",
     "jest-ci": "jest --coverage --colors && cat ./coverage/lcov.info | coveralls",
+    "jest-cov": "jest --coverage --colors",
     "grunt-dev": "grunt ngAnnotate uglify",
     "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js ."
   },
