@@ -3,7 +3,7 @@
     <head>
 
         <!--[if lte IE 7]>
-            <script src="/assets/js/lib/json/json2.js"></script>
+            <script src="assets/js/lib/json/json2.js"></script>
         <![endif]-->
 
         <script type="text/javascript" src='assets/js/lib/jquery/jquery1x.min.js'></script>
@@ -33,43 +33,44 @@
             };
         </script>
 
-        <script src='/assets/js/lib/fileupload/angular-file-upload-shim.min.js'></script>
+        <script src='assets/js/lib/fileupload/angular-file-upload-shim.min.js'></script>
         <script src="https://angular-file-upload.appspot.com/js/FileAPI.min.js"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-resource.min.js"></script>
-		<script src="/assets/js/lib/ui-router/angular-ui-router.min.js"></script>
-        <script src="/assets/js/lib/ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="assets/js/lib/ui-router/angular-ui-router.min.js"></script>
+        <script src="assets/js/lib/ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-        <script src="/assets/js/lib/x2js-v1.1.5/xml2json.min.js"></script>
+        <!-- angular from npm install to node_modules directory -->
+        <script src="angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="assets/js/lib/x2js-v1.1.5/xml2json.min.js"></script>
 
-        <script src="/assets/js/lib/fileupload/angular-file-upload.min.js"></script>
+        <script src="assets/js/lib/fileupload/angular-file-upload.min.js"></script>
 
-        <script src="/assets/js/ng-app.js"></script>
+        <script src="assets/js/ng-app.js"></script>
 
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="source/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="source/favicon.ico" type="image/x-icon">
 
         <!-- mvp styles -->
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/bootstrap/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/bootstrap/mvpready-admin.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/bootstrap/mvpready-flat.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-admin.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-flat.css" />
 
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/js/lib/datepicker/css/datepicker.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/js/lib/datepicker/css/datepicker.css" />
 
-        <link href="/assets/js/lib/ng-grid/ui-grid-stable.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="assets/js/lib/ng-grid/ui-grid-stable.min.css" />
 
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/font-awesome/font-awesome.min.css" />
 
         <!-- Production JavaScript -->
-        <!--<script src="assets/js/dist/profile-editor.min.js"></script>-->
+        <!--<script src="../dist/assets/js/sinopia_profile_editor.min.js"></script>-->
         <!-- Dev JavaScript -->
-        <script src="/assets/js/dist/concat.js"></script>
+        <script src="assets/js/concat.js"></script>
 
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/dist/profile-editor.min.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/jquery.fileupload.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/css/jquery.fileupload-ui.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="../dist/assets/css/sinopia_profile_editor.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload-ui.css" />
 
         <!--Special CSS for IE 9 and below-->
         <!--[if lte IE 9]>
@@ -77,8 +78,9 @@
         <![endif]-->
         <base href="/">
         <!-- <base href="/profile-edit/"> -->
-        <script src="/node_modules/spin.js/spin.js"></script>
-        <script src="/node_modules/angular-spinner/angular-spinner.js"></script>
+        <!-- spin and angular from npm install to node_modules directory -->
+        <script src="spin.js/spin.js"></script>
+        <script src="angular-spinner/angular-spinner.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -87,7 +89,7 @@
                 <div class="container">
 
                     <div class="navbar-header">
-                        <img src="/assets/images/bibframe-newlogo.png"/>
+                        <img src="assets/images/bibframe-newlogo.png"/>
                         <span class="bold">Library of Congress&nbsp;</span>
                         <span class="normal">Bibframe Profile Editor</span>
 
@@ -126,7 +128,7 @@
 
             <div class="container hidden-print">
             <ol class="breadcrumb">
-            <li><a href="../index.html">Home</a></li>
+            <li><a href="../source/index.html">Home</a></li>
             <li class="active">Profile Editor</li>
             </ol>
             </div>
@@ -190,18 +192,18 @@
         </div>
 
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/lib/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/lib/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
 
         <!-- Bootstrap Script -->
-		<script src="/assets/js/lib/bootstrap/bootstrap.js"></script>
+		<script src="assets/js/lib/bootstrap/bootstrap.js"></script>
 
         <!-- MVC Admin -->
-        <script src="/assets/js/lib/mvpready/mvpready-core.js"></script>
-        <script src="/assets/js/lib/mvpready/mvpready-admin.js"></script>
+        <script src="assets/js/lib/mvpready/mvpready-core.js"></script>
+        <script src="assets/js/lib/mvpready/mvpready-admin.js"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script src="/assets/js/lib/ui-sortable/sortable.js"></script>
+        <script src="assets/js/lib/ui-sortable/sortable.js"></script>
 
         <!--[if lte IE 8]>
         <script src="assets/js/lib/ng-grid/ui-grid-ie8.min.js"></script>
@@ -212,10 +214,10 @@
         <![endif]-->
 
         <!--[if !IE]> -->
-        <script src="/assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
+        <script src="assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
         <!-- <![endif]-->
 
-        <script src="/assets/js/lib/datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="assets/js/lib/datepicker/js/bootstrap-datepicker.js"></script>
 
     </body>
 

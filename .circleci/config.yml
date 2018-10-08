@@ -13,41 +13,41 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update-npm
+          name: Install latest npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          key: dependency-cache-{{ checksum "source/package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Workaround for GoogleChrome/puppeteer#290
           command: 'sh .circleci/setup_puppeteer.sh'
       - run:
-          name: npm-install
-          command: cd source && npm install
+          name: npm install
+          command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "source/package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - ./source/node_modules
+            - node_modules
       - run:
           name: eslint
-          command: cd source && npm run eslint
+          command: npm run eslint
       - run:
-          name: Run gruntjs
-          command: cd source && npm run grunt-dev
+          name: gruntjs
+          command: npm run grunt-dev
       - run:
-          name: test
-          command: cd source && npm run jest-ci
+          name: jest
+          command: npm run jest-ci
           environment:
-            JEST_JUNIT_OUTPUT: "../test-results/jest/jest-results.xml"
+            JEST_JUNIT_OUTPUT: "test-results/jest/jest-results.xml"
       - store_test_results:
           path: test-results
       - store_artifacts:
-          path: source/coverage
+          path: coverage
           destination: jest-coverage
       - run:
-          name: Run static analysis
-          command: cd source && npm run analysis
+          name: static analysis
+          command: npm run analysis
       - store_artifacts:
-          path: source/static-analysis
+          path: static-analysis
           destination: static-analysis
 
 workflows:

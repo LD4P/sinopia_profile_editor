@@ -37,10 +37,10 @@
   "jest": {
     "preset": "jest-puppeteer",
     "collectCoverageFrom": [
-      "assets/js/**/*.js",
-      "!assets/js/dist/**",
-      "!assets/js/lib/**",
-      "!assets/js/dropzone.min.js"
+      "source/assets/js/**/*.js",
+      "!source/assets/js/dist/**",
+      "!source/assets/js/lib/**",
+      "!source/assets/js/dropzone.min.js"
     ],
     "reporters": [
       "default",
@@ -53,7 +53,7 @@
     "jest-cov": "jest --coverage --colors",
     "grunt-dev": "grunt ngAnnotate uglify",
     "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js .",
-    "analysis": "es6-plato -d static-analysis -n -e .eslintrc.js assets/js/modules/help assets/js/modules/profile assets/js/ng-app.js"
+    "analysis": "es6-plato -d static-analysis -n -e .eslintrc.js source/assets/js/modules/help source/assets/js/modules/profile source/assets/js/ng-app.js"
   },
   "engines": {
     "node": "10.11.x"
