@@ -23,27 +23,43 @@ module.exports = function(grunt) {
 			//The controllers and services must follow everything else
 			base: {
 				files: [
-					{src: ['assets/js/modules/**/*.js', '!assets/js/modules/**/controllers/**/*.js', '!assets/js/modules/**/services/**/*.js', '!assets/js/modules/**/directives/**/*.js'], dest: 'assets/js/dist/base.js'}
+					{
+						src: [
+							'source/assets/js/modules/**/*.js',
+							'!source/assets/js/modules/**/controllers/**/*.js',
+              '!source/assets/js/modules/**/services/**/*.js',
+              '!source/assets/js/modules/**/directives/**/*.js'
+            ],
+            dest: 'dist/assets/js/base.js'
+          }
 				],
 			},
 			controllers: {
 				files: [
-					{src: ['assets/js/modules/**/controllers/**/*.js'], dest: 'assets/js/dist/controllers.js'}
+					{src: ['source/assets/js/modules/**/controllers/**/*.js'], dest: 'dist/assets/js/controllers.js'}
 				],
 			},
 			services: {
 				files: [
-					{src: ['assets/js/modules/**/services/**/*.js'], dest: 'assets/js/dist/services.js'}
+					{src: ['source/assets/js/modules/**/services/**/*.js'], dest: 'dist/assets/js/services.js'}
 				],
 			},
 			directives: {
 				files: [
-					{src: ['assets/js/modules/**/directives/**/*.js'], dest: 'assets/js/dist/directives.js'}
+					{src: ['source/assets/js/modules/**/directives/**/*.js'], dest: 'dist/assets/js/directives.js'}
 				],
 			},
 			dist: {
 				files: [
-					{src: ['assets/js/dist/base.js', 'assets/js/dist/services.js', 'assets/js/dist/controllers.js', 'assets/js/dist/directives.js'], dest: 'assets/js/dist/concat.js'},
+					{
+            src: [
+              'dist/assets/js/base.js',
+              'dist/assets/js/services.js',
+              'dist/assets/js/controllers.js',
+              'dist/assets/js/directives.js'
+            ],
+            dest: 'dist/assets/js/concat.js'
+          },
 				],
 			},
 		},
@@ -53,7 +69,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: [
-					{src: 'assets/js/dist/concat.js', dest: 'assets/js/dist/<%= pkg.name %>.min.js'}
+					{src: 'dist/assets/js/concat.js', dest: 'dist/assets/js/<%= pkg.name %>.min.js'}
 				]
 			},
 		},
@@ -61,7 +77,11 @@ module.exports = function(grunt) {
 			combine: {
 				//For some reason, this one is dest then src
 				files: {
-					'assets/css/dist/<%= pkg.name %>.min.css': ['assets/css/**/*.css', '!assets/css/explorer8.css', '!assets/css/explorer9.css', '!**/*.min.css']
+					'dist/assets/css/<%= pkg.name %>.min.css': [
+            'source/assets/css/**/*.css',
+            '!source/assets/css/explorer8.css',
+            '!source/assets/css/explorer9.css',
+            '!source/**/*.min.css']
 				},
 			},
 		},
@@ -69,19 +89,19 @@ module.exports = function(grunt) {
 			options: {
 				dest: 'documentation/ngdocs',
 			},
-			all: ['assets/js/modules/**/*.js']
+			all: ['source/assets/js/modules/**/*.js']
 		},
 		jsdoc: {
 			dist: {
-				src: ['assets/js/modules/**/*.js'],
+				src: ['source/assets/js/modules/**/*.js'],
 				options: {
 					destination: 'documentation/jsdoc'
 				}
 			}
 		},
-        eslint: {
-            target: ['assets/js/modules/**/*.js']
-        }
+    eslint: {
+        target: ['source/assets/js/modules/**/*.js']
+    }
 	});
 
 	grunt.loadNpmTasks('grunt-ng-annotate');

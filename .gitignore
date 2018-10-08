@@ -1,7 +1,8 @@
 *.zip
-source/assets/css/dist/
-source/assets/js/dist/
-source/documentation/
-source/node_modules/
-source/coverage/
+coverage/
+dist/
+documentation/jsdoc
+documentation/ngdocs
+junit.xml
+node_modules/
 static-analysis

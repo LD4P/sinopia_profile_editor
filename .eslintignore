@@ -1,0 +1,7 @@
+coverage
+dist
+documentation/jsdoc
+documentation/ngdocs
+source/assets/js/lib/**
+source/assets/js/dropzone.min.js
+static-analysis
