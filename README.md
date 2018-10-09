@@ -1,13 +1,17 @@
 [![CircleCI](https://circleci.com/gh/LD4P/sinopia_profile_editor.svg?style=svg)](https://circleci.com/gh/LD4P/sinopia_profile_editor)
 [![Coverage Status](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor/badge.svg)](https://coveralls.io/github/LD4P/sinopia_profile_editor)
 
-# BIBRAME Profile Editor
+# LD4P's BIBFRAME Profile Editor
 
 ## Overview
-The BIBFRAME Profile Editor was designed to work on the widest range of machines possible. As such, most of the business logic is implemented client-side in JavaScript. This code can run in Chrome, FireFox, IE 8+, and Safari. The AngularJS framework used is the latest in client-side MVC architecture, and provides a clear model for structuring and organizing code. Every effort has been made to follow this structure and document the code, making future modifications as easy as possible.
-All of the JavaScript code comes with comments explaining what each bit does. Documentation tools were used to generate documentation for this part of the application automatically. This documentation is available in /source/documentation/jsdoc/. It is also viewable from the web interface at /documentation/jsdoc/. The Editor also contains a help link containing a FAQ section.
+From lcnetdev description:  "The BIBFRAME Profile Editor was designed to work on the widest range of machines possible. As such, most of the business logic is implemented client-side in JavaScript. This code can run in Chrome, FireFox, IE 8+, and Safari. The AngularJS framework used is the latest in client-side MVC architecture, and provides a clear model for structuring and organizing code. Every effort has been made to follow this structure and document the code, making future modifications as easy as possible.
+All of the JavaScript code comes with comments explaining what each bit does. Documentation tools were used to generate documentation for this part of the application automatically. This documentation is available in /source/documentation/jsdoc/. It is also viewable from the web interface at /documentation/jsdoc/. The Editor also contains a help link containing a FAQ section."
 
-## Installation Prerequisites
+# Sinopia Profile Editor
+Technical documentation specific to the Sinopia Profile Editor
+[wiki](https://github.com/LD4P/sinopia_profile_editor/wiki/Sinopia-Profile-Editor) follows.
+
+## Installation Prerequisites (before using docker image)
 
 ### Prerequisites
 1.  node.js
@@ -54,26 +58,7 @@ We use circleci.  The steps are in `.circleci/config.yml`.  See https://circleci
 In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`) and at static analysis output (`static-analysis/index.html`).
 
 
-
-# OLD info below
-
-## Installation Prerequisites
-
-The Profile Editor is now a submodule of [Recto](http://github.com/lcnetdev/recto), which is an Express-based web service which uses [Verso](http://github.com/lcnetdev/verso) to store data. The PHP files in 1.2 have been removed and have been replaced with api methods in recto, or loopback functions in verso. To use the Profile Editor, Verso should be installed and configured, then Recto should be installed and configured which will install the profile-editor as a submodule.
-
-## Sinopia Profile Editor
-Technical documentation for specific to the Sinopia Profile Editor
-[wiki](https://github.com/LD4P/sinopia_profile_editor/wiki/Sinopia-Profile-Editor) including
-running with Docker.
-
-## Installation
-
-1.	Clone recto w/submodules: `git clone --recursive https://github.com/lcnetdev/recto`
-2. cd profile-edit/source
-3.	Run 'npm init', and follow the instructions that follow.
-4.	Run 'npm install'. This installs everything needed for Grunt to run successfully.
-5.	Run 'grunt' to generate the minified javascript and css files that run the site, as well as several files that document the code in the editor.
-6.	In index.html, change the 'base' property to the base for your webserver.
+# lcnetdev info below
 
 ## Data References
 
