@@ -1,7 +1,8 @@
 FROM php:7.2-apache
 
-ENV HTML /var/www/html
-COPY source $HTML
+ENV HTML /var/www/html/
+
+COPY source/ package*.json Gruntfile.js $HTML
 
 RUN apt-get update && \
     apt-get install -y gnupg curl && \
