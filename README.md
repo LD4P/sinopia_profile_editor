@@ -9,6 +9,56 @@ All of the JavaScript code comes with comments explaining what each bit does. Do
 
 ## Installation Prerequisites
 
+### Prerequisites
+1.  node.js
+
+### Installation Instructions
+1.  install node.js
+2.	Run `npm init`, and follow the instructions that appear.
+3.  Get latest npm: `npm install -g npm@latest`
+4.	Run `npm install`. This installs everything needed for Grunt to run successfully.
+5.  Install grunt command line interface `npm install grunt-cli`
+6.  Run `grunt` to build the code and jsdocs and ngdocs.
+
+## Running the code
+
+Follow installation instructions, then run `node server.js`.  This will start up the profile editor at http://localhost:8000
+
+## Developers
+
+The javascript code uses the angular framework https://angular.io/.  It uses grunt as a build tool.
+
+### grunt-dev
+
+To build the code without running jsdocs or ngdocs, `npm run grunt-dev`
+
+### Check for some errors / style guide
+
+`npm run eslint`
+
+### test
+
+Tests are written in jest, also utilizing puppeteer for end-to-end tests.  To run them `npm test`.
+
+#### test coverage
+To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.
+
+### static analysis
+
+We use plato (actually es6-plato) to get static analysis info such as code complexity, etc.  `npm run analysis` will create a folder static-analysis; use a web browser to open `static-analysis/index.html`.  There is a project view and also a view of each file.
+
+### continuous integration
+
+We use circleci.  The steps are in `.circleci/config.yml`.  See https://circleci.com/gh/Ld4p/sinopia_profile_editor.  
+
+In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`) and at static analysis output (`static-analysis/index.html`).
+
+
+
+# OLD info below
+
+## Installation Prerequisites
+
 The Profile Editor is now a submodule of [Recto](http://github.com/lcnetdev/recto), which is an Express-based web service which uses [Verso](http://github.com/lcnetdev/verso) to store data. The PHP files in 1.2 have been removed and have been replaced with api methods in recto, or loopback functions in verso. To use the Profile Editor, Verso should be installed and configured, then Recto should be installed and configured which will install the profile-editor as a submodule.
 
 ## Sinopia Profile Editor
