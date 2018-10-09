@@ -12,12 +12,11 @@ describe('Sinopia Profile Editor imports a Profile', () => {
       await expect(page).toClick('a', { text: 'Import'})
     })
 
-    it('click the import button and display dialog', async () => {
+    it('displays Import Data dialog after Import button is clicked', async () => {
       await expect(page).toMatch(/Import Data/)
     })
 
-
-    it('uploads a local BIBFRAME 2.0 Item Profile and checks for loaded Profile', async () => {
+    it('uploads a local BIBFRAME 2.0 Item Profile', async () => {
       const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
 
       await expect(page).toUploadFile(
