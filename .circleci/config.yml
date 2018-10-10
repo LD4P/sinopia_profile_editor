@@ -28,10 +28,10 @@ jobs:
           name: eslint
           command: npm run eslint
       - run:
-          name: gruntjs
+          name: build with grunt
           command: npm run grunt-dev
       - run:
-          name: jest
+          name: test with jest and puppeteer
           command: npm run jest-ci
           environment:
             JEST_JUNIT_OUTPUT: "test-results/jest/jest-results.xml"
