@@ -6,10 +6,10 @@ describe('Sinopia Profile Editor exports a loaded Profile', () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create')
   })
 
-  it('clicks Verbose Export and displays an error with missing profile form data', async () => {
+  it('error displayed when exporting profile form data', async () => {
      await expect(page).toClick('a', { text: 'Verbose Export'})
      const alert_box_header = await page.$eval('#alertBox > div > div > div.modal-header > h3', e => e.textContent)
-     await expect(alert_box_header).toMatch(/Error\!/)
+     await expect(alert_box_header).toMatch(/Error!/)
  })
 
   describe('Exporting an existing profile', () => {
@@ -23,9 +23,10 @@ describe('Sinopia Profile Editor exports a loaded Profile', () => {
       )
     })
 
-    it('clicks the Verbose Button and downloads the loaded Profile', async () => {
+    it('saves a non-empty Profile', async () => {
       await page.waitFor(1000)
       await expect(page).toClick('a', { text: 'Verbose Export'})
+      // TODO: test that profile written to file system (see #77)
     })
   })
 })
