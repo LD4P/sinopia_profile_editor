@@ -3,12 +3,13 @@ const path = require('path')
 describe('Sinopia Profile Editor imports a Profile', () => {
 
   beforeAll(async () => {
-    await page.goto('http://127.0.0.1:8000/#/profile/create')
+    await page.goto('http://127.0.0.1:8000/#/profile/sinopia')
   })
 
   describe('Import Data Modal Upload Dialog', () => {
 
     beforeAll(async () => {
+      await page.waitFor(1000)
       await expect(page).toClick('a', { text: 'Import'})
     })
 

@@ -68,7 +68,12 @@
         <!-- Dev JavaScript -->
         <script src="assets/js/concat.js"></script>
 
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" />
         <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia_profile_editor.min.css" />
+
+        <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia.css" />
+        
         <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload.css" />
         <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload-ui.css" />
 
@@ -83,111 +88,32 @@
         <script src="angular-spinner/angular-spinner.js"></script>
     </head>
     <body>
+
         <div id="wrapper">
-            <!--[if !IE]> -->
-            <header class="nabvar navbar-inverse sss-large-min-width" role="banner">
-                <div class="container">
-
-                    <div class="navbar-header">
-                        <img src="assets/images/bibframe-newlogo.png"/>
-                        <span class="bold">Library of Congress&nbsp;</span>
-                        <span class="normal">Bibframe Profile Editor</span>
-
-                    </div>
-                </div>
-            </header>
-            <!-- <![endif]-->
-
-            <!--[if IE 9]>
-            <header class="nabvar navbar-inverse sss-large-min-width" role="banner">
-                <div class="container">
-
-                    <div class="navbar-header">
-                        <img src="assets/images/bibframe-newlogo.png"/>
-                        <span class="bold">Library of Congress&nbsp;</span>
-                        <span class="normal">Bibframe Profile Editor</span>
-
-                    </div>
-                </div>
-            </header>
-            <![endif]-->
-
-            <!--[if lte IE 8]>
-            <h1 class="headerTag nabvar navbar-inverse sss-large-min-width" role="banner">
-                <div class="container">
-
-                    <div class="navbar-header">
-                        <img src="assets/images/bibframe-newlogo.png"/>
-                        <span class="bold">Library of Congress&nbsp;</span>
-                        <span class="normal">Bibframe Profile Editor</span>
-
-                    </div>
-                </div>
-            </h1>
-            <![endif]-->
-
-            <div class="container hidden-print">
-            <ol class="breadcrumb">
-            <li><a href="../source/index.html">Home</a></li>
-            <li class="active">Profile Editor</li>
-            </ol>
-            </div>
 
             <div class="content">
 
-                <div class="mainnav sss-large-min-width">
-                    <div class="container">
-                        <!--[if !IE]> -->
-                        <nav class="collapse mainnav-collapse sss-large-min-width" role="navigation">
-                            <ul class="mainnav-menu">
-                                <li class="dropdown">
-                                    <a href="#/profile/list" >Profiles</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#/profile/ontologies" >Ontologies</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#/help">Help</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- <![endif]-->
-
-                        <!--[if IE 9]>
-                        <nav class="collapse mainnav-collapse sss-large-min-width" role="navigation">
-                            <ul class="mainnav-menu">
-                                <li class="dropdown">
-                                    <a href="#/profile/list" >Profiles</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#/help">Help</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <![endif]-->
-
-                        <!--[if lte IE 8]>
-                        <ul class="navTag mainnav-collapse sss-large-min-width" role="navigation">
-                            <ul class="mainnav-menu">
-                                <li class="dropdown">
-                                    <a href="#/profile/list" >Profiles</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#/help">Help</a>
-                                </li>
-                            </ul>
-                        </ul>
-                        <![endif]-->
-
+                <div class="sinopia">
+                    <img src="assets/images/sinopiaheaderbg_profileeditor.png">
+                </div>
+                <div class="sinopia-headertext">
+                    <img src="assets/images/sinopia_profile_headertext.png">
+                    <div class="sinopia-headerlinks">
+                        <a href="#">Bibliographic Editor</a>
+                        &nbsp;
+                        <a href="#">Help and Resources</a>
                     </div>
                 </div>
-
-
                 <div class="container">
                     <div class="page-content-area" ui-view>
 
                     </div>
                 </div>
+
+                <div class="sinopia-footer">
+                    Sinopia is a project of <a href="#">Linked Data for Production 2 (LD4P2)</a>, funded by the Andrew W. Mellon Foundation.
+                </div>
+
             </div>
         </div>
 
@@ -220,47 +146,5 @@
         <script src="assets/js/lib/datepicker/js/bootstrap-datepicker.js"></script>
 
     </body>
-
-
-    <!--[if !IE]> -->
-    <footer class="footer sss-large-min-width">
-
-        <div class="container">
-
-            <p id="copyrightTest" class="pull-left"></p>
-
-        </div>
-
-    </footer>
-    <!-- <![endif]-->
-
-    <!--[if IE 9]>
-    <footer class="footer sss-large-min-width">
-
-        <div class="container">
-
-            <p id="copyrightTest" class="pull-left"></p>
-
-        </div>
-
-    </footer>
-    <![endif]-->
-
-    <!--[if lte IE 8]>
-    <h1 class="headerTag footer sss-large-min-width">
-
-        <div class="container">
-
-            <p id="copyrightTest" class="pull-left"></p>
-
-        </div>
-
-    </h1>
-    <![endif]-->
-
-    <script>
-        var year = new Date(Date.now()).getFullYear();
-        $('#copyrightTest').html("Copyright &copy; " + year + " Library of Congress");
-    </script>
 
 </html>
