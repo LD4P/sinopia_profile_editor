@@ -18,19 +18,18 @@ Technical documentation specific to the Sinopia Profile Editor
 
 ### Installation Instructions
 1.  install node.js
-2.	Run `npm init`, and follow the instructions that appear.
+2.  Run `npm init`, and follow the instructions that appear.
 3.  Get latest npm: `npm install -g npm@latest`
-4.	Run `npm install`. This installs everything needed for Grunt to run successfully.
-5.  Install grunt command line interface `npm install grunt-cli`
-6.  Run `grunt` to build the code and jsdocs and ngdocs.
+4.  Run `npm install`. This installs everything needed for the build to run successfully.
+5.  Run `grunt` to build the code and jsdocs and ngdocs.
 
 ## Running the code
 
-Follow installation instructions, then run `node server.js`.  This will start up the profile editor at http://localhost:8000
+Follow installation instructions, then run `node server.js` or `npm start`.  This will start up the profile editor at http://localhost:8000
 
 ## Developers
 
-The javascript code uses the angular framework https://angular.io/.  It uses grunt as a build tool.
+The javascript code uses the AngularJS framework https://angular.io/.  It uses grunt as a build tool.
 
 ### grunt-dev
 

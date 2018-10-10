@@ -10,8 +10,7 @@ RUN cd $HTML && npm install
 # FIXME: do we want to run grunt locally and copy only dist/ to docker image?
 COPY Gruntfile.js $HTML
 COPY source/ $HTML/source/
-# FIXME: grunt-cli could be an npm devDependency ?
-RUN cd $HTML && npm install -g grunt-cli && npm run grunt-dev
+RUN cd $HTML && npm run grunt-dev
 
 COPY dist/ $HTML
 COPY server.js $HTML
