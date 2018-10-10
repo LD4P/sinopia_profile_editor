@@ -1,16 +1,21 @@
-FROM php:7.2-apache
+FROM node:10.11
 
-ENV HTML /var/www/html
-COPY source $HTML
+ENV HTML /opt/sinopia_profile_editor/
+WORKDIR $HTML
 
-RUN apt-get update && \
-    apt-get install -y gnupg curl && \
-    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-    apt-get update && \
-    apt-get install -y nodejs
+COPY package*.json $HTML
+# FIXME: should this be npm install with --production flag?
+RUN cd $HTML && npm install
 
-RUN cd $HTML && \
-    npm install && \
-    npm install angular-local-storage && \
-    npm install -g grunt-cli && \
-    grunt
+# FIXME: do we want to run grunt locally and copy only dist/ to docker image?
+COPY Gruntfile.js $HTML
+COPY source/ $HTML/source/
+RUN cd $HTML && npm run grunt-dev
+
+COPY dist/ $HTML
+COPY server.js $HTML
+
+# docker daemon maps app's port
+EXPOSE 8000
+
+CMD ["npm", "start"]

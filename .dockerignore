@@ -1,0 +1,7 @@
+.circleci
+.git
+coverage
+documentation
+node_modules
+npm-debug.log
+static-analysis
