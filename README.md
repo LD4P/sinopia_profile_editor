@@ -29,7 +29,7 @@ Follow installation instructions, then run `node server.js` or `npm start`.  Thi
 
 ## Developers
 
-The javascript code uses the AngularJS framework https://angular.io/.  It uses grunt as a build tool.
+The javascript code uses the AngularJS framework https://angularjs.org/.  It uses grunt as a build tool.
 
 ### grunt-dev
 
