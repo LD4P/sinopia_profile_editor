@@ -3,25 +3,28 @@
 
 # LD4P's BIBFRAME Profile Editor
 
+forked from https://github.com/lcnetdev/profile-edit
+
 ## Overview
 From lcnetdev description:  "The BIBFRAME Profile Editor was designed to work on the widest range of machines possible. As such, most of the business logic is implemented client-side in JavaScript. This code can run in Chrome, FireFox, IE 8+, and Safari. The AngularJS framework used is the latest in client-side MVC architecture, and provides a clear model for structuring and organizing code. Every effort has been made to follow this structure and document the code, making future modifications as easy as possible.
 All of the JavaScript code comes with comments explaining what each bit does. Documentation tools were used to generate documentation for this part of the application automatically. This documentation is available in /source/documentation/jsdoc/. It is also viewable from the web interface at /documentation/jsdoc/. The Editor also contains a help link containing a FAQ section."
 
 # Sinopia Profile Editor
-Technical documentation specific to the Sinopia Profile Editor
-[wiki](https://github.com/LD4P/sinopia_profile_editor/wiki/Sinopia-Profile-Editor) follows.
+Technical documentation specific to the Sinopia Profile Editor may also be found in the [wiki](https://github.com/LD4P/sinopia_profile_editor/wiki/Sinopia-Profile-Editor).
 
-## Installation Prerequisites (before using docker image)
+## Installation (without docker image)
 
 ### Prerequisites
-1.  node.js
+* `node.js` JavaScript runtime https://nodejs.org/en/download/
+* `npm` JavaScript package manager https://www.npmjs.com/
 
 ### Installation Instructions
-1.  install node.js
-2.  Run `npm init`, and follow the instructions that appear.
-3.  Get latest npm: `npm install -g npm@latest`
-4.  Run `npm install`. This installs everything needed for the build to run successfully.
-5.  Run `grunt` to build the code and jsdocs and ngdocs.
+1.  Install [node.js](https://nodejs.org/en/download/)
+2.  Install [npm](https://www.npmjs.com/)
+3.  Run `npm init`, and follow the instructions that appear.
+4.  Get latest npm: `npm install -g npm@latest`
+5.  Run `npm install`. This installs everything needed for the build to run successfully.
+6.  Run `grunt` to build the code and jsdocs and ngdocs.
 
 ## Running the code
 
@@ -29,33 +32,47 @@ Follow installation instructions, then run `node server.js` or `npm start`.  Thi
 
 ## Developers
 
-The javascript code uses the AngularJS framework https://angularjs.org/.  It uses grunt as a build tool.
+- See `package.json` for npm package dependencies.
+- The javascript code uses the [AngularJS framework](https://angularjs.org/).
+- The web server used is `express` web framework for node.js
 
-### grunt-dev
+### Build with grunt
 
-To build the code without running jsdocs or ngdocs, `npm run grunt-dev`
+The javascript code uses grunt as a build tool. See `Gruntfile.js` for build dependencies and configuration.
 
-### Check for some errors / style guide
+- To build the code and create jsdocs or ngdocs, `grunt` or `npm run grunt`
+- To build the code without creating jsdocs or ngdocs, `npm run grunt-dev`
+
+### Linter for JavaScript
 
 `npm run eslint`
+
+#### Generate a list of all eslint errors
+
+```
+npx eslint-takeoff
+```
+
+creates `.eslintrc-todo.yml` showing which linter rules give errors or warnings for each javascript file, per `.eslintrc.yml`
+
+See https://www.npmjs.com/package/eslint-takeoff for more info.
 
 ### test
 
 Tests are written in jest, also utilizing puppeteer for end-to-end tests.  To run them `npm test`.
 
 #### test coverage
-To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.
+To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.  You can also check [coveralls](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor)
 
 ### static analysis
 
-We use plato (actually es6-plato) to get static analysis info such as code complexity, etc.  `npm run analysis` will create a folder static-analysis; use a web browser to open `static-analysis/index.html`.  There is a project view and also a view of each file.
+We use plato (actually es6-plato) to get static analysis info such as code complexity, etc.  `npm run analysis` will create a folder `static-analysis`; use a web browser to open `static-analysis/index.html`.  There is a project view and also a view of each file.
 
 ### continuous integration
 
-We use circleci.  The steps are in `.circleci/config.yml`.  See https://circleci.com/gh/Ld4p/sinopia_profile_editor.  
+We use [circleci](https://circleci.com/gh/Ld4p/sinopia_profile_editor).  The steps are in `.circleci/config.yml`.
 
 In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`) and at static analysis output (`static-analysis/index.html`).
-
 
 # lcnetdev info below
 
