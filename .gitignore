@@ -5,4 +5,5 @@ documentation/jsdoc
 documentation/ngdocs
 junit.xml
 node_modules/
+scss-lint-report.xml
 static-analysis

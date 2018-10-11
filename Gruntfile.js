@@ -101,6 +101,19 @@ module.exports = function(grunt) {
 		},
     eslint: {
         target: ['source/assets/js/modules/**/*.js']
+    },
+    scsslint: {
+      allFiles: [
+        'source/assets/css/**/*.css'
+      ],
+      options: {
+        // bundleExec: true,
+        colorizeOutput: true,
+        config: '.scss-lint.yml',
+        failOnWarning: true,
+        maxBuffer: 512000,
+        reporterOutput: 'scss-lint-report.xml',
+      }
     }
 	});
 
@@ -110,6 +123,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ngdocs');
 	grunt.loadNpmTasks('grunt-jsdoc');
 	grunt.loadNpmTasks('grunt-eslint');
+	grunt.loadNpmTasks('grunt-scss-lint');
 
 	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'ngdocs', 'jsdoc']);
 };

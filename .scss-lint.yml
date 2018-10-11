@@ -1,0 +1,98 @@
+scss_files: source/assets/css/**/*.css
+
+exclude:
+  - coverage/*
+  - dist/*
+  - documentation/*
+  - node_modules/*
+  - source/assets/css/jquery*.css
+  - source/assets/css/bootstrap/**
+  - source/assets/css/font-awesome/**
+  - static-analysis/*
+
+# $ scss-lint --format=Stats -c .scss-lint.yml --color source/assets/css/dropzone.css  source/assets/css/explorer8.css  source/assets/css/explorer9.css source/assets/css/profileTemplate.css
+# 281  Indentation                    (across 4 files)
+#  56  SelectorFormat                 (across 3 files)
+#  44  IdSelector                     (across 3 files)
+#  44  QualifyingElement              (across 2 files)
+#  42  ColorVariable                  (across 3 files)
+#  40  PropertySortOrder              (across 3 files)
+#  32  ImportantRule                  (across 3 files)
+#  29  MergeableSelector              (across 3 files)
+#  17  SingleLinePerSelector          (across 3 files)
+#  17  HexNotation                    (across 3 files)
+#  16  TrailingWhitespace             (across 3 files)
+#  15  ZeroUnit                       (across 2 files)
+#  13  ColorKeyword                   (across 1 files)
+#  10  Comment                        (across 3 files)
+#   8  LeadingZero                    (across 1 files)
+#   8  SpaceBeforeBrace               (across 2 files)
+#   6  SpaceAfterComma                (across 1 files)
+#   6  EmptyLineBetweenBlocks         (across 1 files)
+#   5  BangFormat                     (across 1 files)
+#   4  FinalNewline                   (across 4 files)
+#   2  UnnecessaryMantissa            (across 1 files)
+#   2  SelectorDepth                  (across 2 files)
+#   1  SpaceAfterPropertyColon        (across 1 files)
+#   1  VendorPrefix                   (across 1 files)
+#   1  Shorthand                      (across 1 files)
+#   1  TrailingSemicolon              (across 1 files)
+# ---  -----------------------        ----------------
+# 701  total                          (across 4 files)
+
+# Below was generated with
+# $ scss-lint --format=Config -c .scss-lint.yml --color source/assets/css/dropzone.css  source/assets/css/explorer8.css  source/assets/css/explorer9.css source/assets/css/profileTemplate.css
+---
+linters:
+  BangFormat:
+    enabled: false
+  ColorKeyword:
+    enabled: false
+  ColorVariable:
+    enabled: false
+  Comment:
+    enabled: false
+  EmptyLineBetweenBlocks:
+    enabled: false
+  FinalNewline:
+    enabled: false
+  HexNotation:
+    enabled: false
+  IdSelector:
+    enabled: false
+  ImportantRule:
+    enabled: false
+  Indentation:
+    enabled: false
+  LeadingZero:
+    enabled: false
+  MergeableSelector:
+    enabled: false
+  PropertySortOrder:
+    enabled: false
+  QualifyingElement:
+    enabled: false
+  SelectorDepth:
+    enabled: false
+  SelectorFormat:
+    enabled: false
+  Shorthand:
+    enabled: false
+  SingleLinePerSelector:
+    enabled: false
+  SpaceAfterComma:
+    enabled: false
+  SpaceAfterPropertyColon:
+    enabled: false
+  SpaceBeforeBrace:
+    enabled: false
+  TrailingSemicolon:
+    enabled: false
+  TrailingWhitespace:
+    enabled: false
+  UnnecessaryMantissa:
+    enabled: false
+  VendorPrefix:
+    enabled: false
+  ZeroUnit:
+    enabled: false
