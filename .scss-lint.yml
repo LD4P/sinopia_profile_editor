@@ -1,0 +1,13 @@
+scss_files: source/assets/css/**/*.css
+
+exclude:
+  - coverage/*
+  - dist/*
+  - documentation/*
+  - node_modules/*
+  - source/assets/css/jquery*.css
+  - source/assets/css/bootstrap/**
+  - source/assets/css/font-awesome/**
+  - static-analysis/*
+
+#linters:
