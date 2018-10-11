@@ -4,7 +4,7 @@
 # LD4P's BIBFRAME Profile Editor
 
 ## Overview
-From lcnetdev description:  "The BIBFRAME Profile Editor was designed to work on the widest range of machines possible. As such, most of the business logic is implemented client-side in JavaScript. This code can run in Chrome, FireFox, IE 8+, and Safari. The AngularJS framework used is the latest in client-side MVC architecture, and provides a clear model for structuring and organizing code. Every effort has been made to follow this structure and document the code, making future modifications as easy as possible.
+From lcnetdev description:  "The BIBFRAME Profile Editor was designed to work on the widest range of machines possible. As such, most of the business logic is implemented client-side in JavaScript. This code can run in Chrome, FireFox, IE 8+, and Safari. The Angular framework used is the latest in client-side MVC architecture, and provides a clear model for structuring and organizing code. Every effort has been made to follow this structure and document the code, making future modifications as easy as possible.
 All of the JavaScript code comes with comments explaining what each bit does. Documentation tools were used to generate documentation for this part of the application automatically. This documentation is available in /source/documentation/jsdoc/. It is also viewable from the web interface at /documentation/jsdoc/. The Editor also contains a help link containing a FAQ section."
 
 # Sinopia Profile Editor
@@ -29,7 +29,7 @@ Follow installation instructions, then run `node server.js` or `npm start`.  Thi
 
 ## Developers
 
-The javascript code uses the AngularJS framework https://angular.io/.  It uses grunt as a build tool.
+The javascript code uses the Angular framework https://angular.io/.  It uses grunt as a build tool.
 
 ### grunt-dev
 
