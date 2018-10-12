@@ -1,0 +1,22 @@
+<!-- the bare-bones Sinopia profile landing page without the profile list, and only the Create New and Import buttons -->
+<h3 class="new-profile-header">
+    Create a new Profile or Import one from your files
+</h3>
+
+<div class="portlet sss-min-width sinopia-button-group">
+
+
+    <a class="pull-left new-profile btn btn-light fa fa-plus" ui-sref="profile.create" role="button">
+        Create new Profile
+    </a>
+
+    <span class="pull-left"> or </span>
+
+    <div ng-controller="sinopiaController">
+
+        <a class="btn btn-light pull-left import-export" ng-click="showImport()">
+            Import
+        </a>
+    </div>
+
+</div>

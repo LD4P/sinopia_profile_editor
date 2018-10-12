@@ -1,0 +1,96 @@
+body {
+    font-family: "Source Sans Pro", "Helvetica", sans-serif !important;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#resourceChoose, #deleteIcon, #propertyChoose,
+.fa-bars, .fa-trash-o {
+    color: whitesmoke !important;
+}
+
+.accordion-caret, .accordion-caret:before {
+    color: #797268 !important;
+}
+
+.accordion-panel, .accordion-toggle,
+.panel-default, .panel-heading {
+    background-color: #B26F16 !important;
+    border-color: #B26F16 !important;
+}
+
+.btn {
+    padding: 10px 50px;
+}
+
+.container {
+    font-size: 14px !important;
+    text-align: start;
+}
+
+.content {
+    height: 1024px;
+    position: relative;
+    text-align: center;
+    width: 1024px;
+}
+
+.import-export {
+    background-color: #B26F16;
+    color: whitesmoke;
+    margin-left: 70px;
+    padding: 8px 70px;
+}
+
+.new-profile {
+    border: #797268 dashed 1px;
+    color: #797268;
+    font-size: 14px;
+    margin-right: 50px !important;
+}
+
+.new-profile-button-group {
+    margin-left: 20px;
+}
+
+.new-profile-header {
+    margin-left: 30px;
+    padding: 70px 0 40px 0;
+}
+
+.panel-title {
+    color: whitesmoke;
+}
+
+.sinopia-footer {
+    color: #797268;
+    font-size: 12px;
+    margin-top: 200px;
+}
+
+.sinopia {
+    border-bottom: #B26F16 2px solid;
+    line-height: 0px;
+}
+
+.sinopia-button-group {
+    margin-left: 50px;
+}
+
+.sinopia-headerlinks {
+    float: right;
+    font-size: 12px;
+}
+
+.sinopia-headertext {
+    padding: 20px;
+    text-align: left;
+}
+
+.sinopia-profile-form {
+    padding-top: 70px;
+}
+

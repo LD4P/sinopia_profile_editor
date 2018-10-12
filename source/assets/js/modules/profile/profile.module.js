@@ -17,9 +17,9 @@ angular.module('locApp.modules.profile', [
 
     .config(function($stateProvider, $urlRouterProvider) {
 
-        // Reroute root of module to list controller
+        // Reroute root of module to list controller, with Sinopia customizations
         $urlRouterProvider
-            .when('/profile', '/profile/list');
+            .when('/profile', '/profile/sinopia');
 
         // Define various states of module
         $stateProvider
@@ -27,16 +27,30 @@ angular.module('locApp.modules.profile', [
                 url: '/profile',
                 templateUrl: 'html/profile.html'
             })
+            .state('profile.sinopia', {
+                parent: 'profile',
+                url: '/sinopia',
+                templateUrl: 'html/sinopia.html',
+                controller: 'sinopiaController'
+            })
             .state('profile.list', {
                 parent: 'profile',
                 url: '/list',
                 templateUrl: 'html/profileList.html',
                 controller: 'profileListController'
             })
+            // we want the profileController to use the sinopia templateUrl and
+                // to include the parameter used to show/hide the import modal
+            // .state('profile.create', {
+            //     parent: 'profile',
+            //     url: '/create',
+            //     templateUrl: 'html/profileForm.html',
+            //     controller: 'profileController'
+            // })
             .state('profile.create', {
                 parent: 'profile',
-                url: '/create',
-                templateUrl: 'html/profileForm.html',
+                url: '/create/:showImport',
+                templateUrl: 'html/sinopiaProfileForm.html',
                 controller: 'profileController'
             })
             .state('profile.ontologies', {

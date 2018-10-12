@@ -2,18 +2,23 @@ const path = require('path')
 
 describe('Sinopia Profile Editor imports a Profile', () => {
 
-  beforeAll(async () => {
-    await page.goto('http://127.0.0.1:8000/#/profile/create')
+  describe('It has an Import button', () => {
+
+    beforeAll(async () => {
+      await page.goto('http://127.0.0.1:8000/#/profile/sinopia')
+      await expect(page).toClick('a', {text: 'Import'})
+    })
+
+    it('Redirects to the new profile page state', async () => {
+      await expect(page).toMatch(/Create a new Profile/);
+    })
+
   })
 
   describe('Import Data Modal Upload Dialog', () => {
 
     beforeAll(async () => {
-      await expect(page).toClick('a', { text: 'Import'})
-    })
-
-    it('displays Import Data dialog', async () => {
-      await expect(page).toMatch(/Import Data/)
+      await page.goto('http://127.0.0.1:8000/#/profile/create/true')
     })
 
     it('uploads a local Item Profile and checks to see if it is loaded', async () => {

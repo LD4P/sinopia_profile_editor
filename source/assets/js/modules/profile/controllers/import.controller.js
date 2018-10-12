@@ -7,7 +7,7 @@
 angular.module('locApp.modules.profile.controllers')
 
     .controller('importController', ['$upload', '$scope', 'Import', 'ProfileHandler', 'Alert', function($upload, $scope, Import, ProfileHandler, Alert) {
-            
+
         $scope.onFileSelect = function($files) {
             //$files: an array of files selected, each file has name, size, and type.
             for (var i = 0; i < $files.length; i++) {
@@ -44,6 +44,7 @@ angular.module('locApp.modules.profile.controllers')
                                     err.message = "The selected file contains no data";
                                 }
                             }
+
                             $scope.setMessage(Alert.showModal(err));
                             //watched by the alert and export directives to know
                             //when to display error messages
@@ -54,5 +55,7 @@ angular.module('locApp.modules.profile.controllers')
             //watched by the closeModal directive that handles closing the
             //import file modal dialog
             $scope.visible = !$scope.visible;
+            //close the modal on the sinopiaProfileForm
+            $scope.hideImport();
         };
     }]);
