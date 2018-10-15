@@ -27,6 +27,7 @@ describe('Sinopia Profile Editor exports a loaded Profile', () => {
       await page.waitFor(1000)
       await expect(page).toClick('a', { text: 'Export'})
       // TODO: test that profile written to file system (see #77)
+      // TODO: test fields that are validated, listed in source/assets/js/modules/profile/services/profileHandler.service.js
     })
   })
 })
