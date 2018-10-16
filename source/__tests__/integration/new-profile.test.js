@@ -26,7 +26,7 @@ describe('Adding and removing a new Profile', () => {
 
         it('has six input fields for the profile admin data', async () => {
             const inputs = await page.$eval('div[id="profile"] > div > table', e => e.getElementsByTagName('input').length)
-            expect(inputs).toBe(6)
+            expect(inputs).toBe(7)
             await expect(page).toMatch('ID')
             await expect(page).toMatch('Description')
             await expect(page).toMatch('Contact')
