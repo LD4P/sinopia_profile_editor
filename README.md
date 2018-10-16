@@ -59,7 +59,8 @@ See https://www.npmjs.com/package/eslint-takeoff for more info.
 
 ### test
 
-Tests are written in jest, also utilizing puppeteer for end-to-end tests.  To run them `npm test`.
+Tests are written in jest, also utilizing puppeteer for end-to-end tests.  Be
+sure to run `npm install && grunt` before running the tests with `npm test`.
 
 #### test coverage
 To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.  You can also check [coveralls](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor)
