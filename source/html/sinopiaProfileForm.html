@@ -259,6 +259,19 @@
                           <td>
                             <label for="source">Source</label>
                           </td>
+                          <td>
+                            <input type="url" name="source" ng-model="profile.source"
+                                   ng-blur="checkURL()"
+                                   popover="Link to more information about profile" popover-trigger="mouseenter"
+                                   popover-title="Source URL"
+                                   popover-placeholder="left" />
+                             <div class="error" ng-show="profile.source.$dirty && profile.source.$invalid">
+                                  <small class="error">uri is invalid</small>
+                             </div>
+                             <div class="warn" ng-show="profile.source.$warn">
+                                 <small class="fa fa-warning red">URI did not resolve!</small>
+                             </div>
+                          </td>
                         </tr>
                         </tbody>
                     </table>
