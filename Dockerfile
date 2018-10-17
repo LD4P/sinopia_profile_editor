@@ -1,19 +1,13 @@
 FROM node:10.11
+WORKDIR /opt/sinopia_profile_editor/
 
-ENV HTML /opt/sinopia_profile_editor/
-WORKDIR $HTML
+# both package.json AND package-lock.json
+COPY package*.json ./
 
-COPY package*.json $HTML
-# FIXME: should this be npm install with --production flag?
-RUN cd $HTML && npm install
+RUN npm install --production
 
-# FIXME: do we want to run grunt locally and copy only dist/ to docker image?
-COPY Gruntfile.js $HTML
-COPY source/ $HTML/source/
-RUN cd $HTML && npm run grunt-dev
-
-COPY dist/ $HTML
-COPY server.js $HTML
+# Everything that isn't in .dockerignore ships
+COPY . .
 
 # docker daemon maps app's port
 EXPOSE 8000

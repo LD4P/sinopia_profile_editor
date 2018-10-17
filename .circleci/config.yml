@@ -28,8 +28,11 @@ jobs:
           name: eslint
           command: npm run eslint
       - run:
+          name: install grunt
+          command: sudo npm install -g grunt
+      - run:
           name: build with grunt
-          command: npm run grunt-dev
+          command: grunt
       - run:
           name: test with jest and puppeteer
           command: npm run jest-ci
@@ -47,8 +50,25 @@ jobs:
           path: static-analysis
           destination: static-analysis
 
+  register_image:
+    docker:
+      - image: circleci/node:10.11-browsers
+    working_directory: ~/sinopia_profile_editor
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build & Register Image
+          command: |
+            docker build -t ld4p/sinopia_profile_editor:latest .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push ld4p/sinopia_profile_editor:latest
+
 workflows:
   version: 2
   build:
     jobs:
       - build
+      - register_image:
+          requires:
+            - build
