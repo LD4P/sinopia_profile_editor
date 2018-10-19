@@ -2,14 +2,16 @@
 #
 # Check https://hub.docker.com/r/circleci/node/ for more details
 #
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.11-browsers
+  working_directory: ~/sinopia_profile_editor
+
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/node:10.11-browsers
-
-    working_directory: ~/sinopia_profile_editor
-
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -32,7 +34,7 @@ jobs:
           command: sudo npm install -g grunt
       - run:
           name: build with grunt
-          command: grunt
+          command: grunt ngAnnotate uglify cssmin
       - run:
           name: test with jest and puppeteer
           command: npm run jest-ci
@@ -51,9 +53,7 @@ jobs:
           destination: static-analysis
 
   register_image:
-    docker:
-      - image: circleci/node:10.11-browsers
-    working_directory: ~/sinopia_profile_editor
+    <<: *defaults
     steps:
       - checkout
       - setup_remote_docker
