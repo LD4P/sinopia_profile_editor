@@ -20,7 +20,6 @@ Technical documentation specific to the Sinopia Profile Editor may also be found
 
 ### Installation Instructions
 1.  Install [node.js](https://nodejs.org/en/download/), which includes [npm](https://www.npmjs.com/)
-3.  Run `npm init`, and follow the instructions that appear.
 4.  Get latest npm: `npm install -g npm@latest`
 5.  Run `npm install`. This installs everything needed for the build to run successfully.
 6.  Run `grunt` to build the code and jsdocs and ngdocs.
