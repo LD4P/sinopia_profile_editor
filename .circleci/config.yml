@@ -14,27 +14,16 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Install latest npm
-          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: npm install
-          command: npm install
+      - run: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run:
-          name: eslint
-          command: npm run eslint
-      - run:
-          name: install grunt
-          command: sudo npm install -g grunt
-      - run:
-          name: build with grunt
-          command: grunt ngAnnotate uglify cssmin
+      - run: npm run eslint
+      - run: sudo npm install -g grunt
+      - run: grunt ngAnnotate uglify cssmin
       - run:
           name: test with jest and puppeteer
           command: npm run jest-ci
@@ -45,9 +34,7 @@ jobs:
       - store_artifacts:
           path: coverage
           destination: jest-coverage
-      - run:
-          name: static analysis
-          command: npm run analysis
+      - run: npm run analysis
       - store_artifacts:
           path: static-analysis
           destination: static-analysis
