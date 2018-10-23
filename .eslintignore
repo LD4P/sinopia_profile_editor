@@ -2,6 +2,7 @@ coverage
 dist
 documentation/jsdoc
 documentation/ngdocs
+sample_data_from_verso
 source/assets/js/lib/**
 source/assets/js/dropzone.min.js
 static-analysis

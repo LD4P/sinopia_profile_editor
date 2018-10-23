@@ -1,0 +1,3 @@
+[submodule "sample_data_from_verso"]
+	path = sample_data_from_verso
+	url = git@github.com:lcnetdev/verso.git
