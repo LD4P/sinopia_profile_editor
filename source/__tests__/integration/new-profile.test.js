@@ -9,6 +9,23 @@ describe('Adding and removing a new Profile', () => {
         await expect(span).toMatch(/Profile ID: Undefined/)
     })
 
+    describe('Adherence rules/standards that profile confirms with', () => {
+
+      const adherence_input_sel = '#profile input[name="adherence"]'
+
+      it('adherence input label and field', async () => {
+        await expect_value_in_selector_textContent('#profile label[for="adherence"]', 'Adherence')
+        const field = await page.$eval(adherence_input_sel, e => e.getAttribute('name'))
+        await expect(field).toBe('adherence')
+      })
+
+      it('popover text', async () => {
+        const popover = await page.$eval(adherence_input_sel, e => e.getAttribute('popover'))
+        await expect(popover).toBe('What rules this profile follows')
+      })
+
+    })
+
     describe('Source url', () => {
 
       const source_input_sel = '#profile input[name="source"]'
