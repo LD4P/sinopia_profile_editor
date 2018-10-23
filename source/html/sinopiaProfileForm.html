@@ -172,7 +172,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <label for="id">ID <!--[if lte IE 9]>
+                                <label for="id">ID* <!--[if lte IE 9]>
                                     <small>e.g., profile:MyRDAProfile</small>
                                     <![endif]--></label>
                             </td>
@@ -189,7 +189,7 @@
                             </td>
 
                             <td>
-                                <label for="title">Title</label>
+                                <label for="title">Title*</label>
                             </td>
                             <td>
                                 <input name="title" ng-model="profile.title" required
@@ -206,7 +206,7 @@
                                 <label for="description">Description*</label>
                             </td>
                             <td>
-                                <input name="description" ng-model="profile.description"
+                                <input name="description" ng-model="profile.description" required
                                        popover="Textual description associated with the profile."
                                        popover-title="Description" popover-trigger="mouseenter"
                                        popover-placement="right"/>
@@ -230,7 +230,7 @@
                                 <label for="author">Author*</label>
                             </td>
                             <td>
-                                <input name="author" ng-model="profile.author"
+                                <input name="author" ng-model="profile.author" required
                                        popover="Contact information associated with the profile."
                                        popover-title="Profile Author" popover-trigger="mouseenter"
                                        popover-placement="right"/>
