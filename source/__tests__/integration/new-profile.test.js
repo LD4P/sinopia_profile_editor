@@ -9,6 +9,27 @@ describe('Adding and removing a new Profile', () => {
         await expect(span).toMatch(/Profile ID: Undefined/)
     })
 
+    describe('Source url', () => {
+
+      const source_input_sel = '#profile input[name="source"]'
+
+      it('source input label and field', async () => {
+        await expect_value_in_selector_textContent('#profile label[for="source"]', 'Source')
+        const input_name = await page.$eval(source_input_sel, e => e.getAttribute('name'))
+        await expect(input_name).toBe('source')
+      })
+
+      it('popover text', async () => {
+        const popover = await page.$eval(source_input_sel, e => e.getAttribute('popover'))
+        await expect(popover).toBe('Link to more information about profile')
+      })
+
+      it('validates with checkURL', async () => {
+        const ng_blur = await page.$eval(source_input_sel, e => e.getAttribute('ng-blur'))
+        await expect(ng_blur).toBe('checkURL()')
+      })
+    })
+
     describe('Adding a Resource Template', () => {
 
         beforeAll(async () => {
@@ -24,15 +45,17 @@ describe('Adding and removing a new Profile', () => {
             expect(span).toMatch(/Resource Template/)
         })
 
-        it('has six input fields for the profile admin data', async () => {
+        it('has eight input fields for the profile admin data', async () => {
             const inputs = await page.$eval('div[id="profile"] > div > table', e => e.getElementsByTagName('input').length)
-            expect(inputs).toBe(7)
+            expect(inputs).toBe(8)
             await expect(page).toMatch('ID')
             await expect(page).toMatch('Description')
             await expect(page).toMatch('Contact')
             await expect(page).toMatch('Title')
             await expect(page).toMatch('Date')
             await expect(page).toMatch('Remark')
+            await expect(page).toMatch('Adherence')
+            await expect(page).toMatch('Source')
         })
 
         it('has five input fields for the resource template data', async () => {
@@ -80,3 +103,8 @@ describe('Adding and removing a new Profile', () => {
     });
 
 });
+
+async function expect_value_in_selector_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toBe(value)
+}

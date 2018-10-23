@@ -7,7 +7,7 @@
  */
 angular.module('locApp.modules.profile.controllers')
 
-    .controller('profileController', function($scope, $state, $stateParams, $filter, $parse, Alert, Server, FormHandler, ProfileHandler, Vocab, usSpinnerService, localStorageService) {
+    .controller('profileController', function($scope, $state, $stateParams, $filter, $parse, Alert, Server, FormHandler, ProfileHandler, Vocab, usSpinnerService, localStorageService, $http) {
 
       //expose the parameter to the view in order to show/hide the import modal
       $scope.showImport = $stateParams.showImport;
@@ -28,6 +28,25 @@ angular.module('locApp.modules.profile.controllers')
           .then(function(response) {
             $scope.languages = response;
           });
+
+      /**
+       * @ngdoc function
+       * @name checkURL
+       * @description
+       * Check if URI resolves
+       */
+      $scope.checkURL = function() {
+        $scope.profile.source.$warn = false;
+        var url = $scope.profile.source
+        $http({
+            method: 'GET',
+            url: url
+        })
+        .then(function () {
+        }, function () {
+            $scope.profile.source.$warn = true;
+        });
+      };
 
       $scope.importy = false;
       $scope.loading = false;
