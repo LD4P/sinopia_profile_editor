@@ -16,7 +16,6 @@ describe('Validating a resource template', () => {
     })
 
     it('should validate the presence of the Resource ID field ', async () => {
-      var alert_box_header;
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -26,12 +25,10 @@ describe('Validating a resource template', () => {
         resourceURI: "http://www.example.com"
       })
       await expect(page).toClick('a', { text: 'Export'})
-      alert_box_header = await page.$eval('#alertBox > div > div > div.modal-body > p', e => e.textContent)
-      await expect(alert_box_header).toEqual("Parts of the form are invalid")
+      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', "Parts of the form are invalid")
     })
 
     it('should validate the presence of the Resource URI field ', async () => {
-      var alert_box_header;
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -41,15 +38,13 @@ describe('Validating a resource template', () => {
         resourceURI: ""
       })
       await expect(page).toClick('a', { text: 'Export'})
-      alert_box_header = await page.$eval('#alertBox > div > div > div.modal-body > p', e => e.textContent)
-      await expect(alert_box_header).toEqual("Parts of the form are invalid")
+      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', "Parts of the form are invalid")
     })
   })
 
   describe('with at least one property template', () => {
 
     it('should return "my:resource must have at least one property template" when resource template is valid but there is no property template', async () => {
-      var alert_box_header;
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -59,9 +54,13 @@ describe('Validating a resource template', () => {
         resourceURI: "http://www.example.com"
       })
       await expect(page).toClick('a', { text: 'Export'})
-      alert_box_header = await page.$eval('#alertBox > div > div > div.modal-body > p', e => e.textContent)
-      await expect(alert_box_header).toEqual("my:resource must have at least one property template")
+      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', "my:resource must have at least one property template")
     })
   })
 
-});
+})
+
+async function expect_value_in_selector_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toBe(value)
+}
