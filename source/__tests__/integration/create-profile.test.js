@@ -7,7 +7,7 @@ describe('Validating the profile metadata', () => {
   describe('with the required profile metadata fields', () => {
 
     afterEach(async () => {
-      await page.$eval('form[name="profileForm"]', e => e.reset())
+      page.$eval('form[name="profileForm"]', e => e.reset())
     })
 
     it.each`
@@ -23,10 +23,11 @@ describe('Validating the profile metadata', () => {
           description: description,
           author: author,
           title: title
-        }, 3000)
+        })
         await expect(page).toClick('a', { text: 'Export'})
         alert_box_header = await page.$eval('#alertBox > div > div > div.modal-body > p', e => e.textContent)
         await expect(alert_box_header).toEqual(result)
+        await page.reload({waitUntil: 'networkidle2'});
     })
   })
 
