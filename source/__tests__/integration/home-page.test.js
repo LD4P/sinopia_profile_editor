@@ -9,6 +9,10 @@ describe('Sinopia Profile Editor Homepage', () => {
     expect(new_url).toBe('http://127.0.0.1:8000/#/profile/sinopia')
   })
 
+  it('website title', async () => {
+    await expect_value_in_selector_textContent('title', 'Sinopia Profile Editor')
+  })
+
   describe('header', () => {
     it('image', async() => {
       await expect_sel_to_exist('div.sinopia-headertext > img[src="assets/images/sinopia_profile_headertext.png"]')
