@@ -1,7 +1,7 @@
 describe('Sinopia Profile Editor Homepage', () => {
 
   beforeAll(async () => {
-    await page.goto('http://127.0.0.1:8000')
+    await page.goto('http://127.0.0.1:8000').then({waitUntil: 'networkidle2'})
     // await page.waitFor(1000)
   })
 

@@ -3,7 +3,7 @@ const path = require('path')
 describe('Sinopia Profile Editor exports a loaded Profile', () => {
 
   beforeAll(async () => {
-    await page.goto('http://127.0.0.1:8000/#/profile/create/')
+    await page.goto('http://127.0.0.1:8000/#/profile/create/').then({waitUntil: 'networkidle2'})
   })
 
   it('error displayed when exporting profile form data', async () => {

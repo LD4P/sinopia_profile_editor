@@ -1,7 +1,7 @@
 describe('Validating the profile metadata', () => {
 
   beforeAll(async () => {
-    await page.goto('http://localhost:8000/#/profile/create/')
+    await page.goto('http://localhost:8000/#/profile/create/').then({waitUntil: 'networkidle2'})
   })
 
   describe('with the required profile metadata fields', () => {

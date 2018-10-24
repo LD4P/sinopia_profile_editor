@@ -1,7 +1,7 @@
 describe('Sinopia Profile Adherence Field', () => {
 
   beforeAll(async () => {
-    await page.goto('http://localhost:8000/#/profile/create/')
+    await page.goto('http://localhost:8000/#/profile/create/').then({waitUntil: 'networkidle2'})
   })
   
   it('finds in the profile', async () => {

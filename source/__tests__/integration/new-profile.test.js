@@ -1,7 +1,7 @@
 describe('Adding and removing a new Profile', () => {
 
     beforeAll(async () => {
-        await page.goto('http://localhost:8000/#/profile/create/')
+        await page.goto('http://localhost:8000/#/profile/create/').then({waitUntil: 'networkidle2'})
     })
 
     it('displays a new profile span', async () => {

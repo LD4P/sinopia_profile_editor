@@ -1,7 +1,7 @@
 describe('Validating a resource template', () => {
 
   beforeAll(async () => {
-    await page.goto('http://localhost:8000/#/profile/create/')
+    await page.goto('http://localhost:8000/#/profile/create/').then({waitUntil: 'networkidle2'})
     await expect(page).toClick('a', { text: 'Add Resource Template'})
   })
 

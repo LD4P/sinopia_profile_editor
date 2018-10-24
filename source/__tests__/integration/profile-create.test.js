@@ -5,7 +5,7 @@ describe('Sinopia Profile Editor imports a Profile', () => {
   describe('It has an Import button', () => {
 
     beforeAll(async () => {
-      await page.goto('http://127.0.0.1:8000/#/profile/sinopia')
+      await page.goto('http://127.0.0.1:8000/#/profile/sinopia').then({waitUntil: 'networkidle2'})
       await expect(page).toClick('a', {text: 'Import'})
     })
 
