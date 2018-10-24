@@ -1,42 +1,64 @@
 const path = require('path')
 
-describe('Sinopia Profile Editor imports a Profile', () => {
-
-  describe('It has an Import button', () => {
-
+describe('Sinopia Profile Editor Create Page', () => {
+  describe('Upload dialog not showing', () => {
     beforeAll(async () => {
-      await page.goto('http://127.0.0.1:8000/#/profile/sinopia')
-      await expect(page).toClick('a', {text: 'Import'})
+      await page.goto('http://127.0.0.1:8000/#/profile/create')
     })
 
-    it('Redirects to the new profile page state', async () => {
-      await expect(page).toMatch(/Create a new Profile/);
+    it('text on page', async () => {
+      await expect_regex_in_selector_textContent('h3.portlet-title', /\s*Profile\s*$/)
     })
+    it('profile metadata span', async() => {
+      await expect_value_in_selector_textContent('h4.profile-header > span#profileBanner.accordion-toggle > span.ng-scope', 'Profile')
+    });
 
+    describe('header', () => {
+      it('image', async() => {
+        await expect_sel_to_exist('div.sinopia-headertext > img[src="assets/images/sinopia_profile_headertext.png"]')
+      });
+      it('links', async () => {
+        await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Bibliographic Editor')
+        await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
+      })
+    })
+    it('footer', async () => {
+      await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
+      await expect_value_in_selector_textContent('div.sinopia-footer > a', 'Linked Data for Production 2 (LD4P2)')
+    })
   })
 
-  describe('Import Data Modal Upload Dialog', () => {
-
-    beforeAll(async () => {
+  describe('Upload dialog showing', () => {
+    it('can upload a local Profile', async () => {
       await page.goto('http://127.0.0.1:8000/#/profile/create/true')
-    })
 
-    it('uploads a local Item Profile and checks to see if it is loaded', async () => {
       const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
 
       await expect(page).toUploadFile(
         'input[type="file"]',
         bf_item_location,
       )
+      await page.waitForSelector('span[popover-title="Profile ID: profile:bf2:Item"]') // Waits for the Profile to load
 
-      await page.waitFor(1000) // Waits for the Profile to load
-      await expect(page).toMatch(/BIBFRAME 2.0 Item/)
-      await expect(page).toMatch(/Lending or Access Policy/)
-      await expect(page).toMatch(/Use or Reproduction Policy/)
-      await expect(page).toMatch(/Retention Policy/)
-      await expect(page).toMatch(/Immediate Source of Acquisition/)
-      await expect(page).toMatch(/Enumeration/)
-      await expect(page).toMatch(/Chronology/)
+      await expect_regex_in_selector_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', /\s*BIBFRAME 2.0 Item\s*/)
+      await expect_regex_in_selector_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', /\s*BIBFRAME 2.0 Item\s*/)
+      await expect_regex_in_selector_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', /\s*Lending or Access Policy\s*/)
     })
   })
 })
+
+async function expect_sel_to_exist(sel) {
+  await page.waitForSelector(sel)
+  const sel_text = !!(await page.$(sel))
+  expect(sel_text).toEqual(true)
+}
+async function expect_regex_in_selector_textContent(sel, regex) {
+  await page.waitForSelector(sel)
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toMatch(regex)
+}
+async function expect_value_in_selector_textContent(sel, value) {
+  await page.waitForSelector(sel)
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toBe(value)
+}

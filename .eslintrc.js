@@ -22,6 +22,7 @@ module.exports = {
       },
       "globals": {
           "page": true,
+          "window": true,
           "angular": true
       }
     }

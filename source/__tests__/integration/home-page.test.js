@@ -2,34 +2,56 @@ describe('Sinopia Profile Editor Homepage', () => {
 
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000')
-    // await page.waitFor(1000)
   })
 
-  it('displays "Profiles on Server" text on page', async () => {
-    await expect(page).toMatch('Create a new Profile or Import one from your files')
+  it('redirects to profile/sinopia', async () => {
+    const new_url = await page.evaluate(() => window.location.href)
+    expect(new_url).toBe('http://127.0.0.1:8000/#/profile/sinopia')
   })
 
-  it('has the header links', async () => {
-    await expect(page).toMatch('a', { text: 'Biblographic Editor' })
-    await expect(page).toMatch('a', { text: 'Help and Resources' })
+  describe('header', () => {
+    it('image', async() => {
+      await expect_sel_to_exist('div.sinopia-headertext > img[src="assets/images/sinopia_profile_headertext.png"]')
+    });
+    it('links', async () => {
+      await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Bibliographic Editor')
+      await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
+    })
   })
 
-  it('has a link to the create new profile page', async () => {
-    const link = await page.$eval('.new-profile', e => e.getAttribute('href'))
-    expect(link).toMatch(/#\/profile\/create/)
+  it('text on page', async () => {
+    await expect_regex_in_selector_textContent('h3.new-profile-header', /\s*Create a new Profile or Import one from your files\s*$/)
   })
 
-  it('has the import profile button', async () => {
-    await expect(page).toMatch('Import')
+  it('link to create new profile page', async () => {
+    await expect_regex_in_selector_textContent('a.new-profile[href="#/profile/create/"]', /\s*Create new Profile\s*/)
   })
 
-  it('has the footer info', async () => {
+  it('Import button redirects to profile/create/true', async () => {
+    await expect(page).toClick('a.btn.import-export[ng-click="showImport()"]')
+    const new_url = await page.evaluate(() => window.location.href)
+    expect(new_url).toBe('http://127.0.0.1:8000/#/profile/create/true')
+  })
+
+  it('footer', async () => {
     await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
-    await expect(page).toMatch('a', { text: 'Linked Data for Production 2 (LD4P2)' })
+    await expect_value_in_selector_textContent('div.sinopia-footer > a', 'Linked Data for Production 2 (LD4P2)')
   })
 
   it('loads our angular app', async () => {
-    const app = await page.$eval('html', e => e.getAttribute('ng-app'))
-    expect(app).toMatch(/locApp/)
+    expect_sel_to_exist('html[ng-app="locApp"]')
   })
-});
+})
+
+async function expect_sel_to_exist(sel) {
+  const sel_text = !!(await page.$(sel))
+  expect(sel_text).toEqual(true)
+}
+async function expect_regex_in_selector_textContent(sel, regex) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toMatch(regex)
+}
+async function expect_value_in_selector_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toBe(value)
+}
