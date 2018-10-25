@@ -42,3 +42,33 @@ function loadVocabs() {
     )
   }
 }
+
+// Manual construction of ontologies list;  json extracts each ontology from distinct http calls
+// Based on lcnetdev verso/server/boot/05-load-ontologies.js
+module.exports.ontologies = [
+  {
+    'configType': 'ontology',
+    'name': 'Bibframe-ontology',
+    'json': {'label': 'Bibframe 2.0', 'url': 'http://id.loc.gov/ontologies/bibframe.rdf'},
+  },
+  {
+    'configType': 'ontology',
+    'name': 'BFLC-ontology',
+    'json': {'label': 'BFLC', 'url': 'http://id.loc.gov/ontologies/bflc.rdf'},
+  },
+  {
+    'configType': 'ontology',
+    'name': 'MADSRDF-ontology',
+    'json': {'label': 'MADSRDF', 'url': 'http://www.loc.gov/standards/mads/rdf/v1.rdf'},
+  },
+  {
+    'configType': 'ontology',
+    'name': 'RDF-ontology',
+    'json': {'label': 'RDF', 'url': 'http://www.w3.org/1999/02/22-rdf-syntax-ns.rdf'},
+  },
+  {
+    'configType': 'ontology',
+    'name': 'RDF-Schema-ontology',
+    'json': {'label': 'RDFS', 'url': 'http://www.w3.org/2000/01/rdf-schema.rdf'},
+  }
+]

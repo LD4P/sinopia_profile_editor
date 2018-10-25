@@ -13,6 +13,8 @@ const versoSpoof = require('./source/versoSpoof.js')
 app.all("/verso*", function (req, res) {
   if (req.query.filter.where.configType === 'profile') {
     res.json(versoSpoof.profiles)
+  } else if (req.query.filter.where.configType === 'ontology') {
+    res.json(versoSpoof.ontologies)
   } else if (req.query.filter.where.configType === 'vocabulary') {
     res.json(versoSpoof.vocabularies)
   } else {
