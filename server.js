@@ -13,8 +13,10 @@ const versoSpoof = require('./source/versoSpoof.js')
 app.all("/verso*", function (req, res) {
   if (req.query.filter.where.configType === 'profile') {
     res.json(versoSpoof.profiles)
+  } else if (req.query.filter.where.configType === 'vocabulary') {
+    res.json(versoSpoof.vocabularies)
   } else {
-    res.send("Verso not enabled")
+    res.send(`Verso not enabled -- app made request ${req}`)
   }
 })
 // app.listen(port, host);
