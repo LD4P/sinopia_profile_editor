@@ -36,15 +36,15 @@ angular.module('locApp.modules.profile.controllers')
        * Check if URI resolves
        */
       $scope.checkURL = function() {
-        $scope.profile.source.$warn = false;
+        $scope.profileForm.source.$warn = false;
         var url = $scope.profile.source
         $http({
-            method: 'GET',
+            method: 'HEAD',
             url: url
         })
         .then(function () {
         }, function () {
-            $scope.profile.source.$warn = true;
+            $scope.profileForm.source.$warn = true;
         });
       };
 
