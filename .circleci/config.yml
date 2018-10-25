@@ -42,6 +42,9 @@ jobs:
           root: dist
           paths: assets
       - run:
+          name: get profiles static data via git submodule
+          command: npm run git-submodule
+      - run:
           name: test with jest and puppeteer
           command: npm run jest-ci
           environment:

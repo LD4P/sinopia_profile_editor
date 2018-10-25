@@ -25,6 +25,12 @@ module.exports = {
           "window": true,
           "angular": true
       }
+    },
+    {
+      files: ["source/__tests__/**/*.js", "server.js"],
+      rules: {
+        "no-console": "off"
+      }
     }
   ]
 };
