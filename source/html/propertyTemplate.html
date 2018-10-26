@@ -9,22 +9,22 @@
             </span>
             <i id="error" class="fa fa-exclamation red" ng-show="propertyForm.$invalid || !propertyValid(propertyTemplate)"></i>
         </span>
-        
+
         <a id="propertyChoose" class="pull-right" data-toggle="modal" href="#chooseResource" ng-click="updateChosenProperty(propertyTemplate);" onclick="event.returnValue = false; return false;">
             <i class="fa fa-bars"></i>
             {{!propertyTemplate.propertyURI ? "Select Property" : "Change Property" }}
         </a>
-        
+
         <a id="deleteIcon" href="#" ng-click="verifyDelete(deleteProperty)" class="pull-right" onclick="event.returnValue = false; return false;">
             <i class="fa fa-trash-o"></i>
-            Delete {{propertyTemplate.propertyLabel || "Property Template"}}
+            Delete 
         </a>
     </h4>
 </div>
 
 <div ng-controller="propertyTemplateController" id="property_{{item}}" class="panel-collapse collapse">
     <div class="panel-body">
-        
+
         <table>
             <tbody>
                 <tr>
@@ -117,6 +117,6 @@
             </div>
             <button class="btn btn-secondary" ng-click="addPropertyResource();" onclick="return false;">Add Resource</button>
         </div>
-        
+
     </div>
 </div>
