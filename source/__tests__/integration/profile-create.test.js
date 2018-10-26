@@ -30,8 +30,10 @@ describe('Sinopia Profile Editor Create Page', () => {
 
   describe('Upload dialog showing', () => {
     it('can upload a local Profile', async () => {
-      await page.goto('http://127.0.0.1:8000/#/profile/create/true')
-
+      page
+        .goto('http://127.0.0.1:8000/#/profile/create/true')
+        .then(async () => await page.waitForNavigation({waitUntil: 'load'}), 10000)
+        .catch(error => console.log(`promise error for loading create page with import dialog: ${error}`))
       const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
 
       await expect(page).toUploadFile(
@@ -43,8 +45,8 @@ describe('Sinopia Profile Editor Create Page', () => {
       await expect_regex_in_selector_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', /\s*BIBFRAME 2.0 Item\s*/)
       await expect_regex_in_selector_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', /\s*BIBFRAME 2.0 Item\s*/)
       await expect_regex_in_selector_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', /\s*Lending or Access Policy\s*/)
-    })
-  })
+    }, 15000)
+  }, 15000)
 })
 
 async function expect_sel_to_exist(sel) {

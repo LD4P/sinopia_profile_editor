@@ -32,7 +32,12 @@ describe('Sinopia Profile Editor Homepage', () => {
   })
 
   it('Import button redirects to profile/create/true', async () => {
-    await expect(page).toClick('a.btn.import-export[ng-click="showImport()"]')
+    const sel = 'a.btn.import-export[ng-click="showImport()"]'
+    page
+      .waitForSelector(sel)
+      .then(async () => await page.click(sel))
+      .catch(error => console.log(`promise error for clicking import button: ${error}`))
+    await page.waitForNavigation({waitUntil: 'load'})
     const new_url = await page.evaluate(() => window.location.href)
     expect(new_url).toBe('http://127.0.0.1:8000/#/profile/create/true')
   })
