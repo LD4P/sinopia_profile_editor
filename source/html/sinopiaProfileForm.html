@@ -265,10 +265,10 @@
                                    popover="Link to more information about profile" popover-trigger="mouseenter"
                                    popover-title="Source URL"
                                    popover-placeholder="left" />
-                             <div class="error" ng-show="profile.source.$dirty && profile.source.$invalid">
+                             <div class="error" ng-show="profileForm.source.$dirty && profileForm.source.$invalid">
                                   <small class="error">uri is invalid</small>
                              </div>
-                             <div class="warn" ng-show="profile.source.$warn">
+                             <div class="warn" ng-show="profileForm.source.$warn">
                                  <small class="fa fa-warning red">URI did not resolve!</small>
                              </div>
                           </td>
