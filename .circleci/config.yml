@@ -86,3 +86,7 @@ workflows:
       - register_image:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - master
