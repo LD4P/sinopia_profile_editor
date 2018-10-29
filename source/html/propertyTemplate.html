@@ -1,24 +1,24 @@
 <div ng-controller="propertyTemplateController" class="panel-heading">
-    <h4 class="panel-title profile-header">
-        <span class="accordion-toggle property-panel" data-toggle="collapse" data-parent="#propertyTemplates_{{propNest}}" href="#property_{{item}}" style="display: inline-block">
-            <i class="fa accordion-caret"></i>
-            <i class="fa faq-accordion-caret"></i>
+    <h4 class="panel-property-title profile-header">
+
+        <span style="font-size: 14px" data-toggle="collapse" data-parent="#propertyTemplates_{{propNest}}" href="#property_{{item}}" style="display: inline-block">
             <span popover="Type: {{propertyTemplate.type || 'None'}}"
         popover-title="Property URI: {{propertyTemplate.propertyURI || 'Undefined'}}"
-        popover-placement="right" popover-trigger="mouseenter">{{ propertyTemplate.propertyLabel || "Property Template"}}
+        popover-placement="right" popover-trigger="mouseenter">
+            <i class="fa fa-caret-right" style="color: black"></i>
+            {{ propertyTemplate.propertyLabel || "Property Template"}}
             </span>
             <i id="error" class="fa fa-exclamation red" ng-show="propertyForm.$invalid || !propertyValid(propertyTemplate)"></i>
         </span>
-
-        <a id="propertyChoose" class="pull-right" data-toggle="modal" href="#chooseResource" ng-click="updateChosenProperty(propertyTemplate);" onclick="event.returnValue = false; return false;">
-            <i class="fa fa-bars"></i>
-            {{!propertyTemplate.propertyURI ? "Select Property" : "Change Property" }}
-        </a>
-
-        <a id="deleteIcon" href="#" ng-click="verifyDelete(deleteProperty)" class="pull-right" onclick="event.returnValue = false; return false;">
-            <i class="fa fa-trash-o"></i>
-            Delete 
-        </a>
+        <span class="pull-right">
+          <a id="deleteIcon" href="#" ng-click="verifyDelete(deleteProperty)" class="" onclick="event.returnValue = false; return false;">
+              <i class="fa fa-trash-o"></i>Delete
+          </a>
+          <a id="propertyChoose" data-toggle="modal" href="#chooseResource" ng-click="updateChosenProperty(propertyTemplate);" onclick="event.returnValue = false; return false;">
+              <i class="fa fa-bars property-bars"></i>
+              {{!propertyTemplate.propertyURI ? "Select Property" : "Change Property" }}
+          </a>
+        </span>
     </h4>
 </div>
 
