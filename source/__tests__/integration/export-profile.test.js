@@ -20,6 +20,7 @@ describe('Sinopia Profile Editor exports an edited profile', () => {
     })
 
     it('changes some values', async () => {
+      await page.waitFor(1000)
       await page.$eval('form[name="profileForm"]', e => e.reset())
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "profile:my:Item",
