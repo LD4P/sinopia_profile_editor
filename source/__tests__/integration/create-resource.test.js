@@ -1,4 +1,4 @@
-describe('Validating a resource template', () => {
+describe('Create profile resource template requirements', () => {
 
   beforeAll(async () => {
     await page.goto('http://localhost:8000/#/profile/create/')
@@ -9,25 +9,23 @@ describe('Validating a resource template', () => {
     await page.waitForSelector('a.propertyLink')
   })
 
+  afterEach(async () => {
+    await page.$eval('form[name="profileForm"]', e => e.reset())
+  })
+
   let exportButtonSel = 'span.pull-right.pushed-right > a.import-export'
   let alertBoxSel = '#alertBox > div > div > div.modal-body > p'
 
-  describe('with a resource template that has required form fields', () => {
+  describe('resource template form fields', () => {
 
     it('appends a resource template section to the form', async () => {
       page
         .waitForSelector('span[id="0"] > span')
-        .then(async () => {
-          expect(await page.$eval('span[id="0"] > span', e => e.textContent)).toMatch(/Resource Template/)
-        })
         .catch(error => console.log(`promise error for loading create page with import dialog: ${error}`))
+      await expect_regex_in_sel_textContent('span[id="0"] > span', /^Resource Template\s*$/)
     })
 
-    afterEach(async () => {
-      await page.$eval('form[name="profileForm"]', e => e.reset())
-    })
-
-    it('should validate the presence of the Resource ID field ', async () => {
+    it('requires Resource ID', async () => {
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -39,11 +37,11 @@ describe('Validating a resource template', () => {
       await page.click(exportButtonSel)
       page
         .waitForSelector(alertBoxSel)
-        .then(async () => await expect_value_in_selector_textContent(alertBoxSel, "Parts of the form are invalid"))
         .catch(error => console.log(`promise error for alert box selector: ${error}`))
+      await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
     })
 
-    it('should validate the presence of the Resource URI field ', async () => {
+    it('requires Resource URI', async () => {
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -55,34 +53,37 @@ describe('Validating a resource template', () => {
       await page.click(exportButtonSel)
       page
         .waitForSelector(alertBoxSel)
-        .then(async () => await expect_value_in_selector_textContent(alertBoxSel, "Parts of the form are invalid"))
         .catch(error => console.log(`promise error for alert box selector: ${error}`))
+      await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
     })
   })
 
-  describe('with at least one property template', () => {
-
-    it('should return "my:resource must have at least one property template" when resource template is valid but there is no property template', async () => {
-      expect(page)
-        .toFillForm('form[name="profileForm"]', {
-            id: "my:profile",
-            description: "Profile description",
-            author: "Me",
-            title: "My profile",
-            resourceId: "my:resource",
-            resourceURI: "http://www.example.com"
-          })
-        .then(async() => await page.click(exportButtonSel))
-        .catch(error => console.log(`promise error for filling profile form: ${error}`))
-      page
-        .waitForSelector(alertBoxSel)
-        .then(async () => await expect_value_in_selector_textContent(alertBoxSel, "my:resource must have at least one property template"))
-        .catch(error => console.log(`promise error for alert box selector: ${error}`))
-    })
+  it('requires a property template', async () => {
+    expect(page)
+      .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+          // all the other required fields from resource template
+          id: "my:profile",
+          description: "Profile description",
+          author: "Me",
+          title: "My profile",
+          resourceId: "my:resource",
+          resourceURI: "http://www.example.com"
+        })
+      .catch(error => console.log(`promise error for filling profile form: ${error}`))
+    await page.waitFor(1000) // waiting for .toFillForm(), as resourceURI field does a check
+    await page.click(exportButtonSel)
+    page
+      .waitForSelector(alertBoxSel)
+      .catch(error => console.log(`promise error for alert box selector: ${error}`))
+    await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
   })
 })
 
-async function expect_value_in_selector_textContent(sel, value) {
+async function expect_regex_in_sel_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text).toMatch(value)
+}
+async function expect_value_in_sel_textContent(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
   expect(sel_text).toBe(value)
 }
