@@ -49,6 +49,14 @@ describe('Create profile has properties for resource and templates for property'
       await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value^="profile:bf2"]`)
     })
   })
+
+  describe('property header appearence changed', () => {
+
+    it('font-awesome icon class is present', async () => {
+      await expect_sel_to_exist(`.fa-caret-right`)
+    })
+
+  })
 })
 
 async function expect_sel_to_exist(sel) {
