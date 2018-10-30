@@ -21,9 +21,16 @@ module.exports = {
         "no-useless-escape": "warn"
       },
       "globals": {
+          "angular": true,
+          "document": true,
           "page": true,
-          "window": true,
-          "angular": true
+          "window": true
+      }
+    },
+    {
+      files: ["source/__tests__/**/*.js", "server.js"],
+      rules: {
+        "no-console": "off"
       }
     },
     {
