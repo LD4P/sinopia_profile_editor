@@ -51,9 +51,8 @@
   },
   "scripts": {
     "analysis": "es6-plato -d static-analysis -n -e .eslintrc.js source/assets/js/modules/help source/assets/js/modules/profile source/assets/js/ng-app.js",
-    "dev-test": "npm install && npm run grunt-dev && npm run git-submodule && jest --colors",
+    "dev-test": "npm install && npm run grunt-dev && jest --colors",
     "eslint": "eslint --color --max-warnings 176 -c .eslintrc.js .",
-    "git-submodule": "git submodule init && git submodule update",
     "grunt-dev": "grunt ngAnnotate uglify cssmin",
     "jest-ci": "jest --coverage --ci --runInBand --reporters=default --reporters=jest-junit --colors && cat ./coverage/lcov.info | coveralls",
     "jest-cov": "jest --coverage --colors",
