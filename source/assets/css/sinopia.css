@@ -7,9 +7,15 @@ h3 {
     font-weight: bold;
 }
 
-#resourceChoose, #deleteIcon, #propertyChoose,
-.fa-bars, .fa-trash-o {
+#resourceChoose
+.fa-bars {
     color: whitesmoke !important;
+}
+
+#deleteIcon, #propertyChoose,
+.fa-trash-o {
+  color: black !important;
+  font-size: 14px;
 }
 
 .accordion-caret, .accordion-caret:before {
@@ -61,8 +67,14 @@ h3 {
     padding: 70px 0 40px 0;
 }
 
-.panel-title {
-    color: whitesmoke;
+.panel-property-title {
+  background-color: #DFDFDF;
+  padding: 5px;
+  /* color: black; */
+}
+
+.property-bars {
+  color: black !important;
 }
 
 .sinopia-footer {
@@ -93,4 +105,3 @@ h3 {
 .sinopia-profile-form {
     padding-top: 70px;
 }
-
