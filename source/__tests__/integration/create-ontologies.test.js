@@ -18,6 +18,32 @@ describe('Create profile has ontologies available for resource template', () => 
     const modalTitleSel = `${modalSel} > div.modal-header > h3.modal-title`
     await expect_value_in_sel_textContent(modalTitleSel, 'Choose Vocab Template')
   })
+
+  describe('ontologies select', () => {
+    const modalBodySel = `${modalSel} > div.modal-body`
+    const selectVocabSel = `${modalBodySel} > div#select_box_holder > select[name="chooseVocab"]`
+
+    beforeAll(() => {
+      page
+        .waitForSelector(selectVocabSel)
+        .catch(error => console.log(`promise error for ontologies selector: ${error}`))
+    })
+
+    it('populated with ontologies (via versoSpoof)', async () => {
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(2)`, 'BFLC')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(3)`, 'RDF')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(4)`, 'RDFS')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(5)`, 'MADSRDF')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(6)`, 'Bibframe 2.0')
+    })
+
+    it('ontologies selectable', async () => {
+      await expect(page).toSelect(selectVocabSel, 'RDF')
+
+      const resourcePickSel = `${modalBodySel} > select#resourcePick`
+      await expect_value_in_sel_textContent(`${resourcePickSel} > option:nth-child(1)`, 'Property')
+    })
+  })
 })
 
 async function expect_value_in_sel_textContent(sel, value) {

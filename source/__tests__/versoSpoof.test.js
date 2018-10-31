@@ -1,18 +1,18 @@
 describe('spoofed verso', () => {
-  let verso_spoof  = require('../../source/versoSpoof.js')
+  let versoSpoof  = require('../../source/versoSpoof.js')
 
   describe('profiles', () => {
     it('array of length 30', () => {
-      expect(verso_spoof.profiles).toHaveLength(30)
+      expect(versoSpoof.profiles).toHaveLength(30)
     })
     it('profile has id', () => {
-      expect(verso_spoof.profiles[0]['id']).toBe('profile:bf2:AdminMetadata')
+      expect(versoSpoof.profiles[0]['id']).toBe('profile:bf2:AdminMetadata')
     })
     it('profile has name', () => {
-      expect(verso_spoof.profiles[0]['name']).toBe('Metadata for BIBFRAME Resources')
+      expect(versoSpoof.profiles[0]['name']).toBe('Metadata for BIBFRAME Resources')
     })
     it('profile has type', () => {
-      verso_spoof.profiles.forEach(p => {
+      versoSpoof.profiles.forEach(p => {
         expect(p['configType']).toBe('profile')
       })
     })
@@ -20,16 +20,45 @@ describe('spoofed verso', () => {
 
   describe('vocabularies', () => {
     it('array of length 1', () => {
-      expect(verso_spoof.vocabularies).toHaveLength(1)
+      expect(versoSpoof.vocabularies).toHaveLength(1)
     })
     it('vocabulary has name', () => {
-      expect(verso_spoof.vocabularies[0]['name']).toBe('Languages')
+      expect(versoSpoof.vocabularies[0]['name']).toBe('Languages')
     })
     it('vocabulary has type', () => {
-      expect(verso_spoof.vocabularies[0]['configType']).toBe('vocabulary')
+      expect(versoSpoof.vocabularies[0]['configType']).toBe('vocabulary')
     })
     it('vocabulary has no id', () => {
-      expect(verso_spoof.vocabularies[0]['id']).toBeUndefined()
+      expect(versoSpoof.vocabularies[0]['id']).toBeUndefined()
+    })
+  })
+
+  describe('ontologies', () => {
+    it('array of length 5', () => {
+      expect(versoSpoof.ontologies).toHaveLength(5)
+    })
+    it('ontology has id', () => {
+      expect(versoSpoof.ontologies[0]['id']).toBe('Bibframe-ontology')
+    })
+    it('ontology has name', () => {
+      expect(versoSpoof.ontologies[0]['name']).toBe('Bibframe-ontology')
+    })
+    it('ontology has type', () => {
+      versoSpoof.ontologies.forEach(ont => {
+        expect(ont['configType']).toBe('ontology')
+      })
+    })
+  })
+
+  describe('owlOntUrlToXmlMappings', () => {
+    it('array of length 5', () => {
+      expect(versoSpoof.owlOntUrlToXmlMappings).toHaveLength(5)
+    })
+    it('mapping has url', () => {
+      expect(versoSpoof.owlOntUrlToXmlMappings[0]['url']).toBe('http://id.loc.gov/ontologies/bibframe.rdf')
+    })
+    it('mapping has xml', () => {
+      expect(versoSpoof.owlOntUrlToXmlMappings[0]['xml']).toBeDefined()
     })
   })
 })

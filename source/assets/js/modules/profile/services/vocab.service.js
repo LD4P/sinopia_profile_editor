@@ -14,7 +14,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     var vocabResourceData = [];
     var vocabPropertyData = [];
     var vocabDatatypeData = [];
-    
+
     var languageList = [];
 
     // Takes in the rdf JSON object and puts a list of resources
@@ -76,7 +76,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
             data.comment = (rdfProperties.comment != null) ? rdfProperties.comment.__text.toString() : "";
             data.uri = rdfProperties["_rdf:about"];
             propertyData.push(data);
-            
+
             return propertyData;
         }
 
@@ -149,7 +149,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     // Method that will set the vocab data for each list.
     var _setVocabData = function(name, url, properties, resources, datatypes) {
         var item = $q.defer();
-        
+
         Server.get(url,{},false)
         .then(function(response) {
             // if a vocab file is empty then we will pass over it and return.
@@ -223,7 +223,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     vocab.setVocabData = function() {
         // if the local storage has expired, gather the data and set it up again
         // TODO: make this connect to the real RDF
-        
+
         // const vurl = '/verso/api/configs?filter[where][configType]=vocabulary&filter[fields][name]=true&filter[fields][id]=true&filter[where][name][neq]=Languages';
         const vurl = '/verso/api/configs?filter[where][configType]=ontology';
 
@@ -237,7 +237,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
 
             // loop through the list of vocabs and gather up the data.
             angular.forEach(response, function(value) {
-                var url = 'server/whichrt?uri=' + value.json.url;
+               var url = 'server/whichrt?uri=' + value.json.url;
 
                 // test that we hvae a key and this isn't a comment.
                 if(value.id != null) {
@@ -272,11 +272,13 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
         var currDate = new Date(lsDate);
         var beginDate = new Date();
         var endDate = new Date();
-        
+
         beginDate.setDate(beginDate.getDate() - 7);
         endDate.setDate(endDate.getDate() + 7);
-        
-        if(!lsDate || !(currDate >= beginDate && currDate <= endDate)) {
+
+        // Sinopia: we want to load vocabs if they aren't already in localStorageService
+        // if(!lsDate || !(currDate >= beginDate && currDate <= endDate)) {
+        if(!lsDate) {
             localStorageService.clearAll();
             vocab.setVocabData();
             localStorageService.set('date', (new Date()).toDateString());
@@ -285,6 +287,13 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
             vocabResourceData = localStorageService.get("resourceReference");
             vocabPropertyData = localStorageService.get("propertyReference");
             vocabDatatypeData = localStorageService.get("datatypeReference");
+            if (vocabResourceData == null ||
+                vocabPropertyData == null ||
+                vocabDatatypeData == null) {
+                localStorageService.clearAll();
+                vocab.setVocabData();
+                localStorageService.set('date', (new Date()).toDateString());
+            }
         }
     };
 
@@ -328,10 +337,10 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
 
         return vocabDatatypeData;
     };
-    
+
     vocab.getLanguages = function() {
         var queue = $q.defer();
-        
+
         if(languageList.length > 0) {
             queue.resolve(languageList);
         }
@@ -369,9 +378,9 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
                 queue.resolve(languageList);
             });
         }
-        
+
         return queue.promise;
-        
+
     };
 
     fillResource = function(vocab) {
