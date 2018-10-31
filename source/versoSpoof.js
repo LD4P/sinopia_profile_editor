@@ -42,3 +42,66 @@ function loadVocabs() {
     )
   }
 }
+
+// Manual construction of ontologies list, based on lcnetdev verso/server/boot/05-load-ontologies.js
+module.exports.ontologies = [
+  {
+    'id': 'Bibframe-ontology',
+    'configType': 'ontology',
+    'name': 'Bibframe-ontology',
+    'json': {'label': 'Bibframe 2.0', 'url': 'http://id.loc.gov/ontologies/bibframe.rdf'},
+  },
+  {
+    'id': 'BFLC-ontology',
+    'configType': 'ontology',
+    'name': 'BFLC-ontology',
+    'json': {'label': 'BFLC', 'url': 'http://id.loc.gov/ontologies/bflc.rdf'},
+  },
+  {
+    'id': 'MADSRDF-ontology',
+    'configType': 'ontology',
+    'name': 'MADSRDF-ontology',
+    'json': {'label': 'MADSRDF', 'url': 'http://www.loc.gov/standards/mads/rdf/v1.rdf'},
+  },
+  {
+    'id': 'RDF-ontology',
+    'configType': 'ontology',
+    'name': 'RDF-ontology',
+    'json': {'label': 'RDF', 'url': 'http://www.w3.org/1999/02/22-rdf-syntax-ns.rdf'},
+  },
+  {
+    'id': 'RDF-Schema-ontology',
+    'configType': 'ontology',
+    'name': 'RDF-Schema-ontology',
+    'json': {'label': 'RDFS', 'url': 'http://www.w3.org/2000/01/rdf-schema.rdf'},
+  }
+]
+
+var owlOntUrlToXmlMappings = []
+const owlOntUrl2FileMappings = [
+  {'url': 'http://id.loc.gov/ontologies/bibframe.rdf', 'fname': 'bibframe.rdf.xml'},
+  {'url': 'http://id.loc.gov/ontologies/bflc.rdf', 'fname': 'bflc.rdf.xml'},
+  {'url': 'http://www.loc.gov/standards/mads/rdf/v1.rdf', 'fname': 'mads-v1.rdf.xml'},
+  {'url': 'http://www.w3.org/1999/02/22-rdf-syntax-ns.rdf', 'fname': 'rdf-syntax-ns.rdf.xml'},
+  {'url': 'http://www.w3.org/2000/01/rdf-schema.rdf', 'fname': 'rdf-schema.rdf.xml'}
+]
+loadOwlOntologies()
+
+function loadOwlOntologies() {
+  const x2js = require('x2js')
+  const x2json_parser = new x2js()
+  if (owlOntUrlToXmlMappings.length == 0) {
+    owlOntUrl2FileMappings.forEach(function (mappingEl) {
+      const fileName = mappingEl['fname']
+      const filePath = path.join(__dirname, 'assets', 'rdfxml', fileName)
+      const oxml = fs.readFileSync(filePath, {encoding: 'utf8'})
+      owlOntUrlToXmlMappings.push(
+        {
+          url: mappingEl['url'],
+          'xml': oxml
+        }
+      )
+    })
+  }
+}
+module.exports.owlOntUrlToXmlMappings = owlOntUrlToXmlMappings
