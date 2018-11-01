@@ -77,7 +77,6 @@ module.exports.ontologies = [
   }
 ]
 
-var owlOntUrlToXmlMappings = []
 const owlOntUrl2FileMappings = [
   {'url': 'http://id.loc.gov/ontologies/bibframe.rdf', 'fname': 'bibframe.rdf.xml'},
   {'url': 'http://id.loc.gov/ontologies/bflc.rdf', 'fname': 'bflc.rdf.xml'},
@@ -85,8 +84,6 @@ const owlOntUrl2FileMappings = [
   {'url': 'http://www.w3.org/1999/02/22-rdf-syntax-ns.rdf', 'fname': 'rdf-syntax-ns.rdf.xml'},
   {'url': 'http://www.w3.org/2000/01/rdf-schema.rdf', 'fname': 'rdf-schema.rdf.xml'}
 ]
-loadOwlOntologies()
-
 function loadOwlOntologies() {
   const x2js = require('x2js')
   const x2json_parser = new x2js()
@@ -104,4 +101,16 @@ function loadOwlOntologies() {
     })
   }
 }
+
+var owlOntUrlToXmlMappings = []
+loadOwlOntologies()
 module.exports.owlOntUrlToXmlMappings = owlOntUrlToXmlMappings
+
+// Manual construction of property types list, based on lcnetdev verso/server/boot/45-load-types.js
+module.exports.propertyTypes = [
+  {
+    'name': 'propertyTypes',
+    'configType': 'propertySettings',
+    'json': ['literal', 'resource', 'lookup', 'target', 'list']
+  }
+]

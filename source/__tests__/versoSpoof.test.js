@@ -61,4 +61,22 @@ describe('spoofed verso', () => {
       expect(versoSpoof.owlOntUrlToXmlMappings[0]['xml']).toBeDefined()
     })
   })
+
+  describe('propertyTypes', () => {
+    it('array of length 1', () => {
+      expect(versoSpoof.propertyTypes).toHaveLength(1)
+    })
+    it('propertyType has name', () => {
+      expect(versoSpoof.propertyTypes[0]['name']).toBe('propertyTypes')
+    })
+    it('propertyType has type', () => {
+      expect(versoSpoof.propertyTypes[0]['configType']).toBe('propertySettings')
+    })
+    it('propertyType has json', () => {
+      expect(versoSpoof.propertyTypes[0]['json']).toEqual(['literal', 'resource', 'lookup', 'target', 'list'])
+    })
+    it('propertyType has no id', () => {
+      expect(versoSpoof.propertyTypes[0]['id']).toBeUndefined()
+    })
+  })
 })
