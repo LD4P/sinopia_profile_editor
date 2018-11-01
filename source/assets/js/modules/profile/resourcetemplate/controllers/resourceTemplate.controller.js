@@ -148,16 +148,19 @@ angular.module('locApp.modules.profile.controllers')
          * Check if URI resolves
          */
         $scope.checkURI = function() {
-            $scope.resourceForm.resourceURI.$warn = false;
-            var url = $scope.resourceTemplate.resourceURI;
-            $http({
-                method: 'HEAD',
-                url: url
-            })
-            .then(function (response) {
-            }, function (response) {
-                console.log($scope.resourceTemplate.resourceURI + ' did not resolve!')
-                $scope.resourceForm.resourceURI.$warn = true;
-            });
+            if($scope.resourceTemplate.resourceURI){
+                $scope.resourceForm.resourceURI.$warn = false;
+                var url = $scope.resourceTemplate.resourceURI;
+                $http({
+                    method: 'HEAD',
+                    url: url
+                })
+                .then(function (response) {
+                //resolved
+                }, function (response) {
+                    console.log($scope.resourceTemplate.resourceURI + ' did not resolve!')
+                    $scope.resourceForm.resourceURI.$warn = true;
+                });
+            }
         };
     });

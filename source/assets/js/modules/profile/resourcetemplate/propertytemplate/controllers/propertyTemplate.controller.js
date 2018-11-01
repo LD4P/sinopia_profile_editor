@@ -121,17 +121,20 @@ angular.module('locApp.modules.profile.controllers')
          * Check if the property URI resolves
          */
         $scope.checkPropertyURI = function() {
-            $scope.propertyForm.propertyURI.$warn = false;
-            var url = $scope.propertyTemplate.propertyURI;
-            $http({
-                method: 'HEAD',
-                url: url
-            })
-            .then(function (response) {
-            }, function (response) {
-                console.log($scope.propertyTemplate.propertyURI + ' did not resolve!')
-                $scope.propertyForm.propertyURI.$warn = true;
-            });
+            if($scope.propertyTemplate.propertyURI){
+                $scope.propertyForm.propertyURI.$warn = false;            
+                var url = $scope.propertyTemplate.propertyURI;
+                $http({
+                    method: 'HEAD',
+                    url: url
+                })
+                .then(function (response) {
+                    //resolved
+                }, function (response) {
+                    console.log($scope.propertyTemplate.propertyURI + ' did not resolve!')
+                    $scope.propertyForm.propertyURI.$warn = true;
+                });
+            }
         };
         
     });
