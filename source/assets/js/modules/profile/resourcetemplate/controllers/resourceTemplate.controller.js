@@ -149,7 +149,7 @@ angular.module('locApp.modules.profile.controllers')
          */
         $scope.checkURI = function() {
             $scope.resourceForm.resourceURI.$warn = false;
-            var url = 'server/whichrt?uri=' + $scope.resourceTemplate.resourceURI;
+            var url = $scope.resourceTemplate.resourceURI;
             $http({
                 method: 'HEAD',
                 url: url
