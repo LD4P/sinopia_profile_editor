@@ -18,6 +18,8 @@ app.all("/verso*", function (req, res, next) {
     res.json(versoSpoof.ontologies)
   } else if (req.query.filter.where.configType === 'vocabulary') {
     res.json(versoSpoof.vocabularies)
+  } else if (req.query.filter.where.name === 'propertyTypes') {
+    res.json(versoSpoof.propertyTypes)
   } else {
     res.send(`Verso not enabled -- app made request ${req}`)
   }
