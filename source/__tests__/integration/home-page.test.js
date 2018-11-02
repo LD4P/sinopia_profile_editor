@@ -45,6 +45,7 @@ describe('Sinopia Profile Editor Homepage', () => {
   it('footer', async () => {
     await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
     await expect_value_in_selector_textContent('div.sinopia-footer > a', 'Linked Data for Production 2 (LD4P2)')
+    await expect_value_in_selector_textContent('div.sinopia-footer > a:nth-child(3)', 'Creative Commons Attribution 4.0 International License')
   })
 
   it('loads our angular app', async () => {
