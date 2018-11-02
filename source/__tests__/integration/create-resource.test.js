@@ -48,8 +48,12 @@ describe('Create profile resource template requirements', () => {
         author: "Me",
         title: "My profile",
         resourceId: "my:resource",
-        resourceURI: ""
-      })
+        resourceURI: "htt",
+      }).catch(error => console.log(`promise error for filling profile form: ${error}`));
+      await page.waitFor(1000)
+      page
+        .waitForSelector('input#resourceURI.ng-invalid-url')
+        .catch(error => console.log(`promise error checkURL: ${error}`))
       await page.click(exportButtonSel)
       page
         .waitForSelector(alertBoxSel)
@@ -67,10 +71,13 @@ describe('Create profile resource template requirements', () => {
           author: "Me",
           title: "My profile",
           resourceId: "my:resource",
-          resourceURI: "http://www.example.com"
+          resourceURI: "http://id.loc.gov"
         })
       .catch(error => console.log(`promise error for filling profile form: ${error}`))
     await page.waitFor(1000) // waiting for .toFillForm(), as resourceURI field does a check
+    page
+      .waitForSelector('input#resourceURI.ng-valid-url')
+      .catch(error => console.log(`promise error checkURL: ${error}`))
     await page.click(exportButtonSel)
     page
       .waitForSelector(alertBoxSel)
@@ -87,3 +94,5 @@ async function expect_value_in_sel_textContent(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
   expect(sel_text).toBe(value)
 }
+
+
