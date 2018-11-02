@@ -15,16 +15,18 @@ Technical documentation specific to the Sinopia Profile Editor may also be found
 ## Installation (without docker image)
 
 ### Prerequisites
-* [`node.js`](https://nodejs.org/en/download/) JavaScript runtime 
-  * [`npm`](https://www.npmjs.com/) JavaScript package manager 
+* [`node.js`](https://nodejs.org/en/download/) JavaScript runtime
+  * [`npm`](https://www.npmjs.com/) JavaScript package manager
 
 ### Installation Instructions
 1.  Install [node.js](https://nodejs.org/en/download/), which includes [npm](https://www.npmjs.com/)
 4.  Get latest npm: `npm install -g npm@latest`
 5.  Run `npm install`. This installs everything needed for the build to run successfully.
-6.  Run `grunt` to build the code and jsdocs and ngdocs.
+6.  Run `grunt` to build the code and jsdocs and ngdocs.  Run `npm run grunt-dev` to build the code and not bother with the docs.
 
-## Running the code
+## Running the Profile Editor
+
+(`npm start`)
 
 Follow installation instructions, then run `node server.js` or `npm start`.  This will start up the profile editor at http://localhost:8000
 
