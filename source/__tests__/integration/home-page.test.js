@@ -4,6 +4,10 @@ describe('Sinopia Profile Editor Homepage', () => {
     await page.goto('http://127.0.0.1:8000')
   })
 
+  afterAll(async () =>{
+    await page.waitFor(1000)
+  })
+
   it('redirects to profile/sinopia', async () => {
     const new_url = await page.evaluate(() => window.location.href)
     expect(new_url).toBe('http://127.0.0.1:8000/#/profile/sinopia')
@@ -51,6 +55,7 @@ describe('Sinopia Profile Editor Homepage', () => {
   it('loads our angular app', async () => {
     expect_sel_to_exist('html[ng-app="locApp"]')
   })
+
 })
 
 async function expect_sel_to_exist(sel) {

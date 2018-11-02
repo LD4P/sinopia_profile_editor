@@ -4,6 +4,10 @@ describe('Sinopia Profile Editor exports an edited profile', () => {
     await page.goto('http://localhost:8000/#/profile/create/true')
   })
 
+  afterAll(async () =>{
+      await page.waitFor(1000)
+  })
+
   describe('Exporting an edited profile', () => {
 
     beforeAll(async () => {
