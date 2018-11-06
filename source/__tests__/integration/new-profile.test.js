@@ -41,19 +41,30 @@ describe('Adding and removing a new Profile', () => {
         await expect(popover).toBe('Link to more information about profile')
       })
 
-      it('validates with checkURL', async () => {
+      it('with function checkURL', async () => {
         const ng_blur = await page.$eval(source_input_sel, e => e.getAttribute('ng-blur'))
         await expect(ng_blur).toBe('checkURL()')
       })
+
+      it('displays error if source and user switches focus', async () => {
+        await page
+          .type(source_input_sel, '')
+          .catch(error => console.log(`promise error for : ${error}`))
+        await page.keyboard.press(`Tab`)
+        await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-header > h3', 'Error!')
+        await page.$eval("button#alertClose", e => e.click())
+        await page.waitFor(1000)
+      })
+
     })
 
     describe('Adding a Resource Template', () => {
 
-        beforeAll(async () => {
-            await page.waitForSelector('#addResource')
-            await page.click('#addResource')
-            await page.waitFor(1000)
-        })
+      beforeAll(async () => {
+          await page.waitForSelector('#addResource')
+          await page.click('#addResource')
+          await page.waitFor(1000)
+      })
 
         it('displays a new resource template span', async () => {
             const title = await page.$eval('span[id="0"] > span', e => e.getAttribute('popover-title'))
