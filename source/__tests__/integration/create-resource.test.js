@@ -52,9 +52,9 @@ describe('Create profile resource template requirements', () => {
         resourceURI: "htt",
       }).catch(error => console.log(`promise error for filling profile form: ${error}`));
       await page.waitFor(1000)
-      page
-        .waitForSelector('input#resourceURI.ng-invalid-url')
-        .catch(error => console.log(`promise error checkURL: ${error}`))
+      const invalid_url_class = page.$('input#resourceURI', e => e.getAttribute('ng-invalid-url'))
+      expect(invalid_url_class).toBeDefined()
+
       await page.click(exportButtonSel)
       page
         .waitForSelector(alertBoxSel)
@@ -107,14 +107,10 @@ describe('Create profile resource template requirements', () => {
           let dom = document.querySelector('a.propertyLink');
           dom.innerHTML = "h";
       });
-
-      const phtml = await page.evaluate(() => document.querySelector('a.propertyLink').innerHTML);
-      console.log(phtml)
-
-      console.log("PropertyURI Invalid")
-      page
-          .waitForSelector('input#propertyURI.ng-invalid-url')
-          .catch(error => console.log(`promise error checkPropertyURL: ${error}`))
+      await expect_value_in_sel_textContent('a.propertyLink', 'h')
+      await page.waitFor(2000)
+      const invalid_url_class = await page.$('input#propertyURI', e => e.getAttribute('ng-invalid-url'))
+      expect(invalid_url_class).toBeDefined()
     })
 
     it('valid property uri', async () => {
@@ -134,17 +130,12 @@ describe('Create profile resource template requirements', () => {
 
     await page.evaluate(() => {
         let dom = document.querySelector('a.propertyLink');
-    dom.innerHTML = "http://id.loc.gov/ontologies/bibframe/code";
+        dom.innerHTML = "http://id.loc.gov/ontologies/bibframe/code";
     });
 
-    const phtml = await page.evaluate(() => document.querySelector('a.propertyLink').innerHTML);
-    console.log(phtml)
-
-    console.log("PropertyURI Valid")
     page.waitFor(2000)
-    page
-        .waitForSelector('input#propertyURI.ng-valid-url')
-        .catch(error => console.log(`promise error checkPropertyURL: ${error}`))
+    const valid_url_class = page.$('input#propertyURI', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeDefined()
     })
   })
 })
@@ -157,5 +148,3 @@ async function expect_value_in_sel_textContent(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
   expect(sel_text).toBe(value)
 }
-
-

@@ -52,6 +52,8 @@ describe('Adding and removing a new Profile', () => {
           .catch(error => console.log(`promise error for : ${error}`))
         await page.keyboard.press(`Tab`)
         await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-header > h3', 'Error!')
+        const invalid_url_class = page.$('input#resourceURI', e => e.getAttribute('ng-invalid-url'))
+        expect(invalid_url_class).toBeDefined()
         await page.$eval("button#alertClose", e => e.click())
         await page.waitFor(1000)
       })
