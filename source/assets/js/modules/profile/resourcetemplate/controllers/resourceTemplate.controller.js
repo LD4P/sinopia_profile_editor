@@ -26,7 +26,8 @@ angular.module('locApp.modules.profile.controllers')
                 // override fields
                 $scope.resourceTemplate = $scope.profile.resourceTemplates[$scope.parentId];
                 $scope.importCascade($scope.resourceFields, $scope.resourceTemplate.propertyTemplates);
-                $scope.resourceTemplatesBase.push($scope.resourceTemplate);
+                if ($.inArray($scope.resourceTemplate, $scope.resourceTemplatesBase)==-1)
+                    $scope.resourceTemplatesBase.push($scope.resourceTemplate);
                 $scope.addIndexResource = $scope.resourceTemplate.propertyTemplates.length;
             }
             // if this is the second instance of this item appearing then reference it from the profiles array.
