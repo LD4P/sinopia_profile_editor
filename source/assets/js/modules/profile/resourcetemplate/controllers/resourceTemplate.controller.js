@@ -13,7 +13,7 @@ angular.module('locApp.modules.profile.controllers')
 
         $scope.item = Scrub.getIndex();
         $scope.collapsing = "";
-        
+
         $scope.propNest = $scope.getPropNest();
 
         // Logic for creating the object
@@ -27,7 +27,7 @@ angular.module('locApp.modules.profile.controllers')
                 $scope.resourceTemplate = $scope.profile.resourceTemplates[$scope.parentId];
                 $scope.importCascade($scope.resourceFields, $scope.resourceTemplate.propertyTemplates);
                 if ($.inArray($scope.resourceTemplate, $scope.resourceTemplatesBase)==-1)
-                    $scope.resourceTemplatesBase.push($scope.resourceTemplate);
+                    $scope.resourceTemplatesBase.push($scope.resourceTemplate)
                 $scope.addIndexResource = $scope.resourceTemplate.propertyTemplates.length;
             }
             // if this is the second instance of this item appearing then reference it from the profiles array.
@@ -42,12 +42,12 @@ angular.module('locApp.modules.profile.controllers')
                 $scope.profile.resourceTemplates.push($scope.resourceTemplate);
                 $scope.resourceTemplatesBase.push($scope.resourceTemplate);
             }
-            
+
             $scope.collapsing = "resourceTemplates";
             $scope.resNest = 0;
             $scope.parentList = $scope.fields;
         };
-        
+
         var createFromProperties = function () {
             // if we are importing then we done need to do worry about
             // the floating point numbers.
@@ -138,7 +138,7 @@ angular.module('locApp.modules.profile.controllers')
             templateRefs.find(function (t) {
                 if (t == $scope.resourceTemplate.id) {
                     $scope.resourceForm.resourceId.$invalid = true;
-                };
+                }
             });
         };
 
