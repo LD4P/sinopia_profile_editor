@@ -1,4 +1,5 @@
 describe('Adding and removing a new Profile', () => {
+    const source_input_sel = '#profile input[name="source"]'
 
     beforeAll(async () => {
         await page.goto('http://localhost:8000/#/profile/create/')
@@ -28,8 +29,6 @@ describe('Adding and removing a new Profile', () => {
 
     describe('Source url', () => {
 
-      const source_input_sel = '#profile input[name="source"]'
-
       it('source input label and field', async () => {
         await expect_value_in_selector_textContent('#profile label[for="source"]', 'Source')
         const input_name = await page.$eval(source_input_sel, e => e.getAttribute('name'))
@@ -45,15 +44,16 @@ describe('Adding and removing a new Profile', () => {
         const ng_blur = await page.$eval(source_input_sel, e => e.getAttribute('ng-blur'))
         await expect(ng_blur).toBe('checkURL()')
       })
+
     })
 
     describe('Adding a Resource Template', () => {
 
-        beforeAll(async () => {
-            await page.waitForSelector('#addResource')
-            await page.click('#addResource')
-            await page.waitFor(1000)
-        })
+      beforeAll(async () => {
+          await page.waitForSelector('#addResource')
+          await page.click('#addResource')
+          await page.waitFor(1000)
+      })
 
         it('displays a new resource template span', async () => {
             const title = await page.$eval('span[id="0"] > span', e => e.getAttribute('popover-title'))
@@ -118,6 +118,20 @@ describe('Adding and removing a new Profile', () => {
             await expect(page).not.toMatch('span', { text: 'Resource Template' })
         })
     });
+
+    describe('Profile fields errors', () => {
+
+      it('displays error if source and user switches focus', async () => {
+        await page
+          .type(source_input_sel, '')
+          .catch(error => console.log(`promise error for : ${error}`))
+        await page.keyboard.press(`Tab`)
+        await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-header > h3', 'Error!')
+        const invalid_url_class = page.$('input#resourceURI', e => e.getAttribute('ng-invalid-url'))
+        expect(invalid_url_class).toBeDefined()
+      })
+
+    })
 
 });
 
