@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Create profile has vocabularies available for properties for resource', () => {
   beforeEach(async () => {
     // page.on('console', msg => console.log('PAGE LOG:', msg.text()))

@@ -91,7 +91,7 @@ Contributors:
 * [Wayne Schneider](https://github.com/wafschneider)
 
 ## License
+Original source code created by Stanford University is copyrighted under Apache 2 license and
+documented with an Apache 2.0 license header.
 
-As a work of the United States government, this project is in the public domain within the United States.
-
-Additionally, we waive copyright and related rights in the work worldwide through the CC0 1.0 Universal public domain dedication.
+The Profiled Editor was originally a work of the United States government and portions of project are in the public domain through the CC0 1.0 Universal public domain dedication license. 

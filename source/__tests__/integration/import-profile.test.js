@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Importing a profile from a json file', () => {
 
   beforeAll(async () => {

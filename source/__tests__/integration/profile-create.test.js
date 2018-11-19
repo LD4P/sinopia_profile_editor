@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 const path = require('path')
 
 describe('Sinopia Profile Editor Create Page', () => {

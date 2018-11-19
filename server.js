@@ -1,6 +1,6 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
 
 const port = 8000;
-// const host = '127.0.0.1'
 
 var express = require('express');
 var app = express();

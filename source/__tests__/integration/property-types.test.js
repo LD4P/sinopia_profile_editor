@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Type of Property in Resource in Profile', () => {
   beforeEach(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')

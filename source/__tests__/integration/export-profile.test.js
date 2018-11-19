@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Sinopia Profile Editor exports an edited profile', () => {
 
   beforeAll(async () => {

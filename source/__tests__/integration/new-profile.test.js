@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Adding and removing a new Profile', () => {
     const source_input_sel = '#profile input[name="source"]'
 

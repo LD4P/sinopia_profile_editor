@@ -1,3 +1,5 @@
+// Copyright 2018 Stanford University see Apache2.txt for license
+
 describe('Create profile has ontologies available for resource template', () => {
   const modalSel = 'div#chooseResource > div.modal-dialog > div.modal-content'
   beforeAll(async () => {
