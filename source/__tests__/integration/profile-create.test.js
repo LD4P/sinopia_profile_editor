@@ -26,7 +26,7 @@ describe('Sinopia Profile Editor Create Page', () => {
     })
     it('footer', async () => {
       await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
-      await expect_value_in_selector_textContent('div.sinopia-footer > a', 'Linked Data for Production 2 (LD4P2)')
+      await expect_value_in_selector_textContent('div.sinopia-footer > a:nth-child(2)', 'Linked Data for Production 2 (LD4P2)')
     })
   })
 })
