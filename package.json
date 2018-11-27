@@ -6,6 +6,7 @@
   "dependencies": {
     "angular-local-storage": "~0.2.2",
     "angular-spinner": "~0.6.1",
+    "event-stream": "3.3.4",
     "express": "^4.16.3",
     "findup-sync": "^2.0.0",
     "grunt": "^1.0.3",
