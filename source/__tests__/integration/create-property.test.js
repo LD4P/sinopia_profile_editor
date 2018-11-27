@@ -28,7 +28,7 @@ describe('Create profile has properties for resource and templates for property'
     it('populates templates (via profiles from versoSpoof)', async () => {
       await page.waitForSelector(template_select_sel)
       const profile_count = await page.$eval(template_select_sel, e => e.length)
-      expect(profile_count).toBe(235)
+      expect(profile_count).toBe(240)
     })
     it('can select a template', async () => {
       await page.waitForSelector(template_select_sel)
