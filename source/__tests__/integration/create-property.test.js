@@ -106,6 +106,40 @@ describe('property URI is required', () => {
   })
 })
 
+describe('choose template from menu', () => {
+
+  //let property_select_sel = '#resourcePick > option[value^="0"]'
+  let property_select_sel = '#resourcePick > option:nth-child(1)'
+  let option_select_sel = '#select_box_holder > select > option:nth-child(2)'
+
+  beforeAll(async () => {
+    await page.goto('http://127.0.0.1:8000/#/profile/create/')
+    page
+      .waitForSelector('a#addResource')
+      .then(async () => await page.click('a#addResource'))
+      .catch(error => console.log(`promise error for addResource link: ${error}`))
+    page
+      .waitForSelector('a.propertyLink')
+      .then(async () => await page.click('a.propertyLink'))
+      .catch(error => console.log(`promise error for add property link: ${error}`))
+    page
+      .waitForSelector('a#propertyChoose')
+      .then(async () => await page.click('a#propertyChoose'))
+      .catch(error => console.log(`promise error for select resource link: ${error}`))
+    page
+      .waitForSelector(option_select_sel)
+      .then(async () => await page.click(option_select_sel))
+      .catch(error => console.log(`promise error for select resource link: ${error}`))
+    await page.waitFor(1000)
+  })
+
+  it('First property is Absorbed by', async () => {
+    page
+      .waitForSelector(property_select_sel)
+      .then(async () => await expect_value_in_sel_text(property_select_sel, 'Absorbed by'))
+  })
+})
+
 async function expect_sel_to_exist(sel) {
   const sel_text = !!(await page.$(sel))
   expect(sel_text).toEqual(true)
