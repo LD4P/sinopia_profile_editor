@@ -14,7 +14,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     var vocabResourceData = [];
     var vocabPropertyData = [];
     var vocabDatatypeData = [];
-
+    
     var languageList = [];
 
     // Takes in the rdf JSON object and puts a list of resources
@@ -76,7 +76,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
             data.comment = (rdfProperties.comment != null) ? rdfProperties.comment.__text.toString() : "";
             data.uri = rdfProperties["_rdf:about"];
             propertyData.push(data);
-
+            
             return propertyData;
         }
 
@@ -149,7 +149,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     // Method that will set the vocab data for each list.
     var _setVocabData = function(name, url, properties, resources, datatypes) {
         var item = $q.defer();
-
+        
         Server.get(url,{},false)
         .then(function(response) {
             // if a vocab file is empty then we will pass over it and return.
@@ -170,12 +170,24 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
             resources.push(resource);
 
             property.key = name;
-
-            if (xjson.RDF.Property !== undefined){
-                property.value = buildProperties(xjson.RDF.Property);
-            } else {
-                property.value = buildProperties(xjson.RDF.ObjectProperty);
+            //the intent is to have all properties in one list
+            if (xjson.RDF.Property === undefined){
+                xjson.RDF.Property = [xjson.RDF.ObjectProperty, xjson.RDF.SymetricProperty, xjson.RDF.DatatypeProperty].filter(function(el) { return el != null; }).flat(); 
+                xjson.RDF.Property.sort(function compare(a, b) {
+                    // Use toUpperCase() to ignore character casing
+                    const propA = a.label.toString().toUpperCase();
+                    const propB = b.label.toString().toUpperCase();
+                    
+                    let comparison = 0;
+                    if (propA > propB) {
+                        comparison = 1;
+                    } else if (propA < propB) {
+                        comparison = -1;
+                  }
+                    return comparison;
+                });
             }
+            property.value = buildProperties(xjson.RDF.Property);
             properties.push(property);
 
             datatype.key = name;
@@ -223,7 +235,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     vocab.setVocabData = function() {
         // if the local storage has expired, gather the data and set it up again
         // TODO: make this connect to the real RDF
-
+        
         // const vurl = '/verso/api/configs?filter[where][configType]=vocabulary&filter[fields][name]=true&filter[fields][id]=true&filter[where][name][neq]=Languages';
         const vurl = '/verso/api/configs?filter[where][configType]=ontology';
 
@@ -237,7 +249,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
 
             // loop through the list of vocabs and gather up the data.
             angular.forEach(response, function(value) {
-               var url = 'server/whichrt?uri=' + value.json.url;
+                var url = 'server/whichrt?uri=' + value.json.url;
 
                 // test that we hvae a key and this isn't a comment.
                 if(value.id != null) {
@@ -247,8 +259,10 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
                             returnNumber++;
 
                             // Set local storage once we have all the data.
+                            // The Value Data Type should use the Class list, not the literal property (datatypes) list
                             if(returnNumber >= listLength) {
-                                _setLocalStorage(resources, properties, datatypes);
+                                //_setLocalStorage(resources, properties, datatypes);
+                                _setLocalStorage(resources, properties, resources);
                             }
                         }, function() {
                             returnNumber++;
@@ -272,7 +286,7 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
         var currDate = new Date(lsDate);
         var beginDate = new Date();
         var endDate = new Date();
-
+        
         beginDate.setDate(beginDate.getDate() - 7);
         endDate.setDate(endDate.getDate() + 7);
 
@@ -294,7 +308,8 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
                 vocab.setVocabData();
                 localStorageService.set('date', (new Date()).toDateString());
             }
-        }
+        }        
+
     };
 
     /**
@@ -337,10 +352,10 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
 
         return vocabDatatypeData;
     };
-
+    
     vocab.getLanguages = function() {
         var queue = $q.defer();
-
+        
         if(languageList.length > 0) {
             queue.resolve(languageList);
         }
@@ -378,9 +393,9 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
                 queue.resolve(languageList);
             });
         }
-
+        
         return queue.promise;
-
+        
     };
 
     fillResource = function(vocab) {
