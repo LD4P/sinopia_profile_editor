@@ -3,6 +3,7 @@
 // spoof verso calls to get profiles, vocabularies and ontologies
 const path = require('path')
 const fs = require('fs')
+const valuesFromConfig = require('../sample_data_from_verso/data/config/lookupConfig.json')
 
 var profiles = []
 loadProfiles()
@@ -114,5 +115,13 @@ module.exports.propertyTypes = [
     'name': 'propertyTypes',
     'configType': 'propertySettings',
     'json': ['literal', 'resource', 'lookup', 'target', 'list']
+  }
+]
+
+module.exports.valuesFromConfig = [
+  {
+    'name': 'valuesFromURIs',
+    'configType': 'valuesFromConfig',
+    'json': valuesFromConfig
   }
 ]

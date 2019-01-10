@@ -98,9 +98,18 @@ describe('Importing a profile from a json file', () => {
   it('can add a uri to use for constrained property values', async() => {
     await page.waitForSelector('#adValue')
         .then(async() => {
+          let template_select_sel = 'select[popover-title="Use Values From"]'
           await expect(page).toClick('#adValue')
-          await expect(page).toFill('input[popover-title="Use Values From"]', 'http://www.values.loc')
+          await page.waitForSelector(template_select_sel)
+          await expect_sel_to_exist(`${template_select_sel}.ng-pristine`)
+          await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value="?"]`)
+          const value_selected = '0'
+          await page.select(template_select_sel, value_selected)
+          await expect_sel_to_exist(`${template_select_sel}.ng-dirty`)
+          await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value="0"]`)
+          await expect_regex_in_sel_textContent(template_select_sel, 'AGROVOC (QA)')
         })
+        .catch(error => console.log(`promise error clicking Add Value: ${error}`))
   })
 
   it('deletes a property', async() => {

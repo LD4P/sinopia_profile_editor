@@ -140,6 +140,12 @@ angular.module('locApp.modules.profile.controllers')
             $scope.propertyTypes = response[0].json;
           });
 
+      // Get valuesFromConfig for sinopia
+      Server.get('/verso/api/configs?filter[where][configType]=valuesFromConfig', {}, true)
+        .then(function(response) {
+          $scope.valuesFromConfig = response[0].json;
+        });
+
       /**
        * @ngdoc function
        * @name searchVocab
