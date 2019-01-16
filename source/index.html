@@ -98,7 +98,7 @@
                     <div class="sinopia-headerlinks">
                         <a href="https://sinopia.io/editor">Linked Data Editor</a>
                         &nbsp;
-                        <a href="#">Help and Resources</a>
+                        <a href="#" onclick="openOffCanvasMenu()">Help and Resources</a>
                     </div>
                     <h2 class="sinopia-subtitle"><a class="sinopia-subtitle" href="https://sinopia.io/">Sinopia</a></h2>
                     <h1 class="sinopia-title">Profile Editor</h1>
@@ -120,7 +120,66 @@
 
             </div>
         </div>
-
+        <div id="offCanvasMenu" class="sidenav">
+        <a href="#" onClick="closeOffCanvasMenu()">
+          <i class="fa fa-times close-menu" aria-hidden="true"></i>
+        </a>
+        <ul style="list-style-type: none">
+          <li style="padding-bottom: 2em">
+            <i class="fa fa-arrow-circle-right" style="color: #fff" aria-hidden="true"></i> <a href="#" target="_blank" rel="noopener noreferrer" ><strong>Sinopia User Dashboard</strong></a>
+          </li>
+          <li>
+             <i class="fa fa-arrow-circle-right" style="color: #fff" aria-hidden="true"></i> <a href="#"><strong>Contact Us</strong></a>
+          </li>
+          <li><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">E-mail Sinopia group</a></li>
+          <li style="padding-bottom: 1em"><a href="https://ld4.slack.com/messages/#sinopia" className="menu-item">Join Slack Channel</a>
+          </li>
+          <li>
+            <i class="fa fa-arrow-circle-right" style="color: #fff" aria-hidden="true"></i>  <a href="#"><strong>Training Resources</strong></a>
+          </li>
+          <li><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Intro to Profile Editor</a></li>
+          <li><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Intro to Linked Data Editor</a></li>
+          <li style="padding-bottom: 1em"><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Troubleshooting</a></li>
+          <li>
+            <i class="fa fa-arrow-circle-right" style="color: #fff" aria-hidden="true"></i>  <a href="#"><strong>Website Usage</strong></a>
+          </li>
+          <li><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Policies</a></li>
+          <li><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Terms of Use</a></li>
+          <li style="padding-bottom: 1em"><a href="#" target="_blank" rel="noopener noreferrer" className="menu-item">Request Account</a></li>
+          <li>
+            <i class="fa fa-arrow-circle-right" style="color: #fff" aria-hidden="true"></i>  <a href="#"><strong>External Resources</strong></a>
+          </li>
+          <li><a href="http://www.getty.edu/research/tools/vocabularies/aat/" target="_blank" rel="noopener noreferrer" className="menu-item">Art & Architecture Thesaurus</a></li>
+          <li><a href="https://www.discogs.com/search/" target="_blank" rel="noopener noreferrer" className="menu-item">Discogs</a></li>
+          <li><a href="http://www.geonames.org/" target="_blank" rel="noopener noreferrer" className="menu-item">Geonames</a></li>
+          <li><a href="https://translate.google.com/" target="_blank" rel="noopener noreferrer" className="menu-item">Google Translate</a></li>
+          <li><a href="https://www.imdb.com/" target="_blank" rel="noopener noreferrer" className="menu-item">IMDB</a></li>
+          <li><a href="http://www.isni.org/" target="_blank" rel="noopener noreferrer" className="menu-item">ISNI</a></li>
+          <li><a href="http://id.loc.gov/authorities/names.html" rel="noopener noreferrer" target="_blank" className="menu-item">Library of Congress</a></li>
+          <li><a href="https://musicbrainz.org/" target="_blank" rel="noopener noreferrer" className="menu-item">MusicBrainz</a></li>
+          <li><a href="http://www.share-vde.org/sharevde/clusters?l=en" target="_blank" rel="noopener noreferrer" className="menu-item">Share-VDE</a></li>
+          <li><a href="http://www.loc.gov/pictures/collection/tgm/" target="_blank" rel="noopener noreferrer" className="menu-item">Thesaurus of Graphic Materials</a></li>
+          <li><a href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" rel="noopener noreferrer"  target="_blank" className="menu-item">Thesaurus of Geographical Names</a></li>
+          <li><a href="https://viaf.org/" target="_blank" rel="noopener noreferrer" className="menu-item">VIAF</a></li>
+          <li><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank" rel="noopener noreferrer" className="menu-item">Wikidata</a></li>
+        </ul>
+      </div>
+    <script type="text/javascript">
+      function openOffCanvasMenu() {
+        var menu = document.getElementById("offCanvasMenu");
+        console.log(`Menus width is ${menu.style.width}`);
+        if (menu.style.width > 0) {
+          closeOffCanvasMenu();
+        } else {
+          menu.style.width = "300px";
+          document.getElementById("wrapper").style.marginRight = "300px"
+        }
+      }
+      function closeOffCanvasMenu() {
+        document.getElementById("offCanvasMenu").style.width = "0";
+        document.getElementById("wrapper").style.marginRight = "0";
+      }
+    </script>
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/lib/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
