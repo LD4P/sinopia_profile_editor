@@ -14,11 +14,8 @@ describe('Sinopia Profile Editor Create Page', () => {
     });
 
     describe('header', () => {
-      it('image', async() => {
-        await expect_sel_to_exist('div.sinopia-headertext > img[src="assets/images/sinopia_profile_headertext.png"]')
-      });
       it('links', async () => {
-        await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Bibliographic Editor')
+        await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Linked Data Editor')
         await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
       })
     })
