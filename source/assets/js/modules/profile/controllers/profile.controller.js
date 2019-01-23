@@ -680,7 +680,7 @@ angular.module('locApp.modules.profile.controllers')
             }
           });
           return check;
-        };
+        }
       };
 
       $scope.propertyValid = function(property) {
@@ -698,7 +698,7 @@ angular.module('locApp.modules.profile.controllers')
             }
           });
           return check;
-        };
+        }
       };
 
       /*Created by -rsegura 12/10/2014
