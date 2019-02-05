@@ -10,6 +10,7 @@ describe('Sinopia Profile Editor does not export an invalid Profile', () => {
     it('modal displayed', async () => {
       await expect(page).toClick('a', { text: 'Export'})
       const sel_text = await page.$eval('#alert_text', e => e.textContent)
+      await page.screenshot({path: 'empty-profile.png'})
       expect(sel_text).toMatch('Parts of the form are invalid')
     })
 

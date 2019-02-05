@@ -91,7 +91,7 @@
 
         <div id="wrapper">
             <div class="content">
-               <div class="sinopia">
+               <div class="sinopia" id="main">
                  <img src="assets/images/sinopiaheaderbg_profileeditor.png">
                 </div>
                 <div class="sinopia-headertext">
@@ -121,7 +121,7 @@
             </div>
         </div>
         <div id="offCanvasMenu" class="sidenav">
-        <a href="#" onClick="closeOffCanvasMenu()">
+        <a href="#" onClick="closeOffCanvasMenu()" id="closeMenu">
           <i class="fa fa-times close-menu" aria-hidden="true"></i>
         </a>
         <ul style="list-style-type: none">
@@ -167,17 +167,18 @@
     <script type="text/javascript">
       function openOffCanvasMenu() {
         var menu = document.getElementById("offCanvasMenu");
-        console.log(`Menus width is ${menu.style.width}`);
         if (menu.style.width > 0) {
           closeOffCanvasMenu();
         } else {
           menu.style.width = "300px";
-          document.getElementById("wrapper").style.marginRight = "300px"
+          menu.style.display = "block";
+          document.getElementById("main").style.marginRight = "300px"
         }
       }
       function closeOffCanvasMenu() {
         document.getElementById("offCanvasMenu").style.width = "0";
-        document.getElementById("wrapper").style.marginRight = "0";
+        document.getElementById("main").style.marginRight = "0";
+        menu.style.display = "none";
       }
     </script>
 		<script type="text/javascript">
