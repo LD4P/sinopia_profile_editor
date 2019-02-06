@@ -20,11 +20,12 @@ describe('Sinopia Profile Editor Homepage', () => {
   })
 
   describe('header', () => {
-    it('image', async() => {
-      await expect_sel_to_exist('div.sinopia-headertext > img[src="assets/images/sinopia_profile_headertext.png"]')
+    it('title', async() => {
+      await expect_value_in_selector_textContent('h2.sinopia-subtitle > a:nth-child(1)', 'Sinopia')
+      await expect_value_in_selector_textContent('h1.sinopia-title', 'Profile Editor')
     });
     it('links', async () => {
-      await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Bibliographic Editor')
+      await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(1)', 'Linked Data Editor')
       await expect_value_in_selector_textContent('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
     })
   })

@@ -300,11 +300,11 @@ div.page-footer div.page-info {
         top: 9.8em;
         left: 2.4em;
     }
-    
+
     #search_bar button.btn {
         top: 17px;
     }
-    
+
     .mainnav-form {
         border: 0;
     }
@@ -363,7 +363,7 @@ div.page-footer div.page-info {
 
 /* ----------Move the tooltips on smaller screens-------------------*/
 @media (max-width: 1502) {
-    
+
 }
 
 div.modal-footer form button {
@@ -410,6 +410,8 @@ td label {
 #wrapper {
     /* max-width: 1583px; */
     margin-left: 0px;
+    transition: margin-left .5s;
+    padding: 20px;
 }
 
 #resourceChoose {

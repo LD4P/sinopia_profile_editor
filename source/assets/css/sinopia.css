@@ -105,3 +105,44 @@ h3 {
 .sinopia-profile-form {
     padding-top: 70px;
 }
+
+h2.sinopia-subtitle {
+    margin-bottom: 3px;
+}
+a.sinopia-subtitle {
+  text-decoration: none;
+  font-family: "Copperplate Gothic Light";
+  color: #996633;
+}
+
+h1.sinopia-title {
+  font-family: "Copperplate Gothic Light";
+  color: #996633;
+  margin-top: 0px;
+  font-size: 4em;
+}
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 80%;
+  color: #FFF;
+  display: none;
+  font-size: 1.2em;
+  background-color: #333; /* Black*/
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sidenav a {
+  color: #FFF;
+}
+
+.close-menu {
+  color: #fff;
+  margin-left: 230px;
+  font-size: 1.5em;
+  padding-bottom: 1em;
+}
