@@ -12,8 +12,8 @@ describe('Create profile resource template requirements', () => {
   })
 
   afterEach(async () => {
-      page.waitFor(2000)
-      await page.$eval('form[name="profileForm"]', e => e.reset())
+    page.waitFor(2000)
+    await page.$eval('form[name="profileForm"]', e => e.reset())
   })
 
   let exportButtonSel = 'span.pull-right.pushed-right > a.import-export'
@@ -64,10 +64,9 @@ describe('Create profile resource template requirements', () => {
       await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
     })
 
-
-  it('requires a property template', async () => {
-    expect(page)
-      .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+    it('requires a property template', async () => {
+      expect(page)
+        .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
           // all the other required fields from resource template
           id: "my:profile",
           description: "Profile description",
@@ -76,23 +75,21 @@ describe('Create profile resource template requirements', () => {
           resourceId: "my:resource",
           resourceURI: "http://id.loc.gov"
         })
-      .catch(error => console.log(`promise error for filling profile form: ${error}`))
-    await page.waitFor(1000) // waiting for .toFillForm(), as resourceURI field does a check
-    page
-      .waitForSelector('input#resourceURI.ng-valid-url')
-      .catch(error => console.log(`promise error checkURL: ${error}`))
-    await page.click(exportButtonSel)
-    page
-      .waitForSelector(alertBoxSel)
-      .catch(error => console.log(`promise error for alert box selector: ${error}`))
-    await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
-
-
+        .catch(error => console.log(`promise error for filling profile form: ${error}`))
+      await page.waitFor(1000) // waiting for .toFillForm(), as resourceURI field does a check
+      page
+        .waitForSelector('input#resourceURI.ng-valid-url')
+        .catch(error => console.log(`promise error checkURL: ${error}`))
+      await page.click(exportButtonSel)
+      page
+        .waitForSelector(alertBoxSel)
+        .catch(error => console.log(`promise error for alert box selector: ${error}`))
+      await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
     })
 
     it('requires a valid property uri', async () => {
       expect(page)
-      .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+        .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
           // all the other required fields from resource template
           id: "my:profile",
           description: "Profile description",
@@ -100,14 +97,14 @@ describe('Create profile resource template requirements', () => {
           title: "My profile",
           resourceId: "my:resource",
           resourceURI: "http://id.loc.gov"
-      })
-      .catch(error => console.log(`promise error for filling profile form: ${error}`))
+        })
+        .catch(error => console.log(`promise error for filling profile form: ${error}`))
 
       await page.click('a.propertyLink')
       await page.waitFor(1000)
       await page.evaluate(() => {
-          let dom = document.querySelector('a.propertyLink');
-          dom.innerHTML = "h";
+        let dom = document.querySelector('a.propertyLink');
+        dom.innerHTML = "h";
       });
       await expect_value_in_sel_textContent('a.propertyLink', 'h')
       await page.waitFor(2000)
@@ -116,28 +113,28 @@ describe('Create profile resource template requirements', () => {
     })
 
     it('valid property uri', async () => {
-        expect(page)
+      expect(page)
         .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
-            // all the other required fields from resource template
-            id: "my:profile",
-            description: "Profile description",
-            author: "Me",
-            title: "My profile",
-            resourceId: "my:resource",
-            resourceURI: "http://id.loc.gov"
+          // all the other required fields from resource template
+          id: "my:profile",
+          description: "Profile description",
+          author: "Me",
+          title: "My profile",
+          resourceId: "my:resource",
+          resourceURI: "http://id.loc.gov"
         })
         .catch(error => console.log(`promise error for filling profile form: ${error}`))
 
-    await page.click('a.propertyLink')
+      await page.click('a.propertyLink')
 
-    await page.evaluate(() => {
+      await page.evaluate(() => {
         let dom = document.querySelector('a.propertyLink');
         dom.innerHTML = "http://id.loc.gov/ontologies/bibframe/code";
-    });
+      })
 
-    page.waitFor(2000)
-    const valid_url_class = page.$('input#propertyURI', e => e.getAttribute('ng-valid-url'))
-    expect(valid_url_class).toBeDefined()
+      page.waitFor(2000)
+      const valid_url_class = page.$('input#propertyURI', e => e.getAttribute('ng-valid-url'))
+      expect(valid_url_class).toBeDefined()
     })
   })
 })
