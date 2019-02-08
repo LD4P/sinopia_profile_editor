@@ -25,6 +25,14 @@ angular.module('locApp.modules.profile.services')
             });
         };
 
+        var addSchemaUrls = function(profile) {
+          // add schema to profile properties
+          profile.schema = 'https://ld4p.github.io/sinopia/schemas/0.1.0/profile.json'
+
+          // add schema to each resource template properties
+
+        }
+
         /**
          * @ngdoc function
          * @name getFormData
@@ -36,7 +44,8 @@ angular.module('locApp.modules.profile.services')
         handler.getFormData = function(profile, removeDefault) {
             // TODO: add things here
             if(removeDefault) removeDefaults(profile);
-            
+            addSchemaUrls(profile)
+
             obj = {};
             obj.Profile = profile;
             return obj;
@@ -44,4 +53,3 @@ angular.module('locApp.modules.profile.services')
 
         return handler;
     });
-
