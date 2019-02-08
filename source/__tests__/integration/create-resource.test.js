@@ -87,6 +87,9 @@ describe('Create profile resource template requirements', () => {
       await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
     })
 
+
+
+    // TODO:   I think the below belongs in create-property.test, if it isn't already there
     it('requires a valid property uri', async () => {
       expect(page)
         .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
