@@ -20,21 +20,6 @@ describe('spoofed verso', () => {
     })
   })
 
-  describe('vocabularies', () => {
-    it('array of length 1', () => {
-      expect(versoSpoof.vocabularies).toHaveLength(1)
-    })
-    it('vocabulary has name', () => {
-      expect(versoSpoof.vocabularies[0]['name']).toBe('Languages')
-    })
-    it('vocabulary has type', () => {
-      expect(versoSpoof.vocabularies[0]['configType']).toBe('vocabulary')
-    })
-    it('vocabulary has no id', () => {
-      expect(versoSpoof.vocabularies[0]['id']).toBeUndefined()
-    })
-  })
-
   describe('ontologies', () => {
     it('array of length 5', () => {
       expect(versoSpoof.ontologies).toHaveLength(5)

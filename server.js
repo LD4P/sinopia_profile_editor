@@ -16,8 +16,6 @@ app.all("/verso*", function (req, res, next) {
     res.json(versoSpoof.profiles)
   } else if (req.query.filter.where.configType === 'ontology') {
     res.json(versoSpoof.ontologies)
-  } else if (req.query.filter.where.configType === 'vocabulary') {
-    res.json(versoSpoof.vocabularies)
   } else if (req.query.filter.where.name === 'propertyTypes') {
     res.json(versoSpoof.propertyTypes)
   } else if (req.query.filter.where.configType === 'valuesFromConfig') {
