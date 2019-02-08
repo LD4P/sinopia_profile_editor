@@ -26,11 +26,10 @@ angular.module('locApp.modules.profile.services')
         };
 
         var addSchemaUrls = function(profile) {
-          // add schema to profile properties
           profile.schema = 'https://ld4p.github.io/sinopia/schemas/0.1.0/profile.json'
-
-          // add schema to each resource template properties
-
+          angular.forEach(profile.resourceTemplates, function(resource){
+              resource.schema = 'https://ld4p.github.io/sinopia/schemas/0.1.0/resource-template.json'
+          })
         }
 
         /**
