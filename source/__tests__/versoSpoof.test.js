@@ -75,7 +75,7 @@ describe('spoofed verso', () => {
       expect(versoSpoof.propertyTypes[0]['configType']).toBe('propertySettings')
     })
     it('propertyType has json', () => {
-      expect(versoSpoof.propertyTypes[0]['json']).toEqual(['literal', 'resource', 'lookup', 'target', 'list'])
+      expect(versoSpoof.propertyTypes[0]['json']).toEqual(['literal', 'resource', 'lookup'])
     })
     it('propertyType has no id', () => {
       expect(versoSpoof.propertyTypes[0]['id']).toBeUndefined()

@@ -114,7 +114,7 @@ module.exports.propertyTypes = [
   {
     'name': 'propertyTypes',
     'configType': 'propertySettings',
-    'json': ['literal', 'resource', 'lookup', 'target', 'list']
+    'json': ['literal', 'resource', 'lookup']
   }
 ]
 
