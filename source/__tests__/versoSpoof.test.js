@@ -20,21 +20,6 @@ describe('spoofed verso', () => {
     })
   })
 
-  describe('vocabularies', () => {
-    it('array of length 1', () => {
-      expect(versoSpoof.vocabularies).toHaveLength(1)
-    })
-    it('vocabulary has name', () => {
-      expect(versoSpoof.vocabularies[0]['name']).toBe('Languages')
-    })
-    it('vocabulary has type', () => {
-      expect(versoSpoof.vocabularies[0]['configType']).toBe('vocabulary')
-    })
-    it('vocabulary has no id', () => {
-      expect(versoSpoof.vocabularies[0]['id']).toBeUndefined()
-    })
-  })
-
   describe('ontologies', () => {
     it('array of length 5', () => {
       expect(versoSpoof.ontologies).toHaveLength(5)
@@ -75,7 +60,7 @@ describe('spoofed verso', () => {
       expect(versoSpoof.propertyTypes[0]['configType']).toBe('propertySettings')
     })
     it('propertyType has json', () => {
-      expect(versoSpoof.propertyTypes[0]['json']).toEqual(['literal', 'resource', 'lookup', 'target', 'list'])
+      expect(versoSpoof.propertyTypes[0]['json']).toEqual(['literal', 'resource', 'lookup'])
     })
     it('propertyType has no id', () => {
       expect(versoSpoof.propertyTypes[0]['id']).toBeUndefined()

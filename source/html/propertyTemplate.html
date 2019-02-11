@@ -70,7 +70,7 @@
                         </select>
                     </td>
                     <td>
-                        <label for="remark">Guiding statement for the use of this resource</label>
+                        <label for="remark">Guiding statement for the use of this property</label>
                     </td>
                     <td>
                         <input name="remark" ng-model="propertyTemplate.remark"
@@ -108,14 +108,6 @@
 
         <div id="valueConstraints" class="propertyItems">
             <div ng-repeat="field in propertyFields" sss-field item={{field}} html='html/valueConstraint.html'></div>
-        </div>
-
-        <div id="propertyResources">
-            <h5>Resources</h5>
-            <div id="resources_{{resNest}}" class="resources panel-group accordion-panel" ui-sortable="propResourceSortOption" ng-model="resources">
-                <div ng-form novalidate name="resourceForm" class="panel panel-default" ng-repeat="field in resources" sss-field item={{field}} html='html/resourceTemplate.html'></div>
-            </div>
-            <button class="btn btn-secondary" ng-click="addPropertyResource();" onclick="return false;">Add Resource</button>
         </div>
 
     </div>

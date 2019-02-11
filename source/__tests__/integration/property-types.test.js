@@ -19,8 +19,6 @@ describe('Type of Property in Resource in Profile', () => {
     await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(1)`, 'literal')
     await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(2)`, 'resource')
     await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(3)`, 'lookup')
-    await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(4)`, 'target')
-    await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(5)`, 'list')
   })
 
   // it('can select a type in dropdown', () => {

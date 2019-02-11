@@ -14,6 +14,7 @@ describe('Create profile has properties for resource and templates for property'
     await page.waitForSelector('span[href="#property_1"]')
   })
 
+
   describe('adding a template', () => {
     let template_select_sel = 'select#templateSelect_1_0'
     beforeAll(async () => {
@@ -25,6 +26,10 @@ describe('Create profile has properties for resource and templates for property'
       await page.waitForSelector(template_select_sel)
     })
 
+    it('displays the correct text for remark', async () => {
+      const sel = 'div.propertyItem label[for="remark"]'
+      await expect_value_in_sel_text(sel, 'Guiding statement for the use of this property')
+    })
     it('populates templates (via profiles from versoSpoof)', async () => {
       await page.waitForSelector(template_select_sel)
       const profile_count = await page.$eval(template_select_sel, e => e.length)

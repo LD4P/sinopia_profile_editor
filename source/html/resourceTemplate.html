@@ -9,20 +9,20 @@
                 popover="Resource templates must contain a resource URI and at least one property template"
                 popover-title="Resource Template" popover-trigger="mouseenter"
                 popover-placement="right" style="width: 2em;"></i>
-                
-                
+
+
                 <a id="resourceChoose" class="pull-right" data-toggle="modal" href="#chooseResource" ng-click="updateChosenResource(resourceTemplate, parentList);" onclick="event.returnValue = false; return false;">
                     <i class="fa fa-bars" style="margin-right: 10px;"></i>
                     {{!resourceTemplate.resourceURI ? "Select Resource" : "Change Resource" }}
                 </a>
         </span>
-            
+
     </h4>
 </div>
 
 <div ng-controller="resourceTemplateController" id="resource_{{item}}" class="panel-collapse collapse">
     <div class="panel-body">
-        
+
         <table>
             <tbody>
                 <tr>
@@ -65,17 +65,17 @@
                        <label for="resourceLabel">Resource Label</label>
                     </td>
                     <td>
-                       <input name="resourceLabel" ng-model="resourceTemplate.resourceLabel" 
+                       <input name="resourceLabel" ng-model="resourceTemplate.resourceLabel"
                               popover="Localized label associated with the resource"
                               popover-title="Resource Label" popover-trigger="mouseenter"
                               popover-placement="right"/>
                     </td>
 
                     <td>
-                        <label for="contact">Contact</label>
+                        <label for="author">Author</label>
                     </td>
                     <td>
-                        <input name="contact" ng-model="resourceTemplate.contact"
+                        <input name="author" ng-model="resourceTemplate.author"
                                popover="Contact information associated with the profile"
                                popover-title="Resource Title" popover-trigger="mouseenter"
                                popover-placement="left"/>
@@ -96,7 +96,7 @@
         </table>
 
         <div id="propertyTemplates_{{propNest}}" class="propertyTemplates panel-group accordion-simple" ui-sortable="propertySortOption" ng-model="resourceFields">
-            
+
             <div ng-form name="propertyForm" class="panel propertyItem" ng-repeat="resourceField in resourceFields" sss-field item={{resourceField}} html='html/propertyTemplate.html'></div>
             <a href="#" onclick="event.returnValue = false; return false;" ng-click="addProperty()" class="propertyLink sss-add-margin-top">
                 <i class="fa fa-plus"></i>

@@ -26,26 +26,6 @@ function loadProfiles () {
   }
 }
 
-var vocabularies = []
-loadVocabs()
-module.exports.vocabularies = vocabularies
-
-function loadVocabs() {
-  const x2js = require('x2js')
-  const x2json_parser = new x2js()
-  if (vocabularies.length == 0) {
-    const langVocabPath = path.join(__dirname, '..', 'sample_data_from_verso', 'data', 'vocabularies', 'languages.rdf')
-    const xml = fs.readFileSync(langVocabPath, {encoding: 'utf8'})
-    vocabularies.push(
-      {
-        name: "Languages",
-        configType: "vocabulary",
-        json: x2json_parser.xml2js(xml)
-      }
-    )
-  }
-}
-
 // Manual construction of ontologies list, based on lcnetdev verso/server/boot/05-load-ontologies.js
 module.exports.ontologies = [
   {
@@ -114,7 +94,7 @@ module.exports.propertyTypes = [
   {
     'name': 'propertyTypes',
     'configType': 'propertySettings',
-    'json': ['literal', 'resource', 'lookup', 'target', 'list']
+    'json': ['literal', 'resource', 'lookup']
   }
 ]
 
