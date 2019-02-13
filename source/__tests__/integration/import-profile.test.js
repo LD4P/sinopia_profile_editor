@@ -8,26 +8,26 @@ describe('Importing a profile from a json file', () => {
 
   beforeAll(async () => {
     const path = require('path')
-    const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
+    const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
     await expect(page).toUploadFile(
         'input[type="file"]',
         bf_item_location,
     )
   })
 
-  it('imports an existing profile and resource templates', async () => {
+  it('imports an existing v0.0.2 profile and resource templates', async () => {
     await page.waitForSelector('span[popover-title="Profile ID: profile:bf2:Item"]')
-        .then(async () => {
-          await expect_regex_in_sel_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', 'Lending or Access Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Use"]', 'Use or Reproduction Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Retention"]', 'Retention Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:ImmAcqSource"]', 'Immediate Source of Acquisition')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Enumeration"]', 'Enumeration')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Chronology"]', 'Chronology')
-        })
-        .catch(error => console.log(`promise error for import profile: ${error}`))
+      .then(async () => {
+        await expect_regex_in_sel_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', 'Lending or Access Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Use"]', 'Use or Reproduction Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Retention"]', 'Retention Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:ImmAcqSource"]', 'Immediate Source of Acquisition')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Enumeration"]', 'Enumeration')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Chronology"]', 'Chronology')
+      })
+      .catch(error => console.log(`promise error for import profile: ${error}`))
   })
 
   it('has the expected resource metadata and property sections', async() => {
