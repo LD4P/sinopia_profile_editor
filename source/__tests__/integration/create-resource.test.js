@@ -20,12 +20,39 @@ describe('Create profile resource template requirements', () => {
   let alertBoxSel = '#alertBox > div > div > div.modal-body > p'
 
   describe('resource template form fields', () => {
+    const rt_fields_table_sel = 'div[id="resourceTemplates_0"] div.panel-body > table'
 
     it('appends a resource template section to the form', async () => {
-      page
-        .waitForSelector('span[id="0"] > span')
+      page.waitForSelector('span[id="0"] > span')
         .catch(error => console.log(`promise error for loading create page with import dialog: ${error}`))
       await expect_regex_in_sel_textContent('span[id="0"] > span', /^Resource Template\s*$/)
+    })
+
+    it('has five input fields for the resource template data', async () => {
+      const inputs = await page.$eval(rt_fields_table_sel, e => e.getElementsByTagName('input').length)
+      expect(inputs).toBe(5)
+    })
+
+    describe('Required fields are indicated with asterisk', async () => {
+      it('ID', async () => {
+        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="id"]`, "ID*")
+      })
+      it('Resource URI', async () => {
+        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceURI"]`, "Resource URI*")
+      })
+      it('Resource Label', async () => {
+        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceLabel"]`, "Resource Label*")
+      })
+      it('Author', async () => {
+        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtAuthor"]`, "Author*")
+      })
+    })
+
+    describe('Non-required fields have no asterisk', async () => {
+      it('Remark', async () => {
+        await expect_value_not_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource*")
+        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource")
+      })
     })
 
     it('requires Resource ID', async () => {
@@ -149,4 +176,8 @@ async function expect_regex_in_sel_textContent(sel, value) {
 async function expect_value_in_sel_textContent(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
   expect(sel_text).toBe(value)
+}
+async function expect_value_not_in_sel_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text.trim()).not.toBe(value)
 }
