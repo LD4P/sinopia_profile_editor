@@ -12,7 +12,7 @@ angular.module('locApp.modules.profile.services')
         handler.errors = [];
 
         var profAttributes = ["id","title","description","date","author","remark","adherence","schema","resourceTemplates", "source"];
-        var resAttributes = ["id","resourceURI","resourceURL","resourceLabel","propertyTemplates","author","date","remark","schema"];
+        var resAttributes = ["id","resourceURI","resourceLabel","propertyTemplates","author","date","remark","schema","adherence","source"];
         var propAttributes = ["propertyURI","propertyLabel","mandatory","repeatable","type","valueConstraint","remark", "resourceTemplates"];
         var consAttributes = ["valueLanguage","languageURI","languageLabel","valueDataType","valueTemplateRefs","useValuesFrom","editable","remark", "repeatable", "defaultURI", "defaultLiteral", "defaults", "validatePattern"];
         var dataAttributes = ["dataTypeURI","dataTypeLabel","dataTypeLabelHint","remark"];
@@ -24,7 +24,6 @@ angular.module('locApp.modules.profile.services')
         var ID = "id";
         var TITLE = "title";
         var RESOURCE_URI = "resourceURI";
-        var RESOURCE_URL = "resourceURL";
         var PROPERTY_URI = "propertyURI";
 
         /**
@@ -110,7 +109,7 @@ angular.module('locApp.modules.profile.services')
         _resourceValidation= function(resourceTemplate,name) {
             //Check that the resource template has a resource URI and
             //at least one property template
-            if(!(RESOURCE_URI in resourceTemplate || RESOURCE_URL in resourceTemplate) || resourceTemplate[RESOURCE_URI] === undefined || resourceTemplate[RESOURCE_URI] === "") {
+            if(!(RESOURCE_URI in resourceTemplate) || resourceTemplate[RESOURCE_URI] === undefined || resourceTemplate[RESOURCE_URI] === "") {
                 handler.errors.push( name + " must have a resource URI field");
             }
             if(!(PROPERTY_TEMPLATE in resourceTemplate) || resourceTemplate[PROPERTY_TEMPLATE] === undefined || resourceTemplate[PROPERTY_TEMPLATE].length < 1) {
