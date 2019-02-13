@@ -12,6 +12,52 @@ describe('Adding and removing a new Profile', () => {
     await expect(span).toMatch(/Profile ID: Undefined/)
   })
 
+  describe('Profile fields', () => {
+    const profile_fields_table_sel = 'div[id="profile"] > div.panel-body > table'
+
+    beforeAll(async () => {
+      await page.waitForSelector(profile_fields_table_sel)
+    })
+
+    it('has eight input fields for the profile admin data', async () => {
+      const inputs = await page.$eval(profile_fields_table_sel, e => e.getElementsByTagName('input').length)
+      expect(inputs).toBe(8)
+    })
+
+    describe('Required fields are indicated with asterisk', async () => {
+      it('ID', async () => {
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="id"]`, "ID*")
+      })
+      it('Description', async () => {
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="description"]`, "Description*")
+      })
+      it('Author', async () => {
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="author"]`, "Author*")
+      })
+      it('Title', async () => {
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="title"]`, "Title*")
+      })
+    })
+    it('Date has no asterisk b/c it may be filled in automagically', async () => {
+      await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date*")
+      await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date")
+    })
+    describe('Non-required fields have no asterisk', async () => {
+      it('Remark', async () => {
+        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark*")
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark")
+      })
+      it('Adherence', async () => {
+        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence*")
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence")
+      })
+      it('Source', async () => {
+        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="source"]`, "Source*")
+        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="source"]`, "Source")
+      })
+    })
+  })
+
   describe('Adherence rules/standards that profile confirms with', () => {
 
     const adherence_input_sel = '#profile input[name="adherence"]'
@@ -62,19 +108,6 @@ describe('Adding and removing a new Profile', () => {
       expect(span).toMatch(/Resource Template/)
     })
 
-    it('has eight input fields for the profile admin data', async () => {
-      const inputs = await page.$eval('div[id="profile"] > div > table', e => e.getElementsByTagName('input').length)
-      expect(inputs).toBe(8)
-      await expect(page).toMatch('ID')
-      await expect(page).toMatch('Description')
-      await expect(page).toMatch('Contact')
-      await expect(page).toMatch('Title')
-      await expect(page).toMatch('Date')
-      await expect(page).toMatch('Remark')
-      await expect(page).toMatch('Adherence')
-      await expect(page).toMatch('Source')
-    })
-
     it('has five input fields for the resource template data', async () => {
       const inputs = await page.$eval('div[id="resource_0"] > div > table', e => e.getElementsByTagName('input').length)
       expect(inputs).toBe(5)
@@ -93,6 +126,7 @@ describe('Adding and removing a new Profile', () => {
     })
 
     it('now has 3 input fields for property ID once a resource template is added', async () => {
+      await page.waitForSelector('div[id="property_1"] > div > table')
       const inputs = await page.$eval('div[id="property_1"] > div > table', e => e.getElementsByTagName('input').length)
       expect(inputs).toBe(3)
       await page.waitFor(1000)
@@ -138,5 +172,10 @@ describe('Adding and removing a new Profile', () => {
 
 async function expect_value_in_selector_textContent(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  expect(sel_text.trim()).toBe(value)
+}
+
+async function expect_value_not_in_selector_textContent(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text.trim()).not.toBe(value)
 }
