@@ -56,9 +56,10 @@
     "dev-test": "npm install && npm run grunt-dev && jest --colors",
     "eslint": "eslint --color --max-warnings 172 -c .eslintrc.js .",
     "grunt-dev": "grunt ngAnnotate uglify cssmin",
-    "jest-ci": "jest --coverage --ci --runInBand --reporters=default --reporters=jest-junit --colors && cat ./coverage/lcov.info | coveralls",
-    "jest-cov": "jest --coverage --colors",
-    "test": "jest --colors"
+    "jest-ci": "jest --coverage --colors --silent --ci --runInBand --reporters=default --reporters=jest-junit && cat ./coverage/lcov.info | coveralls",
+    "jest-cov": "jest --coverage --colors --silent",
+    "test": "jest --colors --silent",
+    "test-verbose": "jest --colors"
   },
   "engines": {
     "node": "10.11.x"
