@@ -1,33 +1,31 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const path = require('path')
 
 describe('Importing a profile from a json file', () => {
 
   beforeAll(async () => {
     await page.goto('http://localhost:8000/#/profile/create/true')
-  })
 
-  beforeAll(async () => {
-    const path = require('path')
-    const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
+    const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
     await expect(page).toUploadFile(
         'input[type="file"]',
         bf_item_location,
     )
   })
 
-  it('imports an existing profile and resource templates', async () => {
+  it('imports an existing v0.0.2 profile and resource templates', async () => {
     await page.waitForSelector('span[popover-title="Profile ID: profile:bf2:Item"]')
-        .then(async () => {
-          await expect_regex_in_sel_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', 'Lending or Access Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Use"]', 'Use or Reproduction Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Retention"]', 'Retention Policy')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:ImmAcqSource"]', 'Immediate Source of Acquisition')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Enumeration"]', 'Enumeration')
-          await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Chronology"]', 'Chronology')
-        })
-        .catch(error => console.log(`promise error for import profile: ${error}`))
+      .then(async () => {
+        await expect_regex_in_sel_textContent('span[popover-title="Profile ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item"]', 'BIBFRAME 2.0 Item')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Access"]', 'Lending or Access Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Use"]', 'Use or Reproduction Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Retention"]', 'Retention Policy')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:ImmAcqSource"]', 'Immediate Source of Acquisition')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Enumeration"]', 'Enumeration')
+        await expect_regex_in_sel_textContent('span[popover-title="Resource ID: profile:bf2:Item:Chronology"]', 'Chronology')
+      })
+      .catch(error => console.log(`promise error for import v0.0.2 profile: ${error}`))
   })
 
   it('has the expected resource metadata and property sections', async() => {
@@ -144,6 +142,22 @@ describe('Importing a profile from a json file', () => {
     // TODO: write this test
   })
 
+})
+
+it('imports an existing v0.1.0 profile and resource templates', async () => {
+  await page.goto('http://localhost:8000/#/profile/create/true')
+
+  const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'place_profile_sinopia_v0.1.0.json')
+  await expect(page).toUploadFile(
+    'input[type="file"]',
+    bf_item_location,
+  )
+  await page.waitForSelector('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]')
+    .then(async () => {
+      await expect_regex_in_sel_textContent('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]', 'BIBFRAME 2.0 Place')
+      await expect_regex_in_sel_textContent('span[popover-title="Resource ID: sinopia:resourceTemplate:bf2:Place"]', 'Place Associated with a Work')
+    })
+    .catch(error => console.log(`promise error for import v0.1.0 profile: ${error}`))
 })
 
 async function expect_regex_in_sel_textContent(sel, value) {

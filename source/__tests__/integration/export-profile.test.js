@@ -14,7 +14,7 @@ describe('Sinopia Profile Editor exports an edited profile', () => {
 
     beforeAll(async () => {
       const path = require('path')
-      const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item.json')
+      const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
       await expect(page).toUploadFile(
         'input[type="file"]',
         bf_item_location,
