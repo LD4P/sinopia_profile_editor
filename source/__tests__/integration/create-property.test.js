@@ -66,27 +66,62 @@ describe('Create profile property template requirements', () => {
       })
     })
 
-    // it('displays the correct text for remark', async () => {
-    //   const sel = 'div.propertyItem label[for="remark"]'
-    //   await expect_value_in_sel_text(sel, 'Guiding statement for the use of this property')
-    // })
+    describe('valueConstraints fields', () => {
+      let vcFieldsTableSel = 'div[ng-controller="ValueConstraintController"]'
 
-    describe('Templates dropdown', () => {
-      it('populated with resource template ids (via profiles from versoSpoof)', async () => {
-        await page.waitForSelector(propTemplateSelectSelector)
-        const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
-        expect(profile_count).toBe(235)
+      describe('Value Constraints', () => {
+        it('header', async () => {
+          await expect_value_in_sel_text(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
+        })
+        it('has no input fields', async () => {
+          const inputs = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('input').length)
+          expect(inputs).toBe(0)
+        });
+        it('has no select fields', async () => {
+          const selects = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('select').length)
+          expect(selects).toBe(0)
+        })
+        it('has Add Default Link', async () => {
+          await expect_value_in_sel_text(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
+        })
       })
-      it('allows selection of a resource template id', async () => {
-        await page.waitForSelector(propTemplateSelectSelector)
-        // NOTE: the html always shows the first option selected, though the browser
-        //  shows the right thing.  So here we cheat and use indirect checking of attributes
-        //  to show a template can be selected
-        await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-pristine`)
-        await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
-        await page.select(propTemplateSelectSelector, 'profile:bf2:Form')
-        await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-dirty`)
-        await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="profile:bf2"]`)
+
+
+      describe('Value Data Type', () => {
+        let vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
+        it('header', async () => {
+          await expect(page).toMatch('Value Data Type')
+        })
+        it('has one input field', async () => {
+          const inputs = await page.$eval(vdtTableSel, e => e.getElementsByTagName('input').length)
+          expect(inputs).toBe(1)
+        })
+        it('has URI field', async () => {
+          await expect_value_in_sel_text(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
+        })
+      })
+
+      describe('Templates dropdown', () => {
+        it('populated with resource template ids (via profiles from versoSpoof)', async () => {
+          await page.waitForSelector(propTemplateSelectSelector)
+          const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
+          expect(profile_count).toBe(235)
+        })
+        it('allows selection of a resource template id', async () => {
+          await page.waitForSelector(propTemplateSelectSelector)
+          // NOTE: the html always shows the first option selected, though the browser
+          //  shows the right thing.  So here we cheat and use indirect checking of attributes
+          //  to show a template can be selected
+          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-pristine`)
+          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
+          await page.select(propTemplateSelectSelector, 'profile:bf2:Form')
+          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-dirty`)
+          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="profile:bf2"]`)
+        })
+      })
+
+      describe('has Add Value link', async () => {
+        await expect_value_in_sel_text(`${vcFieldsTableSel} > a#adValue`, "Add Value")
       })
     })
   })
@@ -196,7 +231,7 @@ async function expect_sel_to_exist(sel) {
 }
 async function expect_value_in_sel_text(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  expect(sel_text.trim()).toBe(value)
 }
 async function expect_value_not_in_sel_text(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
