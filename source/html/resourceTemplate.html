@@ -27,7 +27,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <label for="id">ID</label>
+                        <label for="id">ID*</label>
                     </td>
                     <td>
                         <input name="resourceId" ng-model="resourceTemplate.id" ng-change="checkID()" required
@@ -40,7 +40,7 @@
                     </td>
 
                     <td>
-                        <label for="resourceURI">Resource URI</label>
+                        <label for="resourceURI">Resource URI*</label>
                     </td>
                     <td>
                         <input  type="url" name="resourceURI" ng-model="resourceTemplate.resourceURI" required
@@ -62,31 +62,31 @@
 
                 <tr>
                     <td>
-                       <label for="resourceLabel">Resource Label</label>
+                       <label for="resourceLabel">Resource Label*</label>
                     </td>
                     <td>
                        <input name="resourceLabel" ng-model="resourceTemplate.resourceLabel"
-                              popover="Localized label associated with the resource"
+                              popover="Localized label associated with the resource template"
                               popover-title="Resource Label" popover-trigger="mouseenter"
                               popover-placement="right"/>
                     </td>
 
                     <td>
-                        <label for="author">Author</label>
+                        <label for="rtAuthor">Author*</label>
                     </td>
                     <td>
-                        <input name="author" ng-model="resourceTemplate.author"
-                               popover="Contact information associated with the profile"
+                        <input name="rtAuthor" ng-model="resourceTemplate.author"
+                               popover="Contact information associated with the resource template"
                                popover-title="Resource Title" popover-trigger="mouseenter"
                                popover-placement="left"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="remark">Guiding statement for the use of this resource</label>
+                        <label for="rtRemark">Guiding statement for the use of this resource</label>
                     </td>
                     <td>
-                        <input name="remark" ng-model="resourceTemplate.remark"
+                        <input name="rtRemark" ng-model="resourceTemplate.remark"
                                 popover="Comment or guiding statement intended to be presented as supplementary information in user display. A common use for this is to notify a user of code lists or schemata associated with the expected value of this resource."
                                 popover-title="Remark" popover-trigger="mouseenter"
                                 popover-placement="right"/>

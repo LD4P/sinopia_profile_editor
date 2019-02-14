@@ -1,6 +1,6 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
 
-describe('Create profile has properties for resource and templates for property', () => {
+describe('Create profile property template requirements', () => {
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
     page
@@ -15,36 +15,114 @@ describe('Create profile has properties for resource and templates for property'
   })
 
 
-  describe('adding a template', () => {
-    let template_select_sel = 'select#templateSelect_1_0'
+  describe('adding a property template', () => {
+    let propTemplateSelectSelector = 'select#templateSelect_1_0'
+    let ptFieldsTableSel = 'div.panel[name="propertyForm"] table'
     beforeAll(async () => {
       await page.waitForSelector('span[href="#property_1"]')
       page
         .waitForSelector('a#addTemplate')
         .then(async () => await page.click('a#addTemplate'))
         .catch(error => console.log(`promise error for add template link: ${error}`))
-      await page.waitForSelector(template_select_sel)
+      await page.waitForSelector(propTemplateSelectSelector)
     })
 
-    it('displays the correct text for remark', async () => {
-      const sel = 'div.propertyItem label[for="remark"]'
-      await expect_value_in_sel_text(sel, 'Guiding statement for the use of this property')
+    it('appends a property template section to the form', async () => {
+      expect.assertions(1)
+      page.waitForSelector(ptFieldsTableSel)
+        .catch(error => console.log(`promise error loading property form: ${error}`))
+      await expect_sel_to_exist('i.fa-exclamation[id="error"]')
     })
-    it('populates templates (via profiles from versoSpoof)', async () => {
-      await page.waitForSelector(template_select_sel)
-      const profile_count = await page.$eval(template_select_sel, e => e.length)
-      expect(profile_count).toBe(235)
+
+    describe('property template form fields', () => {
+
+      it('has 3 input fields for the property template metadata', async () => {
+        const inputs = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('input').length)
+        expect(inputs).toBe(3)
+      })
+
+      it('has 3 select fields for the property template metadata', async () => {
+        const selects = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('select').length)
+        expect(selects).toBe(3)
+      })
+
+      describe('Required fields are indicated with asterisk', async () => {
+        it('Property URI', async () => {
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyURI"]`, "Property URI*")
+        })
+        it('Property Label', async () => {
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyLabel"]`, "Property Label*")
+        })
+        it('Type', async () => {
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="type"]`, "Type*")
+        })
+      })
+
+      describe('Non-required fields have no asterisk', async () => {
+        it('Remark', async () => {
+          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property*")
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property")
+        })
+      })
     })
-    it('can select a template', async () => {
-      await page.waitForSelector(template_select_sel)
-      // NOTE: the html always shows the first option selected, though the browser
-      //  shows the right thing.  So here we cheat and use indirect checking of attributes
-      //  to show a template can be selected
-      await expect_sel_to_exist(`${template_select_sel}.ng-pristine`)
-      await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value="?"]`)
-      await page.select(template_select_sel, 'profile:bf2:Form')
-      await expect_sel_to_exist(`${template_select_sel}.ng-dirty`)
-      await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value^="profile:bf2"]`)
+
+    describe('valueConstraints fields', () => {
+      let vcFieldsTableSel = 'div[ng-controller="ValueConstraintController"]'
+
+      describe('Value Constraints', () => {
+        it('header', async () => {
+          await expect_value_in_sel_text(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
+        })
+        it('has no input fields', async () => {
+          const inputs = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('input').length)
+          expect(inputs).toBe(0)
+        });
+        it('has no select fields', async () => {
+          const selects = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('select').length)
+          expect(selects).toBe(0)
+        })
+        it('has Add Default Link', async () => {
+          await expect_value_in_sel_text(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
+        })
+      })
+
+
+      describe('Value Data Type', () => {
+        let vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
+        it('header', async () => {
+          await expect(page).toMatch('Value Data Type')
+        })
+        it('has one input field', async () => {
+          const inputs = await page.$eval(vdtTableSel, e => e.getElementsByTagName('input').length)
+          expect(inputs).toBe(1)
+        })
+        it('has URI field', async () => {
+          await expect_value_in_sel_text(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
+        })
+      })
+
+      describe('Templates dropdown', () => {
+        it('populated with resource template ids (via profiles from versoSpoof)', async () => {
+          await page.waitForSelector(propTemplateSelectSelector)
+          const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
+          expect(profile_count).toBe(235)
+        })
+        it('allows selection of a resource template id', async () => {
+          await page.waitForSelector(propTemplateSelectSelector)
+          // NOTE: the html always shows the first option selected, though the browser
+          //  shows the right thing.  So here we cheat and use indirect checking of attributes
+          //  to show a template can be selected
+          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-pristine`)
+          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
+          await page.select(propTemplateSelectSelector, 'profile:bf2:Form')
+          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-dirty`)
+          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="profile:bf2"]`)
+        })
+      })
+
+      describe('has Add Value link', async () => {
+        await expect_value_in_sel_text(`${vcFieldsTableSel} > a#adValue`, "Add Value")
+      })
     })
   })
 
@@ -77,7 +155,8 @@ describe('property URI is required', () => {
 
 
   it('can be exported with property URI', async () => {
-    let data;
+    expect.assertions(3)
+    let data
 
     await page.waitFor(1000, {waitUntil: 'networkidle2'})
     await page.$eval(profileFormSel, e => e.reset())
@@ -93,8 +172,9 @@ describe('property URI is required', () => {
     }, 10000)
 
     await page.waitFor(1000, {waitUntil: 'networkidle2'})
-    page.click(exportButtonSel).then(async () => { console.log('Export button clicked') })
-        .catch(e => console.log(`failed promise on clicking the Export button: ${e}`))
+    page.click(exportButtonSel)
+      // .then(async () => { console.log('Export button clicked') })
+      .catch(e => console.log(`failed promise on clicking the Export button: ${e}`))
 
     await page.waitFor(1000)
 
@@ -102,7 +182,7 @@ describe('property URI is required', () => {
       .waitForSelector('a[download="My Profile.json"]')
       .then(
           data = await page.$eval('a[download="My Profile.json"]', e => e.getAttribute('href'))
-      )
+        )
       .catch(e => console.log(`failed promise on download data link: ${e}`))
 
     const json = JSON.parse(data.substr(data.indexOf(',') + 1))
@@ -151,5 +231,9 @@ async function expect_sel_to_exist(sel) {
 }
 async function expect_value_in_sel_text(sel, value) {
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  expect(sel_text.trim()).toBe(value)
+}
+async function expect_value_not_in_sel_text(sel, value) {
+  const sel_text = await page.$eval(sel, e => e.textContent)
+  expect(sel_text.trim()).not.toBe(value)
 }
