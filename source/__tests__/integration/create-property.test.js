@@ -138,14 +138,14 @@ describe('property URI is required', () => {
   let exportButtonSel = 'a.btn.import-export'
 
   it('error if exported without property URI', async () => {
-    await page.waitFor(1000)
+    await page.waitForSelector(profileFormSel)
     await expect(page).toFillForm(profileFormSel, {
       id: "my:profile",
       description: "Profile description",
       author: "Me",
       title: "My profile",
       resourceId: "my:resource",
-      resourceURI: "http://www.example.com"
+      resourceURI: "http://www.example.com#after"
     }, 10000)
 
     await page.click(exportButtonSel)
@@ -153,11 +153,8 @@ describe('property URI is required', () => {
     await expect_value_in_sel_text(alertBoxSel, 'Parts of the form are invalid')
   })
 
-
   it('can be exported with property URI', async () => {
-    expect.assertions(3)
-    let data
-
+    expect.assertions(3) // avoid false positives when promise fails
     await page.waitFor(1000, {waitUntil: 'networkidle2'})
     await page.$eval(profileFormSel, e => e.reset())
 
@@ -167,8 +164,8 @@ describe('property URI is required', () => {
       author: "Me",
       title: "My Profile",
       resourceId: "my:resource",
-      resourceURI: "http://www.example.com",
-      propertyURI: "http://www.example.org"
+      resourceURI: "http://www.example.com#after",
+      propertyURI: "http://www.example.org#foo"
     }, 10000)
 
     await page.waitFor(1000, {waitUntil: 'networkidle2'})
@@ -176,8 +173,9 @@ describe('property URI is required', () => {
       // .then(async () => { console.log('Export button clicked') })
       .catch(e => console.log(`failed promise on clicking the Export button: ${e}`))
 
-    await page.waitFor(1000)
+    await page.waitForSelector('a[download="My Profile.json"]')
 
+    let data
     page
       .waitForSelector('a[download="My Profile.json"]')
       .then(
@@ -185,9 +183,9 @@ describe('property URI is required', () => {
         )
       .catch(e => console.log(`failed promise on download data link: ${e}`))
 
-    const json = JSON.parse(data.substr(data.indexOf(',') + 1))
+    const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
     expect(json['Profile']['id']).toBe('my:profile')
-    expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['propertyURI']).toBe('http://www.example.org')
+    expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['propertyURI']).toBe('http://www.example.org#foo')
   })
 })
 
