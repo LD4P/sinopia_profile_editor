@@ -9,7 +9,7 @@ angular.module('locApp.modules.profile.controllers')
         return {
             link: function(scope, element, attrs) {
                 element.on('click', function() {
-                    
+
                     if(scope.validateProfile()) {
                         scope.validateDate();
                         // Sinopia: adds an ID to the anchor tag and checks for it's prior existence
@@ -23,7 +23,9 @@ angular.module('locApp.modules.profile.controllers')
                         var raw = FormHandler.getFormData(scope.profile, attrs.sssExport === "brief");
                         var name = ProfileHandler.getName(raw) + ".json";
                         var json = angular.toJson(raw);
-                        var dataStr = "data:text/json; charset=utf-8," + json;
+                        // var dataStr = "data:text/json; charset=utf-8," + json;
+                        // Need to URI encode for any '#' chars in, e.g. propertyURI, o.w. downloaded json truncated
+                        var dataStr = "data:text/json; charset=utf-8," + encodeURIComponent(json);
                         var downloadAnchorNode = document.createElement('a');
                         downloadAnchorNode.setAttribute("id", 'downloadAnchorNode');
                         downloadAnchorNode.setAttribute("href", dataStr);
