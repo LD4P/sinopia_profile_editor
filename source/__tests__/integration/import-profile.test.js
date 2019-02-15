@@ -144,6 +144,22 @@ describe('Importing a profile from a json file', () => {
 
 })
 
+it('imports an existing v0.0.9 profile and resource templates', async () => {
+  await page.goto('http://localhost:8000/#/profile/create/true')
+
+  const bf_item_location = path.join(__dirname, "..", "__fixtures__", 'foo_profile_sinopia_v0.0.9.json')
+  await expect(page).toUploadFile(
+    'input[type="file"]',
+    bf_item_location,
+  )
+  await page.waitForSelector('span[popover-title="Profile ID: sinopia:profile:bf2:Foo"]')
+    .then(async () => {
+      await expect_regex_in_sel_textContent('span[popover-title="Profile ID: sinopia:profile:bf2:Foo"]', 'BIBFRAME 2.0 Foo')
+      await expect_regex_in_sel_textContent('span[popover-title="Resource ID: sinopia:resourceTemplate:bf2:Foo"]', 'Foo Associated with a Work')
+    })
+    .catch(error => console.log(`promise error for import v0.0.9 profile: ${error}`))
+})
+
 it('imports an existing v0.1.0 profile and resource templates', async () => {
   await page.goto('http://localhost:8000/#/profile/create/true')
 
