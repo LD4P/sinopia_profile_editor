@@ -216,10 +216,11 @@ describe('choose template from menu', () => {
     await page.waitFor(1000)
   })
 
+  // FIXME:  this test gives a false positive -- try changing the string below ...
   it('First property is Absorbed by', async () => {
     page
       .waitForSelector(property_select_sel)
-      .then(async () => await expect_value_in_sel_text(property_select_sel, 'Absorbed by'))
+      .then(async () => await expect_value_in_sel_text(property_select_sel, 'FIXME I am broken Absorbed by'))
   })
 })
 
