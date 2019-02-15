@@ -26,9 +26,9 @@ angular.module('locApp.modules.profile.services')
         };
 
         var addSchemaUrls = function(profile) {
-          profile.schema = 'https://ld4p.github.io/sinopia/schemas/0.1.0/profile.json'
+          profile.schema = 'https://ld4p.github.io/sinopia/schemas/0.0.9/profile.json'
           angular.forEach(profile.resourceTemplates, function(resource){
-              resource.schema = 'https://ld4p.github.io/sinopia/schemas/0.1.0/resource-template.json'
+              resource.schema = 'https://ld4p.github.io/sinopia/schemas/0.0.9/resource-template.json'
           })
         }
 
