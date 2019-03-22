@@ -4,11 +4,11 @@ describe('spoofed verso', () => {
   let versoSpoof  = require('../../source/versoSpoof.js')
 
   describe('profiles', () => {
-    it('array of length 30', () => {
-      expect(versoSpoof.profiles).toHaveLength(30)
+    it('array of length 36', () => {
+      expect(versoSpoof.profiles).toHaveLength(36)
     })
     it('profile has id', () => {
-      expect(versoSpoof.profiles[0]['id']).toBe('profile:bf2:AdminMetadata')
+      expect(versoSpoof.profiles[0]['id']).toBe('sinopia:profile:bf2:AdminMetadata')
     })
     it('profile has name', () => {
       expect(versoSpoof.profiles[0]['name']).toBe('Metadata for BIBFRAME Resources')

@@ -54,7 +54,7 @@ describe('Importing a profile from a json file', () => {
           let template_select_sel = 'select#templateSelect_7_0'
           await page.waitForSelector(template_select_sel)
           await expect_sel_to_exist(`${template_select_sel}.ng-pristine`)
-          await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value^="profile:bf2"]`)
+          await expect_sel_to_exist(`${template_select_sel} > option[selected="selected"][value^="?"]`)
         })
   })
 

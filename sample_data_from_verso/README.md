@@ -1,14 +1,17 @@
 # Sinopia Sample Data from verso
 This directory and sub-directories contain JSON Profiles and the language RDF XML
-from the Library of Congress [Verso][VERSO] middleware source code repository 
-that is used in the Sinopia Profile Editor project. 
+from the Library of Congress [Verso][VERSO] middleware source code repository
+that is used in the Sinopia Profile Editor project.
 
 ## Log
+
+### 2019-03-22
+Updated all profiles from [Sinopia Sample Profiles](https://github.com/LD4P/sinopia_sample_profiles).
 
 ### 2018-10-31
 Add README.md
 
-### 2018-10-30 
+### 2018-10-30
 Initial import of the latest profiles in [Verso][VERSO]. Here is the listing of
 profiles from the SHA commit 67786e709e2aa207f6605e6a484b69d01acb9a60.
 
@@ -42,6 +45,6 @@ profiles from the SHA commit 67786e709e2aa207f6605e6a484b69d01acb9a60.
 	BIBFRAME 2.0 Title Information.json
 	BIBFRAME 2.0 Topic.json
 	PMO Medium of Performance.json
- 
 
-[VERSO]: https://github.com/lcnetdev/verso 
+
+[VERSO]: https://github.com/lcnetdev/verso
