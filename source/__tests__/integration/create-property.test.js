@@ -105,7 +105,7 @@ describe('Create profile property template requirements', () => {
         it('populated with resource template ids (via profiles from versoSpoof)', async () => {
           await page.waitForSelector(propTemplateSelectSelector)
           const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
-          expect(profile_count).toBe(235)
+          expect(profile_count).toBe(242)
         })
         it('allows selection of a resource template id', async () => {
           await page.waitForSelector(propTemplateSelectSelector)
@@ -114,9 +114,9 @@ describe('Create profile property template requirements', () => {
           //  to show a template can be selected
           await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-pristine`)
           await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
-          await page.select(propTemplateSelectSelector, 'profile:bf2:Form')
+          await page.select(propTemplateSelectSelector, 'sinopia:resourceTemplate:bf2:Form')
           await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-dirty`)
-          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="profile:bf2"]`)
+          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
         })
       })
 
