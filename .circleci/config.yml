@@ -52,10 +52,6 @@ jobs:
       - store_artifacts:
           path: coverage
           destination: jest-coverage
-      - run: npm run analysis
-      - store_artifacts:
-          path: static-analysis
-          destination: static-analysis
 
   register_image:
     <<: *defaults

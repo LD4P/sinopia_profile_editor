@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
-    "es6-plato": "^1.0.18",
     "eslint": "^5.6.0",
     "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-node": "^7.0.1",
@@ -52,7 +51,6 @@
     ]
   },
   "scripts": {
-    "analysis": "es6-plato -d static-analysis -n -e .eslintrc.js source/assets/js/modules/help source/assets/js/modules/profile source/assets/js/ng-app.js",
     "dev-test": "npm install && npm run grunt-dev && jest --colors",
     "eslint": "eslint --color --max-warnings 172 -c .eslintrc.js .",
     "grunt-dev": "grunt ngAnnotate uglify cssmin",

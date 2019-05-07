@@ -65,15 +65,11 @@ sure to run `npm install && grunt` before running the tests with `npm test`.
 #### test coverage
 To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.  You can also check [coveralls](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor)
 
-### static analysis
-
-We use plato (actually es6-plato) to get static analysis info such as code complexity, etc.  `npm run analysis` will create a folder `static-analysis`; use a web browser to open `static-analysis/index.html`.  There is a project view and also a view of each file.
-
 ### continuous integration
 
 We use [circleci](https://circleci.com/gh/Ld4p/sinopia_profile_editor).  The steps are in `.circleci/config.yml`.
 
-In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`) and at static analysis output (`static-analysis/index.html`).
+In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`).
 
 # lcnetdev info below
 
@@ -94,4 +90,4 @@ Contributors:
 Original source code created by Stanford University is copyrighted under Apache 2 license and
 documented with an Apache 2.0 license header.
 
-The Profiled Editor was originally a work of the United States government and portions of project are in the public domain through the CC0 1.0 Universal public domain dedication license. 
+The Profiled Editor was originally a work of the United States government and portions of project are in the public domain through the CC0 1.0 Universal public domain dedication license.
