@@ -47,16 +47,6 @@ The javascript code uses grunt as a build tool. See `Gruntfile.js` for build dep
 
 `npm run eslint`
 
-#### Generate a list of all eslint errors
-
-```
-npx eslint-takeoff
-```
-
-creates `.eslintrc-todo.yml` showing which linter rules give errors or warnings for each javascript file, per `.eslintrc.yml`
-
-See https://www.npmjs.com/package/eslint-takeoff for more info.
-
 ### test
 
 Tests are written in jest, also utilizing puppeteer for end-to-end tests.  Be
