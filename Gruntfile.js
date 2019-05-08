@@ -109,7 +109,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-ngdocs');
 	grunt.loadNpmTasks('grunt-jsdoc');
-	grunt.loadNpmTasks('grunt-eslint');
 
 	grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'ngdocs', 'jsdoc']);
 };
