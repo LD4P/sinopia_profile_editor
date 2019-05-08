@@ -35,8 +35,8 @@ describe('Create profile has ontologies available for resource template', () => 
       await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(2)`, 'BFLC')
       await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(3)`, 'RDF')
       await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(4)`, 'RDFS')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(5)`, 'MADSRDF')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(6)`, 'Bibframe 2.0')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(5)`, 'Bibframe 2.0')
+      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(6)`, 'MADSRDF')
     })
 
     it('ontologies selectable', async () => {
