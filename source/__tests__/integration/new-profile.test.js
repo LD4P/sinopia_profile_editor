@@ -24,7 +24,7 @@ describe('Adding and removing a new Profile', () => {
       expect(inputs).toBe(8)
     })
 
-    describe('Required fields are indicated with asterisk', async () => {
+    describe('Required fields are indicated with asterisk', () => {
       it('ID', async () => {
         await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="id"]`, "ID*")
       })
@@ -42,7 +42,7 @@ describe('Adding and removing a new Profile', () => {
       await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date*")
       await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date")
     })
-    describe('Non-required fields have no asterisk', async () => {
+    describe('Non-required fields have no asterisk', () => {
       it('Remark', async () => {
         await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark*")
         await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark")

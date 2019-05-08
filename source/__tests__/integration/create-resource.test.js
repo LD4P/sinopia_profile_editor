@@ -33,7 +33,7 @@ describe('Create profile resource template requirements', () => {
       expect(inputs).toBe(5)
     })
 
-    describe('Required fields are indicated with asterisk', async () => {
+    describe('Required fields are indicated with asterisk', () => {
       it('ID', async () => {
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="id"]`, "ID*")
       })
@@ -48,7 +48,7 @@ describe('Create profile resource template requirements', () => {
       })
     })
 
-    describe('Non-required fields have no asterisk', async () => {
+    describe('Non-required fields have no asterisk', () => {
       it('Remark', async () => {
         await expect_value_not_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource*")
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource")
