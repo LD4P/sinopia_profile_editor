@@ -4,167 +4,170 @@ describe('Create profile resource template requirements', () => {
 
   beforeAll(async () => {
     await page.goto('http://localhost:8000/#/profile/create/')
-    page
-      .waitForSelector('a#addResource')
-      .then(async () => await page.click('a#addResource'))
-      .catch(error => console.log(`promise error for addResource link: ${error}`))
-    await page.waitForSelector('a.propertyLink')
+    await page.waitForSelector('a#addResource')
+    await page.click('a#addResource')
+    return await page.waitForSelector('a.propertyLink')
   })
-
-  afterEach(async () => {
-    page.waitFor(2000)
-    await page.$eval('form[name="profileForm"]', e => e.reset())
-  })
-
-  let exportButtonSel = 'span.pull-right.pushed-right > a.import-export'
-  let alertBoxSel = '#alertBox > div > div > div.modal-body > p'
 
   describe('resource template form fields', () => {
     const rt_fields_table_sel = 'div[id="resourceTemplates_0"] div.panel-body > table'
 
     it('appends a resource template section to the form', async () => {
-      page.waitForSelector('span[id="0"] > span')
-        .catch(error => console.log(`promise error for loading create page with import dialog: ${error}`))
+      expect.assertions(1)
+      await page.waitForSelector('span[id="0"] > span')
       await expect_regex_in_sel_textContent('span[id="0"] > span', /^Resource Template\s*$/)
     })
 
     it('has five input fields for the resource template data', async () => {
-      const inputs = await page.$eval(rt_fields_table_sel, e => e.getElementsByTagName('input').length)
-      expect(inputs).toBe(5)
+      expect.assertions(1)
+      const num_inputs = await page.$eval(rt_fields_table_sel, e => e.getElementsByTagName('input').length)
+      expect(num_inputs).toBe(5)
     })
 
     describe('Required fields are indicated with asterisk', () => {
       it('ID', async () => {
+        expect.assertions(1)
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="id"]`, "ID*")
       })
       it('Resource URI', async () => {
+        expect.assertions(1)
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceURI"]`, "Resource URI*")
       })
       it('Resource Label', async () => {
+        expect.assertions(1)
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceLabel"]`, "Resource Label*")
       })
       it('Author', async () => {
+        expect.assertions(1)
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtAuthor"]`, "Author*")
       })
     })
 
     describe('Non-required fields have no asterisk', () => {
       it('Remark', async () => {
+        expect.assertions(2)
         await expect_value_not_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource*")
         await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource")
       })
     })
+  })
 
-    it('requires Resource ID', async () => {
-      await expect(page).toFillForm('form[name="profileForm"]', {
-        id: "my:profile",
-        description: "Profile description",
-        author: "Me",
-        title: "My profile",
-        resourceId: "",
-        resourceURI: "http://www.example.com"
-      })
-      await page.click(exportButtonSel)
-      page
-        .waitForSelector(alertBoxSel)
-        .catch(error => console.log(`promise error for alert box selector: ${error}`))
-      await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
-    })
+  describe('exporting', () => {
+    let exportButtonSel = 'span.pull-right.pushed-right > a.import-export'
+    let alertBoxSel = '#alertBox > div > div > div.modal-body > p'
 
-    it('requires Resource URI', async () => {
-      await expect(page).toFillForm('form[name="profileForm"]', {
+    it('errors without a property template', async () => {
+      expect.assertions(3)
+      await expect(page).toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+        // all the other required fields from profile and resource template
         id: "my:profile",
         description: "Profile description",
         author: "Me",
         title: "My profile",
         resourceId: "my:resource",
-        resourceURI: "htt",
-      }).catch(error => console.log(`promise error for filling profile form: ${error}`));
-      await page.waitFor(1000)
-      const invalid_url_class = page.$('input#resourceURI', e => e.getAttribute('ng-invalid-url'))
-      expect(invalid_url_class).toBeDefined()
+        resourceURI: "http://www.stanford.edu"
+      })
+      // wait for resourceURI check
+      const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+      expect(valid_url_class).toBeTruthy()
 
       await page.click(exportButtonSel)
-      page
-        .waitForSelector(alertBoxSel)
-        .catch(error => console.log(`promise error for alert box selector: ${error}`))
-      await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
-    })
-
-    it('requires a property template', async () => {
-      expect(page)
-        .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
-          // all the other required fields from resource template
-          id: "my:profile",
-          description: "Profile description",
-          author: "Me",
-          title: "My profile",
-          resourceId: "my:resource",
-          resourceURI: "http://id.loc.gov"
-        })
-        .catch(error => console.log(`promise error for filling profile form: ${error}`))
-      await page.waitFor(1000) // waiting for .toFillForm(), as resourceURI field does a check
-      page
-        .waitForSelector('input#resourceURI.ng-valid-url')
-        .catch(error => console.log(`promise error checkURL: ${error}`))
-      await page.click(exportButtonSel)
-      page
-        .waitForSelector(alertBoxSel)
-        .catch(error => console.log(`promise error for alert box selector: ${error}`))
+      await page.waitForSelector(alertBoxSel)
       await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
     })
 
-
-
-    // TODO:   I think the below belongs in create-property.test, if it isn't already there
-    it('requires a valid property uri', async () => {
-      expect(page)
-        .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
-          // all the other required fields from resource template
-          id: "my:profile",
-          description: "Profile description",
-          author: "Me",
-          title: "My profile",
-          resourceId: "my:resource",
-          resourceURI: "http://id.loc.gov"
-        })
-        .catch(error => console.log(`promise error for filling profile form: ${error}`))
-
-      await page.click('a.propertyLink')
-      await page.waitFor(1000)
-      await page.evaluate(() => {
-        let dom = document.querySelector('a.propertyLink');
-        dom.innerHTML = "h";
-      });
-      await expect_value_in_sel_textContent('a.propertyLink', 'h')
-      await page.waitFor(2000)
-      const invalid_url_class = await page.$('input#propertyURI', e => e.getAttribute('ng-invalid-url'))
-      expect(invalid_url_class).toBeDefined()
-    })
-
-    it('valid property uri', async () => {
-      expect(page)
-        .toFillForm('form.sinopia-profile-form[name="profileForm"]', {
-          // all the other required fields from resource template
-          id: "my:profile",
-          description: "Profile description",
-          author: "Me",
-          title: "My profile",
-          resourceId: "my:resource",
-          resourceURI: "http://id.loc.gov"
-        })
-        .catch(error => console.log(`promise error for filling profile form: ${error}`))
-
-      await page.click('a.propertyLink')
-
-      await page.evaluate(() => {
-        let dom = document.querySelector('a.propertyLink');
-        dom.innerHTML = "http://id.loc.gov/ontologies/bibframe/code";
+    describe('with property template', () => {
+      beforeAll(async () => {
+        await page.goto('http://127.0.0.1:8000/#/profile/create/')
+        await page.waitForSelector('a#addResource')
+        await page.click('a#addResource')
+        await page.waitForSelector('a.propertyLink')
+        await page.click('a.propertyLink')
+        return await page.waitForSelector('span[href="#property_1"]')
       })
 
-      page.waitFor(2000)
-      const valid_url_class = page.$('input#propertyURI', e => e.getAttribute('ng-valid-url'))
-      expect(valid_url_class).toBeDefined()
+      afterEach(async() => {
+        return await page.$eval('form[name="profileForm"]', e => e.reset())
+      })
+
+      it('requires Resource ID', async () => {
+        expect.assertions(4)
+        await page.waitForSelector('div[name="propertyForm"]')
+        await expect(page).toFillForm('form[name="profileForm"]', {
+          // all the other required fields from profile and resource template
+          id: "my:profile",
+          description: "Profile description",
+          author: "Me",
+          title: "My profile",
+          resourceId: "",
+          resourceURI: "http://www.stanford.edu",
+          propertyURI: 'http://www.example.org',
+          propertyLabel: 'propLabel'
+        })
+        // wait for resourceURI check
+        let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+        expect(valid_url_class).toBeTruthy()
+        // wait for propertyURI check
+        valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
+        expect(valid_url_class).toBeTruthy()
+
+        await page.click(exportButtonSel)
+        await page.waitForSelector(alertBoxSel)
+        await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
+      })
+
+      it('requires Resource URI', async () => {
+        expect.assertions(4)
+        await expect(page).toFillForm('form[name="profileForm"]', {
+          // all the other required fields from profile and resource template
+          id: "my:profile",
+          description: "Profile description",
+          author: "Me",
+          title: "My profile",
+          resourceId: "my:resource",
+          resourceURI: "not-a-uri",
+          propertyURI: 'http://www.example.org',
+          propertyLabel: 'propLabel'
+        })
+        // wait for propertyURI check
+        const valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
+        expect(valid_url_class).toBeTruthy()
+
+        const invalid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-invalid-url'))
+        expect(invalid_url_class).toBeTruthy()
+
+        await page.click(exportButtonSel)
+        await page.waitForSelector(alertBoxSel)
+        await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
+      })
+
+      it('no alerts when all requirements are met', async () => {
+        expect.assertions(5)
+        await expect(page).toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+          // all the other required fields from profile and resource template
+          id: "my:profile",
+          description: "Profile description",
+          author: "Me",
+          title: "My profile",
+          resourceId: "my:resource",
+          resourceURI: "http://www.stanford.edu",
+          propertyURI: 'http://www.example.org',
+          propertyLabel: 'propLabel'
+        })
+        // wait for resourceURI check
+        let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+        expect(valid_url_class).toBeTruthy()
+        // wait for propertyURI check
+        valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
+        expect(valid_url_class).toBeTruthy()
+
+        await page.click(exportButtonSel)
+        await page.waitForSelector('a[download="My profile.json"]')
+        const data = await page.$eval('a[download="My profile.json"]', e => e.getAttribute('href'))
+        const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
+        expect(json['Profile']['id']).toBe('my:profile')
+        expect(json['Profile']['resourceTemplates'][0]['resourceURI']).toBe('http://www.stanford.edu')
+      })
     })
   })
 })
