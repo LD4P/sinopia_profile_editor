@@ -44,7 +44,6 @@ describe('Sinopia Profile Editor Homepage', () => {
     expect.assertions(2)
     const sel = 'a.btn.import-export[ng-click="showImport()"]'
     await expect(page).toClick(sel)
-    await page.waitFor(500) // shameless green: it needs more time here; not sure what to wait for
     const new_url = await page.evaluate(() => window.location.href)
     expect(new_url).toBe('http://127.0.0.1:8000/#/profile/create/true')
   })
@@ -63,14 +62,17 @@ describe('Sinopia Profile Editor Homepage', () => {
 })
 
 async function expect_sel_to_exist(sel) {
+  await page.waitForSelector(sel)
   const sel_text = !!(await page.$(sel))
-  expect(sel_text).toEqual(true)
+  return expect(sel_text).toEqual(true)
 }
 async function expect_regex_in_selector_textContent(sel, regex) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toMatch(regex)
+  return expect(sel_text).toMatch(regex)
 }
 async function expect_value_in_selector_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }

@@ -26,5 +26,5 @@ describe('Type of Property in Resource in Profile', () => {
 async function expect_value_in_sel_textContent(sel, value) {
   await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }

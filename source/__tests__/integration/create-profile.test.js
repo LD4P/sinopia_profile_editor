@@ -48,6 +48,7 @@ describe('Validating the profile metadata', () => {
 })
 
 async function expect_value_in_selector_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }

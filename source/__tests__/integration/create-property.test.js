@@ -174,6 +174,7 @@ describe('property URI and Label are required', () => {
       propertyLabel: 'propLabel'
     })
     // wait for resourceURI check
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
 
@@ -215,11 +216,10 @@ describe('property URI and Label are required', () => {
       propertyURI: 'not-a-uri',
       propertyLabel: 'propLabel'
     })
-    // wait for resourceURI check
+    // wait for resourceURI and propertyURI checks
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-
-    // wait for propertyURI check
     const invalid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-invalid-url'))
     expect(invalid_url_class).toBeTruthy()
 
@@ -240,15 +240,12 @@ describe('property URI and Label are required', () => {
       resourceURI: "http://www.example.com#after",
       propertyURI: "http://www.example.org#foo"
     })
-    // wait for resourceURI check
+    // wait for resourceURI and propertyURI checks
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-    await page.waitFor(1000, {waitUntil: 'networkidle2'})
-
-    // wait for propertyURI check
     valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-    await page.waitFor(1000, {waitUntil: 'networkidle2'})
 
     await page.click(exportButtonSel)
     await page.waitForSelector('a[download="My Profile.json"]')
@@ -276,14 +273,17 @@ describe('choose propertyTemplate from menu', () => {
 })
 
 async function expect_sel_to_exist(sel) {
+  await page.waitForSelector(sel)
   const sel_text = !!(await page.$(sel))
-  expect(sel_text).toEqual(true)
+  return expect(sel_text).toEqual(true)
 }
 async function expect_value_in_sel_text(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text.trim()).toBe(value)
+  return expect(sel_text.trim()).toBe(value)
 }
 async function expect_value_not_in_sel_text(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text.trim()).not.toBe(value)
+  return expect(sel_text.trim()).not.toBe(value)
 }

@@ -215,18 +215,21 @@ describe('Adding, editing and removing a new Profile', () => {
 })
 
 async function expect_regex_in_sel_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toMatch(value)
+  return expect(sel_text).toMatch(value)
 }
 async function expect_sel_not_to_exist(sel) {
   const sel_text = !!(await page.$(sel))
-  expect(sel_text).toEqual(false)
+  return expect(sel_text).toEqual(false)
 }
 async function expect_value_in_selector_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
   return expect(sel_text.trim()).toBe(value)
 }
 async function expect_value_not_in_selector_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
   return expect(sel_text.trim()).not.toBe(value)
 }

@@ -112,7 +112,6 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
       await page.waitForSelector(addValSel, {visible: true})
       await page.click(addValSel)
       const useValuesFromSel = 'div#value select[popover-title="Use Values From"]'
-      await page.waitFor(500) // shameless green: it needs more time here, can't tell why
       await page.waitForSelector(useValuesFromSel, {visible: true})
       await expect_regex_in_sel_textContent(useValuesFromSel, '')
       await expect_sel_to_exist(`${useValuesFromSel} > option[selected="selected"][value="?"]`)
@@ -142,7 +141,7 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
     expect.assertions(5)
     const resourceTemplateSpan = 'span[popover-title="Resource ID: profile:bf2:Item"]'
     await page.waitFor(500) // shameless green: it needs more time here, can't tell why
-    await page.waitFor(resourceTemplateSpan, {visible: true})
+    await page.waitForSelector(resourceTemplateSpan, {visible: true})
     await expect(page).toClick(resourceTemplateSpan)
     await page.waitForSelector('#resource_0 a.propertyLink')
 
@@ -205,20 +204,19 @@ it('imports propertyURI value with # char cleanly', async () => {
 async function expect_regex_in_sel_textContent(sel, value) {
   await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toMatch(value)
+  return expect(sel_text).toMatch(value)
 }
 async function expect_regex_not_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).not.toMatch(value)
+  return expect(sel_text).not.toMatch(value)
 }
 async function expect_value_in_sel_input(sel, value) {
   await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.value)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }
 async function expect_sel_to_exist(sel) {
   await page.waitForSelector(sel)
   const sel_text = !!(await page.$(sel))
-  expect(sel_text).toEqual(true)
+  return expect(sel_text).toEqual(true)
 }

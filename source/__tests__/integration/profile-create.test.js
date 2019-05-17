@@ -31,10 +31,10 @@ async function expect_regex_in_selector_textContent(sel, regex) {
   await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
   const strippedTextContent = sel_text.replace(/\n+/g,' ').trim()
-  expect(strippedTextContent).toMatch(regex)
+  return expect(strippedTextContent).toMatch(regex)
 }
 async function expect_value_in_selector_textContent(sel, value) {
   await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }

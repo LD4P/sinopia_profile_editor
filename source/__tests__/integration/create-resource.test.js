@@ -68,6 +68,7 @@ describe('Create profile resource template requirements', () => {
         resourceURI: "http://www.stanford.edu"
       })
       // wait for resourceURI check
+      await page.waitFor(1000, {waitUntil: 'networkidle2'})
       const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
       expect(valid_url_class).toBeTruthy()
 
@@ -104,10 +105,10 @@ describe('Create profile resource template requirements', () => {
           propertyURI: 'http://www.example.org',
           propertyLabel: 'propLabel'
         })
-        // wait for resourceURI check
+        // wait for resourceURI and propertyURI checks
+        await page.waitFor(1000, {waitUntil: 'networkidle2'})
         let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
         expect(valid_url_class).toBeTruthy()
-        // wait for propertyURI check
         valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
         expect(valid_url_class).toBeTruthy()
 
@@ -130,6 +131,7 @@ describe('Create profile resource template requirements', () => {
           propertyLabel: 'propLabel'
         })
         // wait for propertyURI check
+        await page.waitFor(1000, {waitUntil: 'networkidle2'})
         const valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
         expect(valid_url_class).toBeTruthy()
 
@@ -154,15 +156,15 @@ describe('Create profile resource template requirements', () => {
           propertyURI: 'http://www.example.org',
           propertyLabel: 'propLabel'
         })
-        // wait for resourceURI check
+        // wait for resourceURI and propertyURI checks
+        await page.waitFor(1000, {waitUntil: 'networkidle2'})
         let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
         expect(valid_url_class).toBeTruthy()
-        // wait for propertyURI check
         valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
         expect(valid_url_class).toBeTruthy()
 
         await page.click(exportButtonSel)
-        await page.waitForSelector('a[download="My profile.json"]')
+        await page.waitForSelector('a[download="My profile.json"]', {visible: true})
         const data = await page.$eval('a[download="My profile.json"]', e => e.getAttribute('href'))
         const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
         expect(json['Profile']['id']).toBe('my:profile')
@@ -173,14 +175,17 @@ describe('Create profile resource template requirements', () => {
 })
 
 async function expect_regex_in_sel_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toMatch(value)
+  return expect(sel_text).toMatch(value)
 }
 async function expect_value_in_sel_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
+  return expect(sel_text).toBe(value)
 }
 async function expect_value_not_in_sel_textContent(sel, value) {
+  await page.waitForSelector(sel)
   const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text.trim()).not.toBe(value)
+  return expect(sel_text.trim()).not.toBe(value)
 }
