@@ -61,6 +61,62 @@ We use [circleci](https://circleci.com/gh/Ld4p/sinopia_profile_editor).  The ste
 
 In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`).
 
+### Using Docker
+
+The Sinopia Profile Editor supports [Docker](https://www.docker.com/), both
+with images hosted on [Dockerhub](https://hub.docker.com/r/ld4p/sinopia_profile_editor/)
+and with an available Dockerfile to build locally.
+
+#### Running latest Dockerhub Image
+To run the Docker image, first download the latest image by
+`docker pull ld4p/sinopia_profile_editor:latest` and then to run the profile editor locally
+in the foreground, `docker run -p 8000:8000 --rm --name=sinopia_profile_editor ld4p/sinopia_profile_editor`. The running Sinopia Profile Editor should now be available locally at
+http://localhost:8000.
+
+#### Building latest Docker Image
+
+Before building the latest Docker Image, run
+```
+grunt ngAnnotate uglify cssmin
+```
+
+to update the `dist` folder with the current build.
+
+To build the latest version of the Sinopia Profile Editor, you can build with the `docker build -t ld4p/sinopia_profile_editor:latest --no-cache=true .` command.
+
+#### Pushing Docker Image to DockerHub
+
+Run `docker login` and enter the correct credentials to your docker account (hub.docker.com).  
+Once successfully authenticated, run
+
+```
+docker push ld4p/sinopia_profile_editor:latest
+```
+
+Ask a member on the DevOps team to go into the AWS console to update https://sinopia.io
+
+#### Updating Docker Image in AWS Dev Environment
+
+This section assumes you've already authenticated to DockerHub via `docker login` in the previous section, and also assumes you've run through the [AWS development environment setup](https://github.com/sul-dlss/terraform-aws/wiki/AWS-DLSS-Dev-Env-Setup) documentation and configured the AWS CLI.
+
+First, build a new `sinopia_profile_editor` image tagged with `latest` per instructions above.
+
+Then push the `latest`-tagged image to DockerHub per instructions above.
+
+Next, set an environment variable to the name of the AWS `DevelopersRole` profile as described in the documentation above (as stored in `~/.aws/config`):
+
+```shell
+$ export AWS_PROFILE=change_to_whatever_you_named_your_dlss_development_profile
+```
+
+And, finally, run the following commands to refresh the dev ECS instance that runs the profile editor:
+
+```shell
+$ task_arn=$(aws ecs list-task-definitions --family-prefix sinopia-pe --region us-west-2 --sort DESC --max-items 1 --profile $AWS_PROFILE | jq --raw-output --exit-status '.taskDefinitionArns[]')
+$ cluster_arn=$(aws ecs list-clusters --region us-west-2  --profile $AWS_PROFILE | jq --raw-output --exit-status '.clusterArns[] | select(contains(":cluster/sinopia-dev"))')
+$ aws ecs update-service --service sinopia-pe --region us-west-2 --cluster $cluster_arn --task-definition $task_arn --force-new-deployment --profile $AWS_PROFILE
+```
+
 # lcnetdev info below
 
 ## Data References
@@ -80,4 +136,4 @@ Contributors:
 Original source code created by Stanford University is copyrighted under Apache 2 license and
 documented with an Apache 2.0 license header.
 
-The Profiled Editor was originally a work of the United States government and portions of project are in the public domain through the CC0 1.0 Universal public domain dedication license.
+The Profile Editor was originally a work of the United States government; portions of the project are in the public domain through the CC0 1.0 Universal public domain dedication license.
