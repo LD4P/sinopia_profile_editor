@@ -3,43 +3,55 @@
 describe('Create profile has ontologies available for resource template', () => {
   const modalSel = 'div#chooseResource > div.modal-dialog > div.modal-content'
   beforeAll(async () => {
-    // page.on('console', msg => console.log('PAGE LOG:', msg.text()))
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
-    page
-      .waitForSelector('a#addResource')
-      .then(async () => await page.click('a#addResource'))
-      .catch(error => console.log(`promise error for addResource link: ${error}`))
-    page
-      .waitForSelector('a#resourceChoose')
-      .then(async () => await page.click('a#resourceChoose'))
-      .catch(error => console.log(`promise error for select resource link: ${error}`))
-    await page.waitForSelector(modalSel)
+    await page.waitForSelector('a#addResource')
+    await page.click('a#addResource')
+    await page.waitForSelector('a#resourceChoose')
+    await page.click('a#resourceChoose')
+    return await page.waitForSelector(modalSel)
   })
 
   it('modal title says Choose Vocab Template', async () => {
+    expect.assertions(1)
+
     const modalTitleSel = `${modalSel} > div.modal-header > h3.modal-title`
-    await expect_value_in_sel_textContent(modalTitleSel, 'Choose Vocab Template')
+    await expect_value_in_sel_textContent(modalTitleSel, 'Choose Resource Template')
   })
 
   describe('ontologies select', () => {
     const modalBodySel = `${modalSel} > div.modal-body`
     const selectVocabSel = `${modalBodySel} > div#select_box_holder > select[name="chooseVocab"]`
 
-    beforeAll(() => {
-      page
-        .waitForSelector(selectVocabSel)
-        .catch(error => console.log(`promise error for ontologies selector: ${error}`))
+    beforeAll( async() => {
+      return await page.waitForSelector(selectVocabSel)
     })
 
     it('populated with ontologies (via versoSpoof)', async () => {
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(2)`, 'BFLC')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(3)`, 'RDF')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(4)`, 'RDFS')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(5)`, 'MADSRDF')
-      await expect_value_in_sel_textContent(`${selectVocabSel} > option:nth-child(6)`, 'Bibframe 2.0')
+      expect.assertions(7)
+      const expVals = [
+        'Select Vocabulary File',
+        'BFLC',
+        'RDF',
+        'RDFS',
+        'MADSRDF',
+        'Bibframe 2.0'
+      ]
+      const options = await page.$$eval(
+        `${selectVocabSel} > option`,
+        opts => {
+          return opts.map(e => {
+            return e.textContent
+          })
+        }
+      )
+      expect(options.length).toBe(6)
+      expVals.forEach(val => {
+        expect(options).toContain(val)
+      })
     })
 
-    it('ontologies selectable', async () => {
+    it('ontologies are selectable', async () => {
+      expect.assertions(2)
       await expect(page).toSelect(selectVocabSel, 'RDF')
 
       const resourcePickSel = `${modalBodySel} > select#resourcePick`

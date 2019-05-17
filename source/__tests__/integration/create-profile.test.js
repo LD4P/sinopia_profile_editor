@@ -3,22 +3,22 @@
 describe('Validating the profile metadata', () => {
 
   beforeAll(async () => {
-    await page.goto('http://localhost:8000/#/profile/create/')
+    return await page.goto('http://localhost:8000/#/profile/create/')
   })
 
-  describe('with the required profile metadata fields', () => {
-
+  describe('missing required profile metadata fields', () => {
     afterEach(async () => {
-      page.$eval('form[name="profileForm"]', e => e.reset())
+      return page.$eval('form[name="profileForm"]', e => e.reset())
     })
 
     it.each`
-      id              | description              | author  | title           | result
-      ${''}           | ${'Profile description'} | ${'Me'} | ${'My Profile'} | ${'Parts of the form are invalid'}
-      ${'my:profile'} | ${''}                    | ${'Me'} | ${'My Profile'} | ${'Parts of the form are invalid'}
-      ${'my:profile'} | ${'Profile description'} | ${''}   | ${'My Profile'} | ${'Parts of the form are invalid'}
-      ${'my:profile'} | ${'Profile description'} | ${'Me'} | ${''}           | ${'Parts of the form are invalid'}
-    `('should show message $result if required form fields are missing', async({id, description, author, title, result}) => {
+      id              | description              | author  | title
+      ${''}           | ${'Profile description'} | ${'Me'} | ${'My Profile'}
+      ${'my:profile'} | ${''}                    | ${'Me'} | ${'My Profile'}
+      ${'my:profile'} | ${'Profile description'} | ${''}   | ${'My Profile'}
+      ${'my:profile'} | ${'Profile description'} | ${'Me'} | ${''}
+    `('alerts if required form fields are missing', async({id, description, author, title}) => {
+        expect.assertions(3)
         await expect(page).toFillForm('form[name="profileForm"]', {
           id: id,
           description: description,
@@ -26,14 +26,14 @@ describe('Validating the profile metadata', () => {
           title: title
         })
         await expect(page).toClick('a', { text: 'Export'})
-        await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', result)
+        await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', 'Parts of the form are invalid')
         await page.reload({waitUntil: 'networkidle2'});
     })
   })
 
-  describe('with at least one resource template', () => {
-
-    it('should return "Profile must have at least one resource template" when profile metadata is valid but there is no resource template', async () => {
+  describe('requires at least one resource template', () => {
+    it(`alerts with useful message when missing resource template with valid profile metadata`, async () => {
+      expect.assertions(3)
       await expect(page).toFillForm('form[name="profileForm"]', {
         id: "my:profile",
         description: "Profile description",
@@ -41,10 +41,10 @@ describe('Validating the profile metadata', () => {
         title: "My profile"
       })
       await expect(page).toClick('a', { text: 'Export'})
-      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', "Profile must have at least one resource template")
+      const alertMsg = 'Profile must have at least one resource template'
+      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', alertMsg)
     })
   })
-
 })
 
 async function expect_value_in_selector_textContent(sel, value) {

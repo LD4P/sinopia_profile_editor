@@ -45,7 +45,7 @@ describe('spoofed verso', () => {
       expect(versoSpoof.owlOntUrlToXmlMappings[0]['url']).toBe('http://id.loc.gov/ontologies/bibframe.rdf')
     })
     it('mapping has xml', () => {
-      expect(versoSpoof.owlOntUrlToXmlMappings[0]['xml']).toBeDefined()
+      expect(versoSpoof.owlOntUrlToXmlMappings[0]['xml']).toBeTruthy()
     })
   })
 

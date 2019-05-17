@@ -1,113 +1,129 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
 
-describe('Create profile property template requirements', () => {
+describe('PropertyTemplate requirements', () => {
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
-    page
-      .waitForSelector('a#addResource')
-      .then(async () => await page.click('a#addResource'))
-      .catch(error => console.log(`promise error for addResource link: ${error}`))
-    page
-      .waitForSelector('a.propertyLink')
-      .then(async () => await page.click('a.propertyLink'))
-      .catch(error => console.log(`promise error for add property link: ${error}`))
-    await page.waitForSelector('span[href="#property_1"]')
+    await page.waitForSelector('a#addResource')
+    await page.click('a#addResource')
+    await page.waitForSelector('a.propertyLink')
+    await page.click('a.propertyLink')
+    return await page.waitForSelector('span[href="#property_1"]')
   })
 
-
   describe('adding a property template', () => {
-    let propTemplateSelectSelector = 'select#templateSelect_1_0'
-    let ptFieldsTableSel = 'div.panel[name="propertyForm"] table'
+    const propTemplateSelectSelector = 'select#templateSelect_1_0'
+    const ptFieldsTableSel = 'div.panel[name="propertyForm"] table'
+
     beforeAll(async () => {
       await page.waitForSelector('span[href="#property_1"]')
-      page
-        .waitForSelector('a#addTemplate')
-        .then(async () => await page.click('a#addTemplate'))
-        .catch(error => console.log(`promise error for add template link: ${error}`))
-      await page.waitForSelector(propTemplateSelectSelector)
+      await page.waitForSelector('a#addTemplate')
+      await page.click('a#addTemplate')
+      return await page.waitForSelector(propTemplateSelectSelector)
     })
 
-    it('appends a property template section to the form', async () => {
+    it('clicking "Add Property Template" appends a property template section to the form', async () => {
       expect.assertions(1)
       page.waitForSelector(ptFieldsTableSel)
-        .catch(error => console.log(`promise error loading property form: ${error}`))
       await expect_sel_to_exist('i.fa-exclamation[id="error"]')
     })
 
     describe('property template form fields', () => {
-
       it('has 3 input fields for the property template metadata', async () => {
+        expect.assertions(1)
         const inputs = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('input').length)
         expect(inputs).toBe(3)
       })
-
       it('has 3 select fields for the property template metadata', async () => {
+        expect.assertions(1)
         const selects = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('select').length)
         expect(selects).toBe(3)
       })
 
-      describe('Required fields are indicated with asterisk', async () => {
+      describe('Required fields are indicated with asterisk', () => {
         it('Property URI', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyURI"]`, "Property URI*")
         })
         it('Property Label', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyLabel"]`, "Property Label*")
         })
         it('Type', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="type"]`, "Type*")
         })
       })
 
-      describe('Non-required fields have no asterisk', async () => {
+      describe('Non-required fields have no asterisk', () => {
         it('Remark', async () => {
+          expect.assertions(2)
           await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property*")
           await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property")
+        })
+        it('Mandatory', async () => {
+          expect.assertions(2)
+          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory*")
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory")
+        })
+        it('Repeatable', async () => {
+          expect.assertions(2)
+          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable*")
+          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable")
         })
       })
     })
 
     describe('valueConstraints fields', () => {
-      let vcFieldsTableSel = 'div[ng-controller="ValueConstraintController"]'
+      const vcFieldsTableSel = 'div[ng-controller="ValueConstraintController"]'
 
-      describe('Value Constraints', () => {
+      describe('Value Constraint', () => {
         it('header', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
         })
         it('has no input fields', async () => {
+          expect.assertions(1)
           const inputs = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('input').length)
           expect(inputs).toBe(0)
         });
         it('has no select fields', async () => {
+          expect.assertions(1)
           const selects = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('select').length)
           expect(selects).toBe(0)
         })
         it('has Add Default Link', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
         })
       })
 
-
       describe('Value Data Type', () => {
-        let vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
+        const vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
+
         it('header', async () => {
+          expect.assertions(1)
           await expect(page).toMatch('Value Data Type')
         })
         it('has one input field', async () => {
+          expect.assertions(1)
           const inputs = await page.$eval(vdtTableSel, e => e.getElementsByTagName('input').length)
           expect(inputs).toBe(1)
         })
         it('has URI field', async () => {
+          expect.assertions(1)
           await expect_value_in_sel_text(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
         })
       })
 
-      describe('Templates dropdown', () => {
-        it('populated with resource template ids (via profiles from versoSpoof)', async () => {
+      describe('Templates', () => {
+        it('dropdown populated with resource template ids (via profiles from versoSpoof)', async () => {
+          expect.assertions(1)
           await page.waitForSelector(propTemplateSelectSelector)
           const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
           expect(profile_count).toBe(242)
         })
-        it('allows selection of a resource template id', async () => {
+        it('dropdown allows selection of a resource template id', async () => {
+          expect.assertions(4)
           await page.waitForSelector(propTemplateSelectSelector)
           // NOTE: the html always shows the first option selected, though the browser
           //  shows the right thing.  So here we cheat and use indirect checking of attributes
@@ -120,43 +136,100 @@ describe('Create profile property template requirements', () => {
         })
       })
 
-      describe('has Add Value link', async () => {
-        await expect_value_in_sel_text(`${vcFieldsTableSel} > a#adValue`, "Add Value")
+      it('Values - has Add Value link', async () => {
+        expect.assertions(1)
+        await expect_value_in_sel_text(`${vcFieldsTableSel} > div#value > a#adValue`, "Add Value")
       })
     })
   })
 
   describe('property header appearence', () => {
     it('font-awesome icon class is present', async () => {
+      expect.assertions(1)
       await expect_sel_to_exist(`.fa-caret-right`)
     })
   })
 })
 
-describe('property URI is required', () => {
-  let profileFormSel = 'form[name="profileForm"]'
-  let exportButtonSel = 'a.btn.import-export'
+describe('property URI and Label are required', () => {
+  const profileFormSel = 'form[name="profileForm"]'
+  const exportButtonSel = 'a.btn.import-export'
+  const alertBoxSel = '#alertBox > div.modal-dialog > div.modal-content > div.modal-body > p#alert_text'
+
+  afterEach(async () => {
+    return await page.$eval(profileFormSel, e => e.reset())
+  })
 
   it('error if exported without property URI', async () => {
+    expect.assertions(3)
     await page.waitForSelector(profileFormSel)
     await expect(page).toFillForm(profileFormSel, {
+      // all the other required fields from profile and resource template
       id: "my:profile",
       description: "Profile description",
       author: "Me",
       title: "My profile",
       resourceId: "my:resource",
-      resourceURI: "http://www.example.com#after"
-    }, 10000)
+      resourceURI: "http://www.example.com#after",
+      propertyLabel: 'propLabel'
+    })
+    // wait for resourceURI check
+    const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeTruthy()
 
     await page.click(exportButtonSel)
-    let alertBoxSel = '#alertBox > div.modal-dialog > div.modal-content > div.modal-body > p#alert_text'
     await expect_value_in_sel_text(alertBoxSel, 'Parts of the form are invalid')
   })
 
-  it('can be exported with property URI', async () => {
-    expect.assertions(3) // avoid false positives when promise fails
-    await page.waitFor(1000, {waitUntil: 'networkidle2'})
-    await page.$eval(profileFormSel, e => e.reset())
+  it('error if exported without property Label', async () => {
+    expect.assertions(3)
+    await page.waitForSelector(profileFormSel)
+    await expect(page).toFillForm(profileFormSel, {
+      // all the other required fields from profile and resource template
+      id: "my:profile",
+      description: "Profile description",
+      author: "Me",
+      title: "My profile",
+      resourceId: "my:resource",
+      resourceURI: "http://www.example.com#after",
+      propertyURI: "http://www.example.com#property"
+    })
+    // wait for resourceURI check
+    const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeTruthy()
+
+    await page.click(exportButtonSel)
+    await expect_value_in_sel_text(alertBoxSel, 'Parts of the form are invalid')
+  })
+
+  it('error if exported with invalid property uri', async () => {
+    expect.assertions(4)
+    await expect(page).toFillForm('form.sinopia-profile-form[name="profileForm"]', {
+      // all the other required fields from profile and resource template
+      id: "my:profile",
+      description: "Profile description",
+      author: "Me",
+      title: "My profile",
+      resourceId: "my:resource",
+      resourceURI: "http://www.stanford.edu",
+      propertyURI: 'not-a-uri',
+      propertyLabel: 'propLabel'
+    })
+    // wait for resourceURI check
+    const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeTruthy()
+
+    // wait for propertyURI check
+    const invalid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-invalid-url'))
+    expect(invalid_url_class).toBeTruthy()
+
+    await page.click(exportButtonSel)
+    await page.waitForSelector(alertBoxSel)
+    await expect_value_in_sel_text(alertBoxSel, "Parts of the form are invalid")
+  })
+
+  it('can be exported with valid property URI', async () => {
+    expect.assertions(5)
 
     await expect(page).toFillForm(profileFormSel, {
       id: "my:profile",
@@ -166,61 +239,39 @@ describe('property URI is required', () => {
       resourceId: "my:resource",
       resourceURI: "http://www.example.com#after",
       propertyURI: "http://www.example.org#foo"
-    }, 10000)
-
+    })
+    // wait for resourceURI check
+    let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeTruthy()
     await page.waitFor(1000, {waitUntil: 'networkidle2'})
-    page.click(exportButtonSel)
-      // .then(async () => { console.log('Export button clicked') })
-      .catch(e => console.log(`failed promise on clicking the Export button: ${e}`))
 
+    // wait for propertyURI check
+    valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
+    expect(valid_url_class).toBeTruthy()
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
+
+    await page.click(exportButtonSel)
     await page.waitForSelector('a[download="My Profile.json"]')
-
-    let data
-    page
-      .waitForSelector('a[download="My Profile.json"]')
-      .then(
-          data = await page.$eval('a[download="My Profile.json"]', e => e.getAttribute('href'))
-        )
-      .catch(e => console.log(`failed promise on download data link: ${e}`))
-
+    const data = await page.$eval('a[download="My Profile.json"]', e => e.getAttribute('href'))
     const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
     expect(json['Profile']['id']).toBe('my:profile')
     expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['propertyURI']).toBe('http://www.example.org#foo')
   })
 })
 
-describe('choose template from menu', () => {
-
-  //let property_select_sel = '#resourcePick > option[value^="0"]'
-  let property_select_sel = '#resourcePick > option:nth-child(1)'
-  let option_select_sel = '#select_box_holder > select > option:nth-child(2)'
-
+describe('choose propertyTemplate from menu', () => {
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
-    page
-      .waitForSelector('a#addResource')
-      .then(async () => await page.click('a#addResource'))
-      .catch(error => console.log(`promise error for addResource link: ${error}`))
-    page
-      .waitForSelector('a.propertyLink')
-      .then(async () => await page.click('a.propertyLink'))
-      .catch(error => console.log(`promise error for add property link: ${error}`))
-    page
-      .waitForSelector('a#propertyChoose')
-      .then(async () => await page.click('a#propertyChoose'))
-      .catch(error => console.log(`promise error for select resource link: ${error}`))
-    page
-      .waitForSelector(option_select_sel)
-      .then(async () => await page.click(option_select_sel))
-      .catch(error => console.log(`promise error for select resource link: ${error}`))
-    await page.waitFor(1000)
+    await page.waitForSelector('a#propertyChoose')
+    return await page.click('a#propertyChoose')
   })
 
-  // FIXME:  this test gives a false positive -- try changing the string below ...
-  it('First property is Absorbed by', async () => {
-    page
-      .waitForSelector(property_select_sel)
-      .then(async () => await expect_value_in_sel_text(property_select_sel, 'FIXME I am broken Absorbed by'))
+  it('selecting property populates property form', async () => {
+    expect.assertions(3)
+    await page.waitForSelector('select[name="chooseVocab"]')
+    await expect(page).toSelect('select[name="chooseVocab"]', 'Bibframe 2.0')
+    await expect(page).toSelect('#resourcePick', 'Absorbed by')
+    await expect_value_in_sel_text('div.propertyItem span[href="#property_1"] > span', 'Absorbed by')
   })
 })
 
