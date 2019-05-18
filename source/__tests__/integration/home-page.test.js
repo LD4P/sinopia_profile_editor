@@ -9,9 +9,10 @@ describe('Sinopia Profile Editor Homepage', () => {
 
   it('redirects to profile/sinopia', async () => {
     expect.assertions(1)
-    await page.waitFor(500) // shameless green: not sure what to wait for
-    const new_url = await page.evaluate(() => window.location.href)
-    expect(new_url).toBe('http://127.0.0.1:8000/#/profile/sinopia')
+    const expectedUrl = 'http://127.0.0.1:8000/#/profile/sinopia'
+    await browser.waitForTarget(target => target.url() === expectedUrl)
+    const receivedUrl = await page.evaluate(() => window.location.href)
+    expect(receivedUrl).toBe(expectedUrl)
   })
 
   it('website title', async () => {
@@ -46,8 +47,8 @@ describe('Sinopia Profile Editor Homepage', () => {
     expect.assertions(2)
     const sel = 'a.btn.import-export[ng-click="showImport()"]'
     await expect(page).toClick(sel)
-    const new_url = await page.evaluate(() => window.location.href)
-    expect(new_url).toBe('http://127.0.0.1:8000/#/profile/create/true')
+    const receivedUrl = await page.evaluate(() => window.location.href)
+    expect(receivedUrl).toBe('http://127.0.0.1:8000/#/profile/create/true')
   })
 
   it('footer', async () => {
