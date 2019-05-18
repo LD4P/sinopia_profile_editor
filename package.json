@@ -48,6 +48,10 @@
     "reporters": [
       "default",
       "jest-junit"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".*/jestPuppeteerHelper.js"
     ]
   },
   "scripts": {

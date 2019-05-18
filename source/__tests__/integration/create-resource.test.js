@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Create profile resource template requirements', () => {
 
@@ -15,7 +16,7 @@ describe('Create profile resource template requirements', () => {
     it('appends a resource template section to the form', async () => {
       expect.assertions(1)
       await page.waitForSelector('span[id="0"] > span')
-      await expect_regex_in_sel_textContent('span[id="0"] > span', /^Resource Template\s*$/)
+      await pupExpect.expectSelTextContentToMatch('span[id="0"] > span', /^Resource Template\s*$/)
     })
 
     it('has five input fields for the resource template data', async () => {
@@ -27,27 +28,27 @@ describe('Create profile resource template requirements', () => {
     describe('Required fields are indicated with asterisk', () => {
       it('ID', async () => {
         expect.assertions(1)
-        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="id"]`, "ID*")
+        await pupExpect.expectSelTextContentToBe(`${rt_fields_table_sel} label[for="id"]`, "ID*")
       })
       it('Resource URI', async () => {
         expect.assertions(1)
-        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceURI"]`, "Resource URI*")
+        await pupExpect.expectSelTextContentToBe(`${rt_fields_table_sel} label[for="resourceURI"]`, "Resource URI*")
       })
       it('Resource Label', async () => {
         expect.assertions(1)
-        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="resourceLabel"]`, "Resource Label*")
+        await pupExpect.expectSelTextContentToBe(`${rt_fields_table_sel} label[for="resourceLabel"]`, "Resource Label*")
       })
       it('Author', async () => {
         expect.assertions(1)
-        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtAuthor"]`, "Author*")
+        await pupExpect.expectSelTextContentToBe(`${rt_fields_table_sel} label[for="rtAuthor"]`, "Author*")
       })
     })
 
     describe('Non-required fields have no asterisk', () => {
       it('Remark', async () => {
         expect.assertions(2)
-        await expect_value_not_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource*")
-        await expect_value_in_sel_textContent(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource")
+        await pupExpect.expectSelTextContentNotToBe(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource*")
+        await pupExpect.expectSelTextContentToBe(`${rt_fields_table_sel} label[for="rtRemark"]`, "Guiding statement for the use of this resource")
       })
     })
   })
@@ -74,7 +75,7 @@ describe('Create profile resource template requirements', () => {
 
       await page.click(exportButtonSel)
       await page.waitForSelector(alertBoxSel)
-      await expect_value_in_sel_textContent(alertBoxSel, "my:resource must have at least one property template")
+      await pupExpect.expectSelTextContentToBe(alertBoxSel, "my:resource must have at least one property template")
     })
 
     describe('with property template', () => {
@@ -114,7 +115,7 @@ describe('Create profile resource template requirements', () => {
 
         await page.click(exportButtonSel)
         await page.waitForSelector(alertBoxSel)
-        await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
+        await pupExpect.expectSelTextContentToBe(alertBoxSel, "Parts of the form are invalid")
       })
 
       it('requires Resource URI', async () => {
@@ -140,7 +141,7 @@ describe('Create profile resource template requirements', () => {
 
         await page.click(exportButtonSel)
         await page.waitForSelector(alertBoxSel)
-        await expect_value_in_sel_textContent(alertBoxSel, "Parts of the form are invalid")
+        await pupExpect.expectSelTextContentToBe(alertBoxSel, "Parts of the form are invalid")
       })
 
       it('no alerts when all requirements are met', async () => {
@@ -173,19 +174,3 @@ describe('Create profile resource template requirements', () => {
     })
   })
 })
-
-async function expect_regex_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text).toMatch(value)
-}
-async function expect_value_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text).toBe(value)
-}
-async function expect_value_not_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text.trim()).not.toBe(value)
-}

@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Type of Property in Resource in Profile', () => {
   beforeEach(async () => {
@@ -13,18 +14,12 @@ describe('Type of Property in Resource in Profile', () => {
   it('dropdown is correctly populated', async () => {
     expect.assertions(3)
     const propTypeSel = 'select[name="type"][ng-model="propertyTemplate.type"]'
-    await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(1)`, 'literal')
-    await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(2)`, 'resource')
-    await expect_value_in_sel_textContent(`${propTypeSel} > option:nth-child(3)`, 'lookup')
+    await pupExpect.expectSelTextContentToBe(`${propTypeSel} > option:nth-child(1)`, 'literal')
+    await pupExpect.expectSelTextContentToBe(`${propTypeSel} > option:nth-child(2)`, 'resource')
+    await pupExpect.expectSelTextContentToBe(`${propTypeSel} > option:nth-child(3)`, 'lookup')
   })
 
   // it('can select a type in dropdown', () => {
   //   // TODO: write this test
   // })
 })
-
-async function expect_value_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text).toBe(value)
-}

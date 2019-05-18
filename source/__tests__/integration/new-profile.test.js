@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Adding, editing and removing a new Profile', () => {
   const sourceInputSel = '#profile input[name="source"]'
@@ -29,41 +30,41 @@ describe('Adding, editing and removing a new Profile', () => {
     describe('Required fields are indicated with asterisk', () => {
       it('ID', async () => {
         expect.assertions(1)
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="id"]`, "ID*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="id"]`, "ID*")
       })
       it('Description', async () => {
         expect.assertions(1)
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="description"]`, "Description*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="description"]`, "Description*")
       })
       it('Author', async () => {
         expect.assertions(1)
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="author"]`, "Author*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="author"]`, "Author*")
       })
       it('Title', async () => {
         expect.assertions(1)
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="title"]`, "Title*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="title"]`, "Title*")
       })
     })
     it('Date has no asterisk b/c it may be filled in automagically', async () => {
       expect.assertions(2)
-      await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date*")
-      await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="date"]`, "Date")
+      await pupExpect.expectSelTextContentNotToMatch(`${profile_fields_table_sel} label[for="date"]`, "Date*")
+      await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="date"]`, "Date")
     })
     describe('Non-required fields have no asterisk', () => {
       it('Remark', async () => {
         expect.assertions(2)
-        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark*")
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="remark"]`, "Remark")
+        await pupExpect.expectSelTextContentNotToMatch(`${profile_fields_table_sel} label[for="remark"]`, "Remark*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="remark"]`, "Remark")
       })
       it('Adherence', async () => {
         expect.assertions(2)
-        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence*")
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence")
+        await pupExpect.expectSelTextContentNotToMatch(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="adherence"]`, "Adherence")
       })
       it('Source', async () => {
         expect.assertions(2)
-        await expect_value_not_in_selector_textContent(`${profile_fields_table_sel} label[for="source"]`, "Source*")
-        await expect_value_in_selector_textContent(`${profile_fields_table_sel} label[for="source"]`, "Source")
+        await pupExpect.expectSelTextContentNotToMatch(`${profile_fields_table_sel} label[for="source"]`, "Source*")
+        await pupExpect.expectSelTextContentTrimmedToBe(`${profile_fields_table_sel} label[for="source"]`, "Source")
       })
     })
     describe('Adherence rules/standards that profile confirms with', () => {
@@ -71,7 +72,7 @@ describe('Adding, editing and removing a new Profile', () => {
 
       it('adherence input label and field', async () => {
         expect.assertions(2)
-        await expect_value_in_selector_textContent('#profile label[for="adherence"]', 'Adherence')
+        await pupExpect.expectSelTextContentTrimmedToBe('#profile label[for="adherence"]', 'Adherence')
         const field = await page.$eval(adherence_input_sel, e => e.getAttribute('name'))
         await expect(field).toBe('adherence')
       })
@@ -85,7 +86,7 @@ describe('Adding, editing and removing a new Profile', () => {
     describe('Source url', () => {
       it('source input label and field', async () => {
         expect.assertions(2)
-        await expect_value_in_selector_textContent('#profile label[for="source"]', 'Source')
+        await pupExpect.expectSelTextContentTrimmedToBe('#profile label[for="source"]', 'Source')
         const input_name = await page.$eval(sourceInputSel, e => e.getAttribute('name'))
         await expect(input_name).toBe('source')
       })
@@ -176,7 +177,7 @@ describe('Adding, editing and removing a new Profile', () => {
       const resourceSelectorSel = `${resourceChooseModalSel} > select#resourcePick`
       await expect(page).toSelect(resourceSelectorSel, 'Role')
 
-      await expect_regex_in_sel_textContent('span[popover="URI: http://id.loc.gov/ontologies/bibframe/Role"]', 'Role')
+      await pupExpect.expectSelTextContentToMatch('span[popover="URI: http://id.loc.gov/ontologies/bibframe/Role"]', 'Role')
     })
 
     it('removing resource template removes its span and input fields', async () => {
@@ -184,7 +185,7 @@ describe('Adding, editing and removing a new Profile', () => {
 
       const deleteTargetSel = 'span[popover="URI: http://id.loc.gov/ontologies/bibframe/Role"]'
       await page.waitForSelector(deleteTargetSel)
-      await expect_regex_in_sel_textContent(deleteTargetSel, 'Role')
+      await pupExpect.expectSelTextContentToMatch(deleteTargetSel, 'Role')
 
       const deleteRoleSel = 'div[name="resourceForm"] div#resource_0 #deleteButton'
       await page.waitForSelector(deleteRoleSel, {visible: true})
@@ -195,7 +196,7 @@ describe('Adding, editing and removing a new Profile', () => {
       await page.waitForSelector(modalConfirmDeleteSel, {visible: true})
       await expect(page).toClick(modalConfirmDeleteSel)
 
-      await expect_sel_not_to_exist(deleteTargetSel)
+      await pupExpect.expectSelNotToExist(deleteTargetSel)
     })
 
     it('alerts with error if non-uri profile source is entered and user switches focus', async () => {
@@ -205,7 +206,7 @@ describe('Adding, editing and removing a new Profile', () => {
       await expect(page).toClick('#profile input[name="description"]')
       const alertBoxSel = '#alertBox > div > div > div.modal-header > h3'
       await page.waitForSelector(alertBoxSel, {visible: true})
-      await expect_value_in_selector_textContent(alertBoxSel, 'Error!')
+      await pupExpect.expectSelTextContentTrimmedToBe(alertBoxSel, 'Error!')
       await page.waitForSelector('#alertClose', {visible: true})
       await page.click('#alertClose')
       const invalid_url_class = await page.$(sourceInputSel, e => e.getAttribute('ng-invalid-url'))
@@ -213,23 +214,3 @@ describe('Adding, editing and removing a new Profile', () => {
     })
   })
 })
-
-async function expect_regex_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text).toMatch(value)
-}
-async function expect_sel_not_to_exist(sel) {
-  const sel_text = !!(await page.$(sel))
-  return expect(sel_text).toEqual(false)
-}
-async function expect_value_in_selector_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text.trim()).toBe(value)
-}
-async function expect_value_not_in_selector_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text.trim()).not.toBe(value)
-}

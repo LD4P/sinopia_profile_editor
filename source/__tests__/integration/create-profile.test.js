@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Validating the profile metadata', () => {
 
@@ -26,7 +27,7 @@ describe('Validating the profile metadata', () => {
           title: title
         })
         await expect(page).toClick('a', { text: 'Export'})
-        await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', 'Parts of the form are invalid')
+        await pupExpect.expectSelTextContentToBe('#alertBox > div > div > div.modal-body > p', 'Parts of the form are invalid')
         await page.reload({waitUntil: 'networkidle2'});
     })
   })
@@ -42,13 +43,7 @@ describe('Validating the profile metadata', () => {
       })
       await expect(page).toClick('a', { text: 'Export'})
       const alertMsg = 'Profile must have at least one resource template'
-      await expect_value_in_selector_textContent('#alertBox > div > div > div.modal-body > p', alertMsg)
+      await pupExpect.expectSelTextContentToBe('#alertBox > div > div > div.modal-body > p', alertMsg)
     })
   })
 })
-
-async function expect_value_in_selector_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  return expect(sel_text).toBe(value)
-}
