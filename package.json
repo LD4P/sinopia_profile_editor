@@ -48,11 +48,15 @@
     "reporters": [
       "default",
       "jest-junit"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".*/jestPuppeteerHelper.js"
     ]
   },
   "scripts": {
     "dev-test": "npm install && npm run grunt-dev && jest --colors",
-    "eslint": "eslint --color --max-warnings 170 -c .eslintrc.js .",
+    "eslint": "eslint --color --max-warnings 145 -c .eslintrc.js .",
     "grunt-dev": "grunt ngAnnotate uglify cssmin",
     "jest-ci": "jest --coverage --colors --silent --ci --runInBand --reporters=default --reporters=jest-junit && cat ./coverage/lcov.info | coveralls",
     "jest-cov": "jest --coverage --colors --silent",

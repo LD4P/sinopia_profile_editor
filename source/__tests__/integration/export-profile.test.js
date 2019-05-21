@@ -9,6 +9,7 @@ describe('Profiles Export', () => {
 
     // import a profile
     await page.goto('http://localhost:8000/#/profile/create/true')
+    await page.waitForSelector('input[type="file"]', {visible: true})
     const profilePath = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
     await expect(page).toUploadFile('input[type="file"]', profilePath)
     await page.waitForSelector('span[popover-title="Profile ID: profile:bf2:Item"]', {visible: true})
@@ -34,7 +35,7 @@ describe('Profiles Export', () => {
 
   describe('exports cleanly', () => {
     beforeAll(async () => {
-      await page.goto('http://127.0.0.1:8000/#/profile/create/')
+      return await page.goto('http://127.0.0.1:8000/#/profile/create/')
     })
 
     beforeEach(async () => {
@@ -59,7 +60,6 @@ describe('Profiles Export', () => {
       await page.waitFor(1000, {waitUntil: 'networkidle2'})
       const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
       expect(valid_url_class).toBeTruthy()
-      return new Promise(resolve => resolve())
     })
 
     afterEach(async() => {

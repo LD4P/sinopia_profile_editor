@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Create profile has ontologies available for resource template', () => {
   const modalSel = 'div#chooseResource > div.modal-dialog > div.modal-content'
@@ -15,7 +16,7 @@ describe('Create profile has ontologies available for resource template', () => 
     expect.assertions(1)
 
     const modalTitleSel = `${modalSel} > div.modal-header > h3.modal-title`
-    await expect_value_in_sel_textContent(modalTitleSel, 'Choose Resource Template')
+    await pupExpect.expectSelTextContentToBe(modalTitleSel, 'Choose Resource Template')
   })
 
   describe('ontologies select', () => {
@@ -55,13 +56,7 @@ describe('Create profile has ontologies available for resource template', () => 
       await expect(page).toSelect(selectVocabSel, 'RDF')
 
       const resourcePickSel = `${modalBodySel} > select#resourcePick`
-      await expect_value_in_sel_textContent(`${resourcePickSel} > option:nth-child(1)`, 'Property')
+      await pupExpect.expectSelTextContentToBe(`${resourcePickSel} > option:nth-child(1)`, 'Property')
     })
   })
 })
-
-async function expect_value_in_sel_textContent(sel, value) {
-  await page.waitForSelector(sel)
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text).toBe(value)
-}

@@ -1,4 +1,5 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
+const pupExpect = require('./jestPuppeteerHelper')
 
 describe('PropertyTemplate requirements', () => {
   beforeAll(async () => {
@@ -23,8 +24,8 @@ describe('PropertyTemplate requirements', () => {
 
     it('clicking "Add Property Template" appends a property template section to the form', async () => {
       expect.assertions(1)
-      page.waitForSelector(ptFieldsTableSel)
-      await expect_sel_to_exist('i.fa-exclamation[id="error"]')
+      await page.waitForSelector(ptFieldsTableSel)
+      await pupExpect.expectSelToExist('i.fa-exclamation[id="error"]')
     })
 
     describe('property template form fields', () => {
@@ -42,33 +43,33 @@ describe('PropertyTemplate requirements', () => {
       describe('Required fields are indicated with asterisk', () => {
         it('Property URI', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyURI"]`, "Property URI*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="propertyURI"]`, "Property URI*")
         })
         it('Property Label', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="propertyLabel"]`, "Property Label*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="propertyLabel"]`, "Property Label*")
         })
         it('Type', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="type"]`, "Type*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="type"]`, "Type*")
         })
       })
 
       describe('Non-required fields have no asterisk', () => {
         it('Remark', async () => {
           expect.assertions(2)
-          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property*")
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property")
+          await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property")
         })
         it('Mandatory', async () => {
           expect.assertions(2)
-          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory*")
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory")
+          await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory")
         })
         it('Repeatable', async () => {
           expect.assertions(2)
-          await expect_value_not_in_sel_text(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable*")
-          await expect_value_in_sel_text(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable")
+          await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable*")
+          await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable")
         })
       })
     })
@@ -79,7 +80,7 @@ describe('PropertyTemplate requirements', () => {
       describe('Value Constraint', () => {
         it('header', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
+          await pupExpect.expectSelTextContentToBe(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
         })
         it('has no input fields', async () => {
           expect.assertions(1)
@@ -93,7 +94,7 @@ describe('PropertyTemplate requirements', () => {
         })
         it('has Add Default Link', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
+          await pupExpect.expectSelTextContentTrimmedToMatch(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
         })
       })
 
@@ -111,7 +112,7 @@ describe('PropertyTemplate requirements', () => {
         })
         it('has URI field', async () => {
           expect.assertions(1)
-          await expect_value_in_sel_text(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
+          await pupExpect.expectSelTextContentToBe(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
         })
       })
 
@@ -128,17 +129,17 @@ describe('PropertyTemplate requirements', () => {
           // NOTE: the html always shows the first option selected, though the browser
           //  shows the right thing.  So here we cheat and use indirect checking of attributes
           //  to show a template can be selected
-          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-pristine`)
-          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
+          await pupExpect.expectSelToExist(`${propTemplateSelectSelector}.ng-pristine`)
+          await pupExpect.expectSelToExist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
           await page.select(propTemplateSelectSelector, 'sinopia:resourceTemplate:bf2:Form')
-          await expect_sel_to_exist(`${propTemplateSelectSelector}.ng-dirty`)
-          await expect_sel_to_exist(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
+          await pupExpect.expectSelToExist(`${propTemplateSelectSelector}.ng-dirty`)
+          await pupExpect.expectSelToExist(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
         })
       })
 
       it('Values - has Add Value link', async () => {
         expect.assertions(1)
-        await expect_value_in_sel_text(`${vcFieldsTableSel} > div#value > a#adValue`, "Add Value")
+        await pupExpect.expectSelTextContentTrimmedToMatch(`${vcFieldsTableSel} > div#value > a#adValue`, "Add Value")
       })
     })
   })
@@ -146,7 +147,7 @@ describe('PropertyTemplate requirements', () => {
   describe('property header appearence', () => {
     it('font-awesome icon class is present', async () => {
       expect.assertions(1)
-      await expect_sel_to_exist(`.fa-caret-right`)
+      await pupExpect.expectSelToExist(`.fa-caret-right`)
     })
   })
 })
@@ -174,11 +175,12 @@ describe('property URI and Label are required', () => {
       propertyLabel: 'propLabel'
     })
     // wait for resourceURI check
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
 
     await page.click(exportButtonSel)
-    await expect_value_in_sel_text(alertBoxSel, 'Parts of the form are invalid')
+    await pupExpect.expectSelTextContentToBe(alertBoxSel, 'Parts of the form are invalid')
   })
 
   it('error if exported without property Label', async () => {
@@ -199,7 +201,7 @@ describe('property URI and Label are required', () => {
     expect(valid_url_class).toBeTruthy()
 
     await page.click(exportButtonSel)
-    await expect_value_in_sel_text(alertBoxSel, 'Parts of the form are invalid')
+    await pupExpect.expectSelTextContentToBe(alertBoxSel, 'Parts of the form are invalid')
   })
 
   it('error if exported with invalid property uri', async () => {
@@ -215,17 +217,16 @@ describe('property URI and Label are required', () => {
       propertyURI: 'not-a-uri',
       propertyLabel: 'propLabel'
     })
-    // wait for resourceURI check
+    // wait for resourceURI and propertyURI checks
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     const valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-
-    // wait for propertyURI check
     const invalid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-invalid-url'))
     expect(invalid_url_class).toBeTruthy()
 
     await page.click(exportButtonSel)
     await page.waitForSelector(alertBoxSel)
-    await expect_value_in_sel_text(alertBoxSel, "Parts of the form are invalid")
+    await pupExpect.expectSelTextContentToBe(alertBoxSel, "Parts of the form are invalid")
   })
 
   it('can be exported with valid property URI', async () => {
@@ -240,15 +241,12 @@ describe('property URI and Label are required', () => {
       resourceURI: "http://www.example.com#after",
       propertyURI: "http://www.example.org#foo"
     })
-    // wait for resourceURI check
+    // wait for resourceURI and propertyURI checks
+    await page.waitFor(1000, {waitUntil: 'networkidle2'})
     let valid_url_class = await page.$('input[name="resourceURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-    await page.waitFor(1000, {waitUntil: 'networkidle2'})
-
-    // wait for propertyURI check
     valid_url_class = await page.$('input[name="propertyURI"]', e => e.getAttribute('ng-valid-url'))
     expect(valid_url_class).toBeTruthy()
-    await page.waitFor(1000, {waitUntil: 'networkidle2'})
 
     await page.click(exportButtonSel)
     await page.waitForSelector('a[download="My Profile.json"]')
@@ -271,19 +269,6 @@ describe('choose propertyTemplate from menu', () => {
     await page.waitForSelector('select[name="chooseVocab"]')
     await expect(page).toSelect('select[name="chooseVocab"]', 'Bibframe 2.0')
     await expect(page).toSelect('#resourcePick', 'Absorbed by')
-    await expect_value_in_sel_text('div.propertyItem span[href="#property_1"] > span', 'Absorbed by')
+    await pupExpect.expectSelTextContentTrimmedToMatch('div.propertyItem span[href="#property_1"] > span', 'Absorbed by')
   })
 })
-
-async function expect_sel_to_exist(sel) {
-  const sel_text = !!(await page.$(sel))
-  expect(sel_text).toEqual(true)
-}
-async function expect_value_in_sel_text(sel, value) {
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text.trim()).toBe(value)
-}
-async function expect_value_not_in_sel_text(sel, value) {
-  const sel_text = await page.$eval(sel, e => e.textContent)
-  expect(sel_text.trim()).not.toBe(value)
-}
