@@ -1,126 +1,113 @@
 <!DOCTYPE html>
 <html id="ng-app" ng-app="locApp">
-    <head>
+  <head>
+    <!--[if lte IE 7]>
+        <script src="assets/js/lib/json/json2.js"></script>
+    <![endif]-->
 
-        <!--[if lte IE 7]>
-            <script src="assets/js/lib/json/json2.js"></script>
-        <![endif]-->
+    <script type="text/javascript" src='assets/js/lib/jquery/jquery1x.min.js'></script>
+    <script>
+        var is_ie8 = false;
+        var serverPath = (window.location.pathname === '/') ? '' : window.location.pathname;
+        var serverHostname = window.location.hostname;
+    </script>
+    <title>Sinopia Profile Editor</title>
+    <!--[if lte IE 8]>
+        <script src='assets/js/lib/json/shim.js'></script>
+        <link rel="stylesheet" href="assets/css/explorer8.css" />
+        <script> is_ie8 = true; </script>
+    <![endif]-->
 
-        <script type="text/javascript" src='assets/js/lib/jquery/jquery1x.min.js'></script>
-        <script>
-            var is_ie8 = false;
-            var serverPath = (window.location.pathname === '/') ? '' : window.location.pathname;
-            var serverHostname = window.location.hostname;
-        </script>
-        <title>Sinopia Profile Editor</title>
-        <!--[if lte IE 8]>
-            <script src='assets/js/lib/json/shim.js'></script>
-            <link rel="stylesheet" href="assets/css/explorer8.css" />
-            <script> is_ie8 = true; </script>
-        <![endif]-->
+    <script type="text/javascript">
+      //optional need to be loaded before angular-file-upload-shim(.min).js
+      window.FileAPI = {
+        //debug: true
+        //only one of jsPath or jsUrl.
+        //jsPath: 'assets/js/lib/fileupload/',
 
-        <script type="text/javascript">
-            //optional need to be loaded before angular-file-upload-shim(.min).js
-            window.FileAPI = {
-                //debug: true
-                //only one of jsPath or jsUrl.
-                //jsPath: 'assets/js/lib/fileupload/',
+        //only one of staticPath or flashUrl.
+        //staticPath: 'assets/js/lib/fileupload/',
 
-                //only one of staticPath or flashUrl.
-                //staticPath: 'assets/js/lib/fileupload/',
+        //forceLoad: true, html5: false //to debug flash in HTML5 browsers
+      };
+    </script>
 
-                //forceLoad: true, html5: false //to debug flash in HTML5 browsers
-            };
-        </script>
+    <script src='assets/js/lib/fileupload/angular-file-upload-shim.min.js'></script>
+    <script src="https://angular-file-upload.appspot.com/js/FileAPI.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-resource.min.js"></script>
+    <script src="assets/js/lib/ui-router/angular-ui-router.min.js"></script>
+    <script src="assets/js/lib/ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- angular from npm install to node_modules directory -->
+    <script src="angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="assets/js/lib/x2js-v1.1.5/xml2json.min.js"></script>
+    <script src="assets/js/lib/fileupload/angular-file-upload.min.js"></script>
+    <script src="assets/js/ng-app.js"></script>
 
-        <script src='assets/js/lib/fileupload/angular-file-upload-shim.min.js'></script>
-        <script src="https://angular-file-upload.appspot.com/js/FileAPI.min.js"></script>
+    <link rel="shortcut icon" href="source/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="source/favicon.ico" type="image/x-icon">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-resource.min.js"></script>
-		<script src="assets/js/lib/ui-router/angular-ui-router.min.js"></script>
-        <script src="assets/js/lib/ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- mvp styles -->
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-admin.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-flat.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/js/lib/datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="assets/js/lib/ng-grid/ui-grid-stable.min.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/font-awesome/font-awesome.min.css" />
 
-        <!-- angular from npm install to node_modules directory -->
-        <script src="angular-local-storage/dist/angular-local-storage.min.js"></script>
-        <script src="assets/js/lib/x2js-v1.1.5/xml2json.min.js"></script>
+    <!-- Production JavaScript -->
+    <!--<script src="assets/js/sinopia_profile_editor.min.js"></script>-->
+    <!-- Dev JavaScript -->
+    <script src="assets/js/concat.js"></script>
 
-        <script src="assets/js/lib/fileupload/angular-file-upload.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia_profile_editor.min.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload-ui.css" />
 
-        <script src="assets/js/ng-app.js"></script>
-
-        <link rel="shortcut icon" href="source/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="source/favicon.ico" type="image/x-icon">
-
-        <!-- mvp styles -->
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-admin.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/bootstrap/mvpready-flat.css" />
-
-        <link rel="stylesheet" type="text/css" media="all" href="assets/js/lib/datepicker/css/datepicker.css" />
-
-        <link rel="stylesheet" type="text/css" href="assets/js/lib/ng-grid/ui-grid-stable.min.css" />
-
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/font-awesome/font-awesome.min.css" />
-
-        <!-- Production JavaScript -->
-        <!--<script src="assets/js/sinopia_profile_editor.min.js"></script>-->
-        <!-- Dev JavaScript -->
-        <script src="assets/js/concat.js"></script>
-
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" />
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia_profile_editor.min.css" />
-
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/sinopia.css" />
-
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.fileupload-ui.css" />
-
-        <!--Special CSS for IE 9 and below-->
-        <!--[if lte IE 9]>
-        <link rel="stylesheet" href="assets/css/explorer9.css" />
-        <![endif]-->
-        <base href="/">
-        <!-- <base href="/profile-edit/"> -->
-        <!-- spin and angular from npm install to node_modules directory -->
-        <script src="spin.js/spin.js"></script>
-        <script src="angular-spinner/angular-spinner.js"></script>
-    </head>
-    <body>
-
-        <div id="wrapper">
-            <div class="content">
-               <div class="sinopia" id="main">
-                 <img src="assets/images/sinopiaheaderbg_profileeditor.png">
-                </div>
-                <div class="sinopia-headertext">
-                    <div class="sinopia-headerlinks">
-                        <a href="https://sinopia.io/editor">Linked Data Editor</a>
-                        &nbsp;
-                        <a href="#" onclick="openOffCanvasMenu()">Help and Resources</a>
-                    </div>
-                    <h2 class="sinopia-subtitle"><a class="sinopia-subtitle" href="https://sinopia.io/">Sinopia</a></h2>
-                    <h1 class="sinopia-title">Profile Editor</h1>
-                </div>
-
-                <div class="container">
-                    <div class="page-content-area" ui-view>
-
-                    </div>
-                </div>
-
-                <div class="sinopia-footer">
-                  <a className='footer-image' rel="license noopener noreferrer" href="http://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
-                    <img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/88x31.png" />
-                  </a>
-                  Sinopia is a project of <a rel="grant noopener noreferrer" href="http://www.ld4p.org" target="_blank">Linked Data for Production 2 (LD4P2)</a>, generously funded by the Andrew W. Mellon Foundation.
-                  All metadata available on Sinopia are published free of restrictions, under the terms of the <a rel="license noopener noreferrer" href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons CC0 1.0 Universal Public Domain Dedication</a>.
-                </div>
-
-            </div>
+    <!--Special CSS for IE 9 and below-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/explorer9.css" />
+    <![endif]-->
+    <base href="/">
+    <!-- <base href="/profile-edit/"> -->
+    <!-- spin and angular from npm install to node_modules directory -->
+    <script src="spin.js/spin.js"></script>
+    <script src="angular-spinner/angular-spinner.js"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div class="content">
+        <div class="sinopia" id="main">
+          <img src="assets/images/sinopiaheaderbg_profileeditor.png">
         </div>
-        <div id="offCanvasMenu" class="sidenav"></div>
+        <div class="sinopia-headertext">
+          <div class="sinopia-headerlinks">
+            <a href="https://sinopia.io/editor">Linked Data Editor</a>
+            &nbsp;
+            <a href="#" onclick="openOffCanvasMenu()">Help and Resources</a>
+          </div>
+          <h2 class="sinopia-subtitle"><a class="sinopia-subtitle" href="https://sinopia.io/">Sinopia</a></h2>
+          <h1 class="sinopia-title">Profile Editor</h1>
+        </div>
+
+        <div class="container">
+          <div class="page-content-area" ui-view>
+          </div>
+        </div>
+
+        <div class="sinopia-footer">
+          <a className='footer-image' rel="license noopener noreferrer" href="http://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
+            <img alt="CC0" src="http://i.creativecommons.org/p/zero/1.0/88x31.png" />
+          </a>
+          Sinopia is a project of <a rel="grant noopener noreferrer" href="http://www.ld4p.org" target="_blank">Linked Data for Production 2 (LD4P2)</a>, generously funded by the Andrew W. Mellon Foundation.
+          All metadata available on Sinopia are published free of restrictions, under the terms of the <a rel="license noopener noreferrer" href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons CC0 1.0 Universal Public Domain Dedication</a>.
+        </div>
+      </div>
+    </div>
+
+    <div id="offCanvasMenu" class="sidenav" />
 
     <script type="text/javascript">
       function openOffCanvasMenu() {
@@ -144,34 +131,32 @@
         document.getElementById("main").style.marginRight = "0";
       }
     </script>
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/lib/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>
+    <script type="text/javascript">
+      if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/lib/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
 
-        <!-- Bootstrap Script -->
-		<script src="assets/js/lib/bootstrap/bootstrap.js"></script>
+    <!-- Bootstrap Script -->
+    <script src="assets/js/lib/bootstrap/bootstrap.js"></script>
 
-        <!-- MVC Admin -->
-        <script src="assets/js/lib/mvpready/mvpready-core.js"></script>
-        <script src="assets/js/lib/mvpready/mvpready-admin.js"></script>
+    <!-- MVC Admin -->
+    <script src="assets/js/lib/mvpready/mvpready-core.js"></script>
+    <script src="assets/js/lib/mvpready/mvpready-admin.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script src="assets/js/lib/ui-sortable/sortable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="assets/js/lib/ui-sortable/sortable.js"></script>
 
-        <!--[if lte IE 8]>
-        <script src="assets/js/lib/ng-grid/ui-grid-ie8.min.js"></script>
-        <![endif]-->
+    <!--[if lte IE 8]>
+    <script src="assets/js/lib/ng-grid/ui-grid-ie8.min.js"></script>
+    <![endif]-->
 
-        <!--[if IE 9]>
-        <script src="assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
-        <![endif]-->
+    <!--[if IE 9]>
+    <script src="assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
+    <![endif]-->
 
-        <!--[if !IE]> -->
-        <script src="assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
-        <!-- <![endif]-->
+    <!--[if !IE]> -->
+    <script src="assets/js/lib/ng-grid/ui-grid-unstable.min.js"></script>
+    <!-- <![endif]-->
 
-        <script src="assets/js/lib/datepicker/js/bootstrap-datepicker.js"></script>
-
-    </body>
-
+    <script src="assets/js/lib/datepicker/js/bootstrap-datepicker.js"></script>
+  </body>
 </html>
