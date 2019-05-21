@@ -10,6 +10,7 @@ describe('Adding, editing and removing a new Profile', () => {
 
   it('displays a new profile span', async () => {
     expect.assertions(1)
+    await page.waitForSelector('span[id="profileBanner"] > span')
     const span = await page.$eval('span[id="profileBanner"] > span', e => e.getAttribute('popover-title'))
     await expect(span).toMatch(/Profile ID: Undefined/)
   })
