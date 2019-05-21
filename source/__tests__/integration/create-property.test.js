@@ -24,7 +24,7 @@ describe('PropertyTemplate requirements', () => {
 
     it('clicking "Add Property Template" appends a property template section to the form', async () => {
       expect.assertions(1)
-      page.waitForSelector(ptFieldsTableSel)
+      await page.waitForSelector(ptFieldsTableSel)
       await pupExpect.expectSelToExist('i.fa-exclamation[id="error"]')
     })
 
