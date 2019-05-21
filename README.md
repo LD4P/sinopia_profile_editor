@@ -1,6 +1,9 @@
 [![CircleCI](https://circleci.com/gh/LD4P/sinopia_profile_editor.svg?style=svg)](https://circleci.com/gh/LD4P/sinopia_profile_editor)
 [![Coverage Status](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor/badge.svg)](https://coveralls.io/github/LD4P/sinopia_profile_editor)
 
+NOTE:  tests fail intermittently, both on local environments and in circleci.
+The test failures are not the same each time - re-running tests locally and in circleci may be necessary to get a green build.
+
 # LD4P's BIBFRAME Profile Editor
 
 forked from https://github.com/lcnetdev/profile-edit
@@ -51,6 +54,9 @@ The javascript code uses grunt as a build tool. See `Gruntfile.js` for build dep
 
 Tests are written in jest, also utilizing puppeteer for end-to-end tests.  Be
 sure to run `npm install && grunt` before running the tests with `npm test`.
+
+NOTE:  tests fail intermittently, both on local environments and in circleci.
+The test failures are not the same each time - re-running tests locally and in circleci may be necessary to get a green build.
 
 #### test coverage
 To get coverage data, `npm run test-cov`.  Use a web browser to open `coverage/lcov-report/index.html`.  There is a project view and also a view of each file.  You can also check [coveralls](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor)
