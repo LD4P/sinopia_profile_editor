@@ -9,7 +9,8 @@ module.exports = {
     {
       files: "**/*.js",
       env: {
-        jest: true
+        jest: true,
+        jquery: true
       },
       plugins: [ "jest", "security" ],
       rules: {
@@ -22,6 +23,7 @@ module.exports = {
       },
       "globals": {
           "angular": true,
+          "browser": true,
           "document": true,
           "page": true,
           "window": true
