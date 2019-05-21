@@ -7,15 +7,15 @@
 
     <script type="text/javascript" src='assets/js/lib/jquery/jquery1x.min.js'></script>
     <script>
-        var is_ie8 = false;
-        var serverPath = (window.location.pathname === '/') ? '' : window.location.pathname;
-        var serverHostname = window.location.hostname;
+      var is_ie8 = false;
+      var serverPath = (window.location.pathname === '/') ? '' : window.location.pathname;
+      var serverHostname = window.location.hostname;
     </script>
     <title>Sinopia Profile Editor</title>
     <!--[if lte IE 8]>
-        <script src='assets/js/lib/json/shim.js'></script>
-        <link rel="stylesheet" href="assets/css/explorer8.css" />
-        <script> is_ie8 = true; </script>
+      <script src='assets/js/lib/json/shim.js'></script>
+      <link rel="stylesheet" href="assets/css/explorer8.css" />
+      <script> is_ie8 = true; </script>
     <![endif]-->
 
     <script type="text/javascript">
@@ -84,11 +84,20 @@
         </div>
         <div class="sinopia-headertext">
           <div class="sinopia-headerlinks">
-            <a href="https://sinopia.io/editor">Linked Data Editor</a>
+            <script>
+              var windowHost = window.location.host
+              var homePageHost = windowHost.replace(/^(profile-editor\.)/, '')
+              var homePageUrl = `https://${homePageHost}`
+              document.write(`<a href="${homePageUrl}/templates">Linked Data Editor</a>`)
+            </script>
             &nbsp;
             <a href="#" onclick="openOffCanvasMenu()">Help and Resources</a>
           </div>
-          <h2 class="sinopia-subtitle"><a class="sinopia-subtitle" href="https://sinopia.io/">Sinopia</a></h2>
+          <h2 class="sinopia-subtitle">
+            <script>
+              document.write('<a class="sinopia-subtitle" href="' + homePageUrl + '">Sinopia</a>')
+            </script>
+          </h2>
           <h1 class="sinopia-title">Profile Editor</h1>
         </div>
 
