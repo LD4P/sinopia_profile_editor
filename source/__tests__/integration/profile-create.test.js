@@ -15,13 +15,7 @@ describe('Sinopia Profile Editor Create Page', () => {
     await pupExpect.expectSelTextContentToMatch('h4.profile-header > span#profileBanner.accordion-toggle > span.ng-scope', 'Profile')
   })
 
-  it('header links', async () => {
-    expect.assertions(2)
-    const linkedDataEdSel = 'div.sinopia-headertext a[href$="/templates"]'
-    await pupExpect.expectSelTextContentToBe(linkedDataEdSel, 'Linked Data Editor')
-    const helpLinkSel = 'div.sinopia-headertext a[onclick="openOffCanvasMenu()"]'
-    await pupExpect.expectSelTextContentToBe(helpLinkSel, 'Help and Resources')
-  })
+  // header tests in header.test file
 
   it('footer', async () => {
     expect.assertions(2)
