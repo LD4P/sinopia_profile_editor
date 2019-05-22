@@ -44,6 +44,6 @@ describe('Sinopia Profile Editor Homepage', () => {
 
   it('loads our angular app', async () => {
     expect.assertions(1)
-    await pupExpect.expectSelToExist('html[ng-app="locApp"]')
+    await expect(page).toMatchElement('html[ng-app="locApp"]')
   })
 })

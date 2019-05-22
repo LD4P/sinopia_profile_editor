@@ -25,7 +25,7 @@ describe('PropertyTemplate requirements', () => {
     it('clicking "Add Property Template" appends a property template section to the form', async () => {
       expect.assertions(1)
       await page.waitForSelector(ptFieldsTableSel)
-      await pupExpect.expectSelToExist('i.fa-exclamation[id="error"]')
+      await expect(page).toMatchElement('i.fa-exclamation[id="error"]')
     })
 
     describe('property template form fields', () => {
@@ -129,11 +129,11 @@ describe('PropertyTemplate requirements', () => {
           // NOTE: the html always shows the first option selected, though the browser
           //  shows the right thing.  So here we cheat and use indirect checking of attributes
           //  to show a template can be selected
-          await pupExpect.expectSelToExist(`${propTemplateSelectSelector}.ng-pristine`)
-          await pupExpect.expectSelToExist(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
+          await expect(page).toMatchElement(`${propTemplateSelectSelector}.ng-pristine`)
+          await expect(page).toMatchElement(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
           await page.select(propTemplateSelectSelector, 'sinopia:resourceTemplate:bf2:Form')
-          await pupExpect.expectSelToExist(`${propTemplateSelectSelector}.ng-dirty`)
-          await pupExpect.expectSelToExist(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
+          await expect(page).toMatchElement(`${propTemplateSelectSelector}.ng-dirty`)
+          await expect(page).toMatchElement(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
         })
       })
 
@@ -147,7 +147,7 @@ describe('PropertyTemplate requirements', () => {
   describe('property header appearence', () => {
     it('font-awesome icon class is present', async () => {
       expect.assertions(1)
-      await pupExpect.expectSelToExist(`.fa-caret-right`)
+      await expect(page).toMatchElement(`.fa-caret-right`)
     })
   })
 })

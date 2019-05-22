@@ -46,7 +46,7 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
     await pupExpect.expectSelValueToBe('select[popover-title="Mandatory"]', '0')
     await pupExpect.expectSelValueToBe('select[popover-title="Repeatable"]', '1')
     const template_select_sel = 'div#template > div[item="0"] select[popover-title="Value Template Reference"]'
-    await pupExpect.expectSelToExist(template_select_sel)
+    await expect(page).toMatchElement(template_select_sel)
   })
 
   describe('property template fields', () => {
@@ -68,8 +68,8 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
       await expect(page).toFill(defaultLiteralSel, 'my default literal')
 
       // NOTE: this is a shameless green way to hopefully show that data has been entered into the default form fields
-      await pupExpect.expectSelToExist(`${defaultURIsel}.ng-dirty`)
-      await pupExpect.expectSelToExist(`${defaultLiteralSel}.ng-dirty`)
+      await expect(page).toMatchElement(`${defaultURIsel}.ng-dirty`)
+      await expect(page).toMatchElement(`${defaultLiteralSel}.ng-dirty`)
     })
 
     //TODO: test selecting a Value Data type modal view and value selection
@@ -87,7 +87,7 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
       const resTemplateRefSel = `${lastResTempPropTempSel} #valueConstraints div#template select[popover-title="Value Template Reference"]`
       await page.waitForSelector(resTemplateRefSel)
       await pupExpect.expectSelTextContentToMatch(resTemplateRefSel, '')
-      await pupExpect.expectSelToExist(`${resTemplateRefSel} > option[selected="selected"][value="?"]`)
+      await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value="?"]`)
 
       // FIXME:  the selector should be populated with ids of resource templates from the server.  See #212
       const resTemplateId = 'profile:bf2:35mmFeatureFilm:Color'
@@ -98,13 +98,13 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
       await page.select(resTemplateRefSel, resTemplateId)
 
       // NOTE: could not get any of these to work
-      // await pupExpect.expectSelToExist(`${resTemplateRefSel} > option[selected="selected"][value="${resTemplateId}"]`)
-      // await pupExpect.expectSelToExist(`${resTemplateRefSel} > option[selected="selected"][value*="Color"]`)
-      // await pupExpect.expectSelToExist(`${resTemplateRefSel} > option[selected="selected"][value^="profile:bf2"]`)
+      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value="${resTemplateId}"]`)
+      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value*="Color"]`)
+      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value^="profile:bf2"]`)
       // await pupExpect.expectSelTextContentToMatch(resourceTemplateRefSel, "profile:bf2:35mmFeatureFilm:Color")
 
       // NOTE: this is a shameless green way to hopefully show that a value has been selected
-      await pupExpect.expectSelToExist(`${resTemplateRefSel}.ng-dirty`)
+      await expect(page).toMatchElement(`${resTemplateRefSel}.ng-dirty`)
     })
 
     it('"Values" Add Value allows URI selection', async() => {
@@ -115,10 +115,10 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
       const useValuesFromSel = 'div#value select[popover-title="Use Values From"]'
       await page.waitForSelector(useValuesFromSel, {visible: true})
       await pupExpect.expectSelTextContentToMatch(useValuesFromSel, '')
-      await pupExpect.expectSelToExist(`${useValuesFromSel} > option[selected="selected"][value="?"]`)
+      await expect(page).toMatchElement(`${useValuesFromSel} > option[selected="selected"][value="?"]`)
 
       await expect(page).toSelect(useValuesFromSel, 'AGROVOC (QA)')
-      await pupExpect.expectSelToExist(`${useValuesFromSel} > option[selected="selected"][value="0"]`)
+      await expect(page).toMatchElement(`${useValuesFromSel} > option[selected="selected"][value="0"]`)
       await pupExpect.expectSelTextContentToMatch(useValuesFromSel, 'AGROVOC (QA)')
     })
   })
@@ -198,6 +198,6 @@ it('imports propertyURI value with # char cleanly', async () => {
 
   // NOTE: this propertyURI has #
   const ptemplateSpanSel = 'span[popover-title="Property URI: http://www.w3.org/2000/01/rdf-schema#label"]'
-  await pupExpect.expectSelToExist(ptemplateSpanSel)
+  await expect(page).toMatchElement(ptemplateSpanSel)
   // shameless green:  could not figure out a way to select the value in the actual input element
 })
