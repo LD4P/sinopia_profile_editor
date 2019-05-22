@@ -17,8 +17,10 @@ describe('Sinopia Profile Editor Create Page', () => {
 
   it('header links', async () => {
     expect.assertions(2)
-    await pupExpect.expectSelTextContentToBe('div.sinopia-headerlinks > a:nth-child(1)', 'Linked Data Editor')
-    await pupExpect.expectSelTextContentToBe('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
+    const linkedDataEdSel = 'div.sinopia-headertext a[href$="/templates"]'
+    await pupExpect.expectSelTextContentToBe(linkedDataEdSel, 'Linked Data Editor')
+    const helpLinkSel = 'div.sinopia-headertext a[onclick="openOffCanvasMenu()"]'
+    await pupExpect.expectSelTextContentToBe(helpLinkSel, 'Help and Resources')
   })
 
   it('footer', async () => {
