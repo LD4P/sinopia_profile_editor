@@ -21,15 +21,33 @@ describe('Sinopia Profile Editor Homepage', () => {
   })
 
   describe('header', () => {
-    it('title', async() => {
-      expect.assertions(2)
-      await pupExpect.expectSelTextContentToBe('h2.sinopia-subtitle > a:nth-child(1)', 'Sinopia')
+    it('sinopia-subtitle', async () => {
+      // FIXME:  would like to show this is execution environment aware,
+      //  e.g. a home page url of https://profile-editor.development.sinopia.io/#/profile/sinopia
+      //  would yield https://development.sinopia.io
+      //  I was unable to figure out how to set window.location.host global so it would
+      //  be set before index.html computed the link
+      expect.assertions(1)
+      await pupExpect.expectSelTextContentToBe('h2.sinopia-subtitle > a', 'Sinopia')
+    })
+    it('sinopia-title', async() => {
+      expect.assertions(1)
       await pupExpect.expectSelTextContentToBe('h1.sinopia-title', 'Profile Editor')
-    });
-    it('links', async () => {
-      expect.assertions(2)
-      await pupExpect.expectSelTextContentToBe('div.sinopia-headerlinks > a:nth-child(1)', 'Linked Data Editor')
-      await pupExpect.expectSelTextContentToBe('div.sinopia-headerlinks > a:nth-child(2)', 'Help and Resources')
+    })
+    it('link to Linked Data Editor', async () => {
+      // FIXME:  would like to show this is execution environment aware,
+      //  e.g. a home page url of https://profile-editor.development.sinopia.io/#/profile/sinopia
+      //  would yield https://development.sinopia.io/templates
+      //  I was unable to figure out how to set global window.location.host value in tests so it would
+      //  be used by index.html to compute the link
+      expect.assertions(1)
+      const linkedDataEdSel = 'div.sinopia-headertext a[href$="/templates"]'
+      await pupExpect.expectSelTextContentToBe(linkedDataEdSel, 'Linked Data Editor')
+    })
+    it('link to help and resources', async () => {
+      expect.assertions(1)
+      const helpLinkSel = 'div.sinopia-headertext a[onclick="openOffCanvasMenu()"]'
+      await pupExpect.expectSelTextContentToBe(helpLinkSel, 'Help and Resources')
     })
   })
 

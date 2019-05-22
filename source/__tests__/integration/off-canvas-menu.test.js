@@ -7,7 +7,10 @@ describe('Off-canvas Help Menu', () => {
 
   it('clicking on the Help and Resource menu displays off-canvas menu ', async () => {
     expect.assertions(1)
-    await page.click("div.sinopia-headertext > div > a:nth-child(2)")
+    const linkSel = 'div.sinopia-headertext a[onclick="openOffCanvasMenu()"]'
+    await page.waitForSelector(linkSel)
+    await page.click(linkSel)
+    await page.waitForSelector("#offCanvasMenu")
     const off_canvas_menu = await page.$eval("#offCanvasMenu", e => e.style.width)
     expect(off_canvas_menu).toBe("300px")
   })

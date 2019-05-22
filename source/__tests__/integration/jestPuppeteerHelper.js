@@ -3,6 +3,7 @@ async function expectSelTextContentToMatch(sel, expected) {
   const textContent = await page.$eval(sel, e => e.textContent)
   return expect(textContent).toMatch(expected)
 }
+// selector is present, but does not have matching textContent
 async function expectSelTextContentNotToMatch(sel, expected) {
   const textContent = await page.$eval(sel, e => e.textContent)
   return expect(textContent).not.toMatch(expected)
@@ -34,12 +35,12 @@ async function expectSelTextContentTrimmedToBe(sel, expected) {
 }
 async function expectSelToExist(sel) {
   await page.waitForSelector(sel)
-  const selector = !!(await page.$(sel))
-  return expect(selector).toEqual(true)
+  const selectorPresent = !!(await page.$(sel))
+  return expect(selectorPresent).toEqual(true)
 }
 async function expectSelNotToExist(sel) {
-  const selector = !!(await page.$(sel))
-  return expect(selector).toEqual(false)
+  const selectorPresent = !!(await page.$(sel))
+  return expect(selectorPresent).toEqual(false)
 }
 
 module.exports = {
