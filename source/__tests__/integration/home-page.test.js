@@ -40,12 +40,7 @@ describe('Sinopia Profile Editor Homepage', () => {
     expect(receivedUrl).toBe('http://127.0.0.1:8000/#/profile/create/true')
   })
 
-  it('footer', async () => {
-    expect.assertions(3)
-    await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
-    await pupExpect.expectSelTextContentToBe('div.sinopia-footer > a:nth-child(2)', 'Linked Data for Production 2 (LD4P2)')
-    await pupExpect.expectSelTextContentToBe('div.sinopia-footer > a:nth-child(3)', 'Creative Commons CC0 1.0 Universal Public Domain Dedication')
-  })
+  // footer tests in footer.test file
 
   it('loads our angular app', async () => {
     expect.assertions(1)
