@@ -45,8 +45,8 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
     await pupExpect.expectSelValueToBe('input[popover-title="Property Label"]', 'Barcode')
     await pupExpect.expectSelValueToBe('select[popover-title="Mandatory"]', '0')
     await pupExpect.expectSelValueToBe('select[popover-title="Repeatable"]', '1')
-    const template_select_sel = 'div#template > div[item="0"] select[popover-title="Value Template Reference"]'
-    await expect(page).toMatchElement(template_select_sel)
+    const valueConstraintSel = 'div#template > div[item="0"] input[popover-title="ID of Resource Template to embed"]'
+    await expect(page).toMatchElement(valueConstraintSel)
   })
 
   describe('property template fields', () => {
@@ -75,36 +75,19 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
     //TODO: test selecting a Value Data type modal view and value selection
     it.todo('add Value Data Type definitions using the Select Data Type modal helper')
 
-    it('add resource template id from selector in "Templates" section', async () => {
-      // NOTE:  Not sure it's working properly in the app.
-      //   browser shows text selected, but inspected element html does NOT show additional changes to
-      //   the selected element (like, I picked 1, then I picked 2).
-
-      expect.assertions(4)
+    it('add resource template id in "Templates" section', async () => {
+      expect.assertions(3)
       const addTemplateSel = `${lastResTempPropTempSel} #valueConstraints div#template > a#addTemplate`
       await expect(page).toClick(addTemplateSel)
 
-      const resTemplateRefSel = `${lastResTempPropTempSel} #valueConstraints div#template select[popover-title="Value Template Reference"]`
-      await page.waitForSelector(resTemplateRefSel)
-      await pupExpect.expectSelTextContentToMatch(resTemplateRefSel, '')
-      await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value="?"]`)
-
-      // FIXME:  the selector should be populated with ids of resource templates from the server.  See #212
+      const valTempRefTemplatesSel = 'div.panel[name="propertyForm"] #template.propertyItems'
+      const valTempRefDivSel = `${valTempRefTemplatesSel} > div.listItems[html="html/template.html"] > div > div`
+      const valTempRefInputSel = `${valTempRefDivSel} > input[id^="templateInput_"][type="text"]`
       const resTemplateId = 'profile:bf2:35mmFeatureFilm:Color'
-      // NOTE: This code technique can't seem to select the text
-      // await expect(page).toSelect(resTemplateRefSel, resTemplateId) // this didn't work;  dunno why
-      // NOTE: not positive this code selects the value
-      await page.waitForSelector(resTemplateRefSel)
-      await page.select(resTemplateRefSel, resTemplateId)
+      await expect(page).toFill(valTempRefInputSel, resTemplateId)
 
-      // NOTE: could not get any of these to work
-      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value="${resTemplateId}"]`)
-      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value*="Color"]`)
-      // await expect(page).toMatchElement(`${resTemplateRefSel} > option[selected="selected"][value^="profile:bf2"]`)
-      // await pupExpect.expectSelTextContentToMatch(resourceTemplateRefSel, "profile:bf2:35mmFeatureFilm:Color")
-
-      // NOTE: this is a shameless green way to hopefully show that a value has been selected
-      await expect(page).toMatchElement(`${resTemplateRefSel}.ng-dirty`)
+      // NOTE: this is a shameless green way to show that a value has been entered
+      await expect(page).toMatchElement(`${valTempRefInputSel}.ng-dirty`)
     })
 
     it('"Values" Add Value allows URI selection', async() => {
