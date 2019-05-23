@@ -12,61 +12,60 @@ describe('PropertyTemplate requirements', () => {
   })
 
   describe('adding a property template', () => {
-    const propTemplateSelectSelector = 'select#templateSelect_1_0'
     const ptFieldsTableSel = 'div.panel[name="propertyForm"] table'
 
     beforeAll(async () => {
       await page.waitForSelector('span[href="#property_1"]')
       await page.waitForSelector('a#addTemplate')
       await page.click('a#addTemplate')
-      return await page.waitForSelector(propTemplateSelectSelector)
+      return await page.waitForSelector(ptFieldsTableSel)
     })
 
-    it('clicking "Add Property Template" appends a property template section to the form', async () => {
+    test('clicking "Add Property Template" appends a property template section to the form', async () => {
       expect.assertions(1)
       await page.waitForSelector(ptFieldsTableSel)
       await expect(page).toMatchElement('i.fa-exclamation[id="error"]')
     })
 
     describe('property template form fields', () => {
-      it('has 3 input fields for the property template metadata', async () => {
+      test('has 3 input fields for the property template metadata', async () => {
         expect.assertions(1)
         const inputs = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('input').length)
         expect(inputs).toBe(3)
       })
-      it('has 3 select fields for the property template metadata', async () => {
+      test('has 3 select fields for the property template metadata', async () => {
         expect.assertions(1)
         const selects = await page.$eval(ptFieldsTableSel, e => e.getElementsByTagName('select').length)
         expect(selects).toBe(3)
       })
 
       describe('Required fields are indicated with asterisk', () => {
-        it('Property URI', async () => {
+        test('Property URI', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="propertyURI"]`, "Property URI*")
         })
-        it('Property Label', async () => {
+        test('Property Label', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="propertyLabel"]`, "Property Label*")
         })
-        it('Type', async () => {
+        test('Type', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="type"]`, "Type*")
         })
       })
 
       describe('Non-required fields have no asterisk', () => {
-        it('Remark', async () => {
+        test('Remark', async () => {
           expect.assertions(2)
           await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property*")
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="remark"]`, "Guiding statement for the use of this property")
         })
-        it('Mandatory', async () => {
+        test('Mandatory', async () => {
           expect.assertions(2)
           await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory*")
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="mandatory"]`, "Mandatory")
         })
-        it('Repeatable', async () => {
+        test('Repeatable', async () => {
           expect.assertions(2)
           await pupExpect.expectSelTextContentNotToBe(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable*")
           await pupExpect.expectSelTextContentToBe(`${ptFieldsTableSel} label[for="repeatable"]`, "Repeatable")
@@ -78,21 +77,21 @@ describe('PropertyTemplate requirements', () => {
       const vcFieldsTableSel = 'div[ng-controller="ValueConstraintController"]'
 
       describe('Value Constraint', () => {
-        it('header', async () => {
+        test('header', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentToBe(`${vcFieldsTableSel} > #constraintHeader`, "Value Constraint")
         })
-        it('has no input fields', async () => {
+        test('has no input fields', async () => {
           expect.assertions(1)
           const inputs = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('input').length)
           expect(inputs).toBe(0)
         });
-        it('has no select fields', async () => {
+        test('has no select fields', async () => {
           expect.assertions(1)
           const selects = await page.$eval(`${vcFieldsTableSel} > table`, e => e.getElementsByTagName('select').length)
           expect(selects).toBe(0)
         })
-        it('has Add Default Link', async () => {
+        test('has Add Default Link', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentTrimmedToMatch(`${vcFieldsTableSel} > a#addDefault`, "Add Default")
         })
@@ -101,43 +100,57 @@ describe('PropertyTemplate requirements', () => {
       describe('Value Data Type', () => {
         const vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
 
-        it('header', async () => {
+        test('header', async () => {
           expect.assertions(1)
           await expect(page).toMatch('Value Data Type')
         })
-        it('has one input field', async () => {
+        test('has one input field', async () => {
           expect.assertions(1)
           const inputs = await page.$eval(vdtTableSel, e => e.getElementsByTagName('input').length)
           expect(inputs).toBe(1)
         })
-        it('has URI field', async () => {
+        test('has URI field', async () => {
           expect.assertions(1)
           await pupExpect.expectSelTextContentToBe(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
         })
       })
 
-      describe('Templates', () => {
-        it('dropdown populated with resource template ids (via profiles from versoSpoof)', async () => {
+      describe('Templates (ValueTemplateRefs)', () => {
+        const valTempRefTemplatesSel = 'div.panel[name="propertyForm"] #template.propertyItems'
+        const valTempRefDivSel = `${valTempRefTemplatesSel} > div.listItems[html="html/template.html"] > div > div`
+        const valTempRefInputSel = `${valTempRefDivSel} > input[id^="templateInput_"]`
+
+        test('heading is "Templates"', async() => {
           expect.assertions(1)
-          await page.waitForSelector(propTemplateSelectSelector)
-          const profile_count = await page.$eval(propTemplateSelectSelector, e => e.length)
-          expect(profile_count).toBe(242)
+          await pupExpect.expectSelTextContentToBe(`${valTempRefTemplatesSel} > h5`, "Templates")
         })
-        it('dropdown allows selection of a resource template id', async () => {
-          expect.assertions(4)
-          await page.waitForSelector(propTemplateSelectSelector)
-          // NOTE: the html always shows the first option selected, though the browser
-          //  shows the right thing.  So here we cheat and use indirect checking of attributes
-          //  to show a template can be selected
-          await expect(page).toMatchElement(`${propTemplateSelectSelector}.ng-pristine`)
-          await expect(page).toMatchElement(`${propTemplateSelectSelector} > option[selected="selected"][value="?"]`)
-          await page.select(propTemplateSelectSelector, 'sinopia:resourceTemplate:bf2:Form')
-          await expect(page).toMatchElement(`${propTemplateSelectSelector}.ng-dirty`)
-          await expect(page).toMatchElement(`${propTemplateSelectSelector} > option[selected="selected"][value^="sinopia:resourceTemplate:bf2"]`)
+
+        test('label of Template', async () => {
+          expect.assertions(1)
+          await pupExpect.expectSelTextContentToBe(`${valTempRefDivSel} > label[for="template"]`, "Template")
         })
+
+        test('input field is text box', async () => {
+          expect.assertions(1)
+          await expect(page).toMatchElement(`${valTempRefInputSel}[type="text"]`)
+        })
+
+        test('popover-title', async () => {
+          expect.assertions(1)
+          await expect(page).toMatchElement(`${valTempRefInputSel}[popover-title="ID of Resource Template to embed"]`)
+        })
+        test('popover', async () => {
+          expect.assertions(1)
+          await expect(page).toMatchElement(`${valTempRefInputSel}[popover="For use with type = resource. Enter the ID of the Resource Template that will be the object of this property."]`)
+        })
+
+        test.todo('on import - ensure existing valueTemplateRef shows up in UI')
+        test.todo('on import - ensure multiple existing valueTemplateRef all show up in UI')
+        test.todo('on export - ensure correct value is in rt in correct way')
+        test.todo('on export - ensure multiple values can be put in rt')
       })
 
-      it('Values - has Add Value link', async () => {
+      test('Values - has Add Value link', async () => {
         expect.assertions(1)
         await pupExpect.expectSelTextContentTrimmedToMatch(`${vcFieldsTableSel} > div#value > a#adValue`, "Add Value")
       })
@@ -145,7 +158,7 @@ describe('PropertyTemplate requirements', () => {
   })
 
   describe('property header appearence', () => {
-    it('font-awesome icon class is present', async () => {
+    test('font-awesome icon class is present', async () => {
       expect.assertions(1)
       await expect(page).toMatchElement(`.fa-caret-right`)
     })
@@ -161,7 +174,7 @@ describe('property URI and Label are required', () => {
     return await page.$eval(profileFormSel, e => e.reset())
   })
 
-  it('error if exported without property URI', async () => {
+  test('error if exported without property URI', async () => {
     expect.assertions(3)
     await page.waitForSelector(profileFormSel)
     await expect(page).toFillForm(profileFormSel, {
@@ -183,7 +196,7 @@ describe('property URI and Label are required', () => {
     await pupExpect.expectSelTextContentToBe(alertBoxSel, 'Parts of the form are invalid')
   })
 
-  it('error if exported without property Label', async () => {
+  test('error if exported without property Label', async () => {
     expect.assertions(3)
     await page.waitForSelector(profileFormSel)
     await expect(page).toFillForm(profileFormSel, {
@@ -204,7 +217,7 @@ describe('property URI and Label are required', () => {
     await pupExpect.expectSelTextContentToBe(alertBoxSel, 'Parts of the form are invalid')
   })
 
-  it('error if exported with invalid property uri', async () => {
+  test('error if exported with invalid property uri', async () => {
     expect.assertions(4)
     await expect(page).toFillForm('form.sinopia-profile-form[name="profileForm"]', {
       // all the other required fields from profile and resource template
@@ -229,7 +242,7 @@ describe('property URI and Label are required', () => {
     await pupExpect.expectSelTextContentToBe(alertBoxSel, "Parts of the form are invalid")
   })
 
-  it('can be exported with valid property URI', async () => {
+  test('can be exported with valid property URI', async () => {
     expect.assertions(5)
 
     await expect(page).toFillForm(profileFormSel, {
@@ -264,7 +277,7 @@ describe('choose propertyTemplate from menu', () => {
     return await page.click('a#propertyChoose')
   })
 
-  it('selecting property populates property form', async () => {
+  test('selecting property populates property form', async () => {
     expect.assertions(3)
     await page.waitForSelector('select[name="chooseVocab"]')
     await expect(page).toSelect('select[name="chooseVocab"]', 'Bibframe 2.0')
