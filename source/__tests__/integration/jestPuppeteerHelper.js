@@ -33,11 +33,6 @@ async function expectSelTextContentTrimmedToBe(sel, expected) {
   const textContent = await page.$eval(sel, e => e.textContent)
   return expect(textContent.trim()).toBe(expected)
 }
-async function expectSelToExist(sel) {
-  await page.waitForSelector(sel)
-  const selectorPresent = !!(await page.$(sel))
-  return expect(selectorPresent).toEqual(true)
-}
 async function expectSelNotToExist(sel) {
   const selectorPresent = !!(await page.$(sel))
   return expect(selectorPresent).toEqual(false)
@@ -51,6 +46,5 @@ module.exports = {
   expectSelTextContentToBe,
   expectSelTextContentNotToBe,
   expectSelTextContentTrimmedToBe,
-  expectSelToExist,
   expectSelNotToExist
 }

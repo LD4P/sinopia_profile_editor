@@ -15,17 +15,7 @@ describe('Sinopia Profile Editor Create Page', () => {
     await pupExpect.expectSelTextContentToMatch('h4.profile-header > span#profileBanner.accordion-toggle > span.ng-scope', 'Profile')
   })
 
-  it('header links', async () => {
-    expect.assertions(2)
-    const linkedDataEdSel = 'div.sinopia-headertext a[href$="/templates"]'
-    await pupExpect.expectSelTextContentToBe(linkedDataEdSel, 'Linked Data Editor')
-    const helpLinkSel = 'div.sinopia-headertext a[onclick="openOffCanvasMenu()"]'
-    await pupExpect.expectSelTextContentToBe(helpLinkSel, 'Help and Resources')
-  })
+  // header tests in header.test file
 
-  it('footer', async () => {
-    expect.assertions(2)
-    await expect(page).toMatch('funded by the Andrew W. Mellon Foundation')
-    await pupExpect.expectSelTextContentToBe('div.sinopia-footer > a:nth-child(2)', 'Linked Data for Production 2 (LD4P2)')
-  })
+  // footer tests in footer.test file
 })
