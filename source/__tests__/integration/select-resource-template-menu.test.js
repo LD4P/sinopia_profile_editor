@@ -1,7 +1,7 @@
 // Copyright 2018 Stanford University see Apache2.txt for license
 const pupExpect = require('./jestPuppeteerHelper')
 
-describe('Create profile has ontologies available for resource template', () => {
+describe('Select Resource Template Menu', () => {
   const modalSel = 'div#chooseResource > div.modal-dialog > div.modal-content'
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
@@ -12,7 +12,7 @@ describe('Create profile has ontologies available for resource template', () => 
     return await page.waitForSelector(modalSel)
   })
 
-  it('modal title says Choose Vocab Template', async () => {
+  it('modal title says Choose Resource Template', async () => {
     expect.assertions(1)
 
     const modalTitleSel = `${modalSel} > div.modal-header > h3.modal-title`
