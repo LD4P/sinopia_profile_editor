@@ -36,8 +36,10 @@ describe('Sinopia Profile Editor Homepage', () => {
     expect.assertions(2)
     const sel = 'a.btn.import-export[ng-click="showImport()"]'
     await expect(page).toClick(sel)
+    const expectedUrl = 'http://127.0.0.1:8000/#/profile/create/true'
+    await browser.waitForTarget(target => target.url() === expectedUrl)
     const receivedUrl = await page.evaluate(() => window.location.href)
-    expect(receivedUrl).toBe('http://127.0.0.1:8000/#/profile/create/true')
+    expect(receivedUrl).toBe(expectedUrl)
   })
 
   // footer tests in footer.test file
