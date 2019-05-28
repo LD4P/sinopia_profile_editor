@@ -142,9 +142,6 @@ describe('imports and edits a v0.0.2 profile from a json file', () => {
   })
 
   it.todo('change property definitions using the Change Property modal')
-
-  // TODO: write this test -- tho it's sorta maybe covered by export-profile tests?
-  it.todo('exports values in json that match the imported values and changes')
 })
 
 it('imports a v0.0.9 profile from a json file', async () => {
