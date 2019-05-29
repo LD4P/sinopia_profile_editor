@@ -2,7 +2,7 @@
 const path = require('path')
 const pupExpect = require('./jestPuppeteerHelper')
 
-describe('imports v0.0.2 profile from json file', () => {
+describe('imports valid profile without included schema url from json file', () => {
   beforeAll(async () => {
     await page.goto('http://localhost:8000/#/profile/create/true')
     const profilePath = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
@@ -63,19 +63,10 @@ describe('imports v0.0.2 profile from json file', () => {
     // const valueConstraintSel = 'div#template > div[item="0"] input[popover-title="ID of Resource Template to embed"]'
     // await expect(page).toMatchElement(valueConstraintSel, { text: 'profile:bf2:Identifiers:Barcode' })
   })
-})
 
-describe('edits an imported v0.0.2 profile', () => {
-  beforeAll(async () => {
-    await page.goto('http://localhost:8000/#/profile/create/true')
-    const profilePath = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
-    await expect(page).toUploadFile('input[type="file"]', profilePath)
-    const profileLoadedSel = 'div#profile-panel .panel-heading span[popover-title="Profile ID: profile:bf2:Item"]'
-    await page.waitForSelector(profileLoadedSel, {visible: true})
-    return await expect(page).toClick(profileLoadedSel)
-  })
-
-  describe('property template fields', () => {
+  // FIXME: this section should move to edit-profile.test but I had trouble getting tests to pass there.
+  //  Suspect it is dependent on test order of execution.
+  describe('edits imported profile', () => {
     beforeAll(async () => {
       await expect(page).toClick('a#addResource')
       return await expect(page).toClick('#resourceTemplates_0 > div:last-child a.propertyLink')
@@ -84,7 +75,7 @@ describe('edits an imported v0.0.2 profile', () => {
     const lastResTempPropTempSel = '#resourceTemplates_0 > div:last-child div[name="propertyForm"]'
 
     test('add Default value constraint to Property Template', async() => {
-      expect.assertions(10) // includes 2 in each beforeAll
+      expect.assertions(8) // includes 2 in beforeAll
       await expect(page).toClick(`${lastResTempPropTempSel} #valueConstraints #addDefault`)
 
       const defaultURIsel = `${lastResTempPropTempSel} #valueConstraints input[name="defaultURI"]`
@@ -99,7 +90,7 @@ describe('edits an imported v0.0.2 profile', () => {
     })
 
     //TODO: test selecting a Value Data type modal view and value selection
-    it.todo('add Value Data Type definitions using the Select Data Type modal helper')
+    test.todo('add Value Data Type definitions using the Select Data Type modal helper')
 
     test('add resource template id in "Templates" section', async () => {
       expect.assertions(3)
@@ -131,46 +122,9 @@ describe('edits an imported v0.0.2 profile', () => {
       await pupExpect.expectSelTextContentToMatch(useValuesFromSel, 'AGROVOC (QA)')
     })
   })
-
-  test('add resource template via Select Resource', async() => {
-    expect.assertions(5)
-
-    await expect(page).toClick('a#addResource')
-    await expect(page).toClick('a#resourceChoose', {text: 'Select Resource'})
-
-    const modalBodySel = 'div#chooseResource div.modal-body'
-    const selectVocabSel = `${modalBodySel} > div#select_box_holder > select[name="chooseVocab"]`
-    await expect(page).toSelect(selectVocabSel, 'Bibframe 2.0')
-
-    const resourcePickSel = `${modalBodySel} > select#resourcePick`
-    await expect(page).toSelect(resourcePickSel, 'Role')
-    await pupExpect.expectSelTextContentToMatch('span[popover="URI: http://id.loc.gov/ontologies/bibframe/Role"]', 'Role')
-  })
-
-  test('delete a property from a resource template', async() => {
-    expect.assertions(5)
-    const resourceTemplateSpan = 'span[popover-title="Resource ID: profile:bf2:Item"]'
-    await page.waitFor(500) // shameless green: it needs more time here, can't tell why
-    await page.waitForSelector(resourceTemplateSpan, {visible: true})
-    await expect(page).toClick(resourceTemplateSpan)
-    await page.waitForSelector('#resource_0 a.propertyLink')
-
-    const propTemplatesSel = '#resourceTemplates_0 > div[name="resourceForm"] div.panel-body div.propertyTemplates'
-    const deleteTargetSel = `${propTemplatesSel} span[popover-title="Property URI: http://id.loc.gov/ontologies/bibframe/identifiedBy"]`
-    await pupExpect.expectSelTextContentToMatch(deleteTargetSel, 'Barcode')
-
-    await expect(page).toClick(`${propTemplatesSel} > div.propertyItem[item="0"] a#deleteIcon`)
-    const confirmDeleteSel = 'div#deleteModal div.modal-body > button[ng-click="confirm();"]'
-    await page.waitForSelector(confirmDeleteSel, {visible: true})
-    await expect(page).toClick(confirmDeleteSel)
-
-    await pupExpect.expectSelTextContentNotToMatch(deleteTargetSel, 'Barcode')
-  })
-
-  it.todo('change property definitions using the Change Property modal')
 })
 
-test('imports a v0.0.9 profile from a json file', async () => {
+test('imports valid v0.0.9 profile from json file', async () => {
   expect.assertions(3)
   await page.goto('http://localhost:8000/#/profile/create/true')
 
@@ -181,11 +135,23 @@ test('imports a v0.0.9 profile from a json file', async () => {
   await pupExpect.expectSelTextContentToMatch('span[popover-title="Resource ID: sinopia:resourceTemplate:bf2:Foo"]', 'Foo Associated with a Work')
 })
 
-test('imports a v0.1.0 profile from a json file', async () => {
+test('imports valid v0.1.0 profile from a json file', async () => {
   expect.assertions(3)
   await page.goto('http://localhost:8000/#/profile/create/true')
 
   const profilePath = path.join(__dirname, "..", "__fixtures__", 'place_profile_sinopia_v0.1.0.json')
+  await expect(page).toUploadFile('input[type="file"]', profilePath)
+  await page.waitForSelector('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]', {visible: true})
+  await pupExpect.expectSelTextContentToMatch('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]', 'BIBFRAME 2.0 Place')
+  await pupExpect.expectSelTextContentToMatch('span[popover-title="Resource ID: sinopia:resourceTemplate:bf2:Place"]', 'Place Associated with a Work')
+})
+
+// NOTE:  0.2.0 != 0.0.2
+test('imports valid v0.2.0 profile from json file', async () => {
+  expect.assertions(3)
+  await page.goto('http://localhost:8000/#/profile/create/true')
+
+  const profilePath = path.join(__dirname, "..", "__fixtures__", 'place_profile_sinopia_v0.2.0.json')
   await expect(page).toUploadFile('input[type="file"]', profilePath)
   await page.waitForSelector('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]', {visible: true})
   await pupExpect.expectSelTextContentToMatch('span[popover-title="Profile ID: sinopia:profile:bf2:Place"]', 'BIBFRAME 2.0 Place')
