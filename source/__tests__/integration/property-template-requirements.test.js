@@ -144,8 +144,10 @@ describe('PropertyTemplate requirements', () => {
           await expect(page).toMatchElement(`${valTempRefInputSel}[popover="For use with type = resource. Enter the ID of the Resource Template that will be the object of this property."]`)
         })
 
+        // NOTE: these tests might be better put in import-profile (see github #222)
         test.todo('on import - ensure existing valueTemplateRef shows up in UI')
         test.todo('on import - ensure multiple existing valueTemplateRef all show up in UI')
+        // NOTE: these tests might be better put in export-profile (see github #222)
         test.todo('on export - ensure correct value is in rt in correct way')
         test.todo('on export - ensure multiple values can be put in rt')
       })
