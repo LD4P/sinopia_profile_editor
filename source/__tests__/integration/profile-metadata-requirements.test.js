@@ -9,7 +9,7 @@ describe('Validating the profile metadata', () => {
 
   describe('missing required profile metadata fields', () => {
     afterEach(async () => {
-      return page.$eval('form[name="profileForm"]', e => e.reset())
+      return await page.$eval('form[name="profileForm"]', e => e.reset())
     })
 
     it.each`

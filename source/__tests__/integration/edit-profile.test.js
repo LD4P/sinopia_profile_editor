@@ -12,8 +12,9 @@ describe('edits an imported v0.0.2 profile', () => {
     return await expect(page).toClick(profileLoadedSel)
   })
 
-  // FIXME: describe('edits imported profile' from import-profile tests should move here, but I had trouble
-  // getting them to pass here.  Suspect it is dependent on test order of execution
+  // FIXME: describe('edits imported profile' ... from import-profile tests should move here, but I had trouble
+  // getting them to pass here.
+  //  Suspect it is dependent on test order of execution and/or need a more specific selector.
 
   describe('edit resource templates in profile', () => {
     beforeAll(async () => {
