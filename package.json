@@ -1,7 +1,7 @@
 {
   "name": "sinopia_profile_editor",
   "description": "Editor for BIBFRAME *profiles* forked from http://github.com/lcnetdev/profile-edit",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "main": "Gruntfile.js",
   "dependencies": {
     "angular-local-storage": "~0.2.2",
@@ -60,6 +60,7 @@
     "grunt-dev": "grunt ngAnnotate uglify cssmin",
     "jest-ci": "jest --coverage --colors --silent --ci --runInBand --reporters=default --reporters=jest-junit && cat ./coverage/lcov.info | coveralls",
     "jest-cov": "jest --coverage --colors --silent",
+    "postpublish": "PACKAGE_VERSION=$(jq -j -r -M .version package.json) && git tag v$PACKAGE_VERSION && git push --tags",
     "test": "jest --colors --silent",
     "test-verbose": "jest --colors"
   },
