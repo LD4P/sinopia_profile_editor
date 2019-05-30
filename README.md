@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/v/sinopia_profile_editor.svg)](https://www.npmjs.com/package/sinopia_profile_editor)
 [![CircleCI](https://circleci.com/gh/LD4P/sinopia_profile_editor.svg?style=svg)](https://circleci.com/gh/LD4P/sinopia_profile_editor)
 [![Coverage Status](https://coveralls.io/repos/github/LD4P/sinopia_profile_editor/badge.svg)](https://coveralls.io/github/LD4P/sinopia_profile_editor)
 
@@ -67,6 +68,18 @@ We use [circleci](https://circleci.com/gh/Ld4p/sinopia_profile_editor).  The ste
 
 In the "artifacts" tab of a particular build, you can look at code coverage (`coverage/lcov-report/index.html`).
 
+### Release management
+
+To release a new version of the profile editor, there are a few steps:
+
+* Update the version number in `package.json`
+* Prerequisite: install [jq](https://stedolan.github.io/jq/), which is used by the npm `postpublish` process
+* Run `npm publish` (**note**: requires publishing rights on [npmjs.com/package/sinopia_profile_editor](https://npmjs.com/package/sinopia_profile_editor))
+  * This will also create a new git tag corresponding to the new version in `package.json` and push the tag upstream
+* [Create a new GitHub release](https://github.com/LD4P/sinopia_profile_editor/releases/new) for the new git tag
+* [Build a new Docker image](https://github.com/LD4P/sinopia_profile_editor#building-latest-docker-image), but instead of tagging with `:latest`, tag with `:1.2.3` (assuming 1.2.3 is the new version you just tagged). In other words, there should be a Docker image tagged with the new version.
+* [Push the tagged Docker image](https://github.com/LD4P/sinopia_profile_editor#pushing-docker-image-to-dockerhub), but instead of pushing the `:latest` tag, push the `:1.2.3` tag you just created (again, 1.2.3 is just an example version)
+
 ### Using Docker
 
 The Sinopia Profile Editor supports [Docker](https://www.docker.com/), both
@@ -92,7 +105,7 @@ To build the latest version of the Sinopia Profile Editor, you can build with th
 
 #### Pushing Docker Image to DockerHub
 
-Run `docker login` and enter the correct credentials to your docker account (hub.docker.com).  
+Run `docker login` and enter the correct credentials to your docker account (hub.docker.com).
 Once successfully authenticated, run
 
 ```
