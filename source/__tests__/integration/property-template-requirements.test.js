@@ -8,7 +8,7 @@ describe('PropertyTemplate requirements', () => {
     await page.click('a#addResource')
     await page.waitForSelector('a.propertyLink')
     await page.click('a.propertyLink')
-    return await page.waitForSelector('span[href="#property_1"]')
+    await page.waitForSelector('span[href="#property_1"]')
   })
 
   describe('adding a property template', () => {
@@ -18,7 +18,7 @@ describe('PropertyTemplate requirements', () => {
       await page.waitForSelector('span[href="#property_1"]')
       await page.waitForSelector('a#addTemplate')
       await page.click('a#addTemplate')
-      return await page.waitForSelector(ptFieldsTableSel)
+      await page.waitForSelector(ptFieldsTableSel)
     })
 
     test('clicking "Add Property Template" appends a property template section to the form', async () => {
@@ -173,7 +173,7 @@ describe('property URI and Label are required', () => {
   const alertBoxSel = '#alertBox > div.modal-dialog > div.modal-content > div.modal-body > p#alert_text'
 
   afterEach(async () => {
-    return await page.$eval(profileFormSel, e => e.reset())
+    await page.$eval(profileFormSel, e => e.reset())
   })
 
   test('error if exported without property URI', async () => {
@@ -276,7 +276,7 @@ describe('choose propertyTemplate from menu', () => {
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:8000/#/profile/create/')
     await page.waitForSelector('a#propertyChoose')
-    return await page.click('a#propertyChoose')
+    await page.click('a#propertyChoose')
   })
 
   test('selecting property populates property form', async () => {

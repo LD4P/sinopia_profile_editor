@@ -7,7 +7,7 @@ describe('Create profile resource template requirements', () => {
     await page.goto('http://localhost:8000/#/profile/create/')
     await page.waitForSelector('a#addResource')
     await page.click('a#addResource')
-    return await page.waitForSelector('a.propertyLink')
+    await page.waitForSelector('a.propertyLink')
   })
 
   describe('resource template form fields', () => {
@@ -85,11 +85,11 @@ describe('Create profile resource template requirements', () => {
         await page.click('a#addResource')
         await page.waitForSelector('a.propertyLink')
         await page.click('a.propertyLink')
-        return await page.waitForSelector('span[href="#property_1"]')
+        await page.waitForSelector('span[href="#property_1"]')
       })
 
       afterEach(async() => {
-        return await page.$eval('form[name="profileForm"]', e => e.reset())
+        await page.$eval('form[name="profileForm"]', e => e.reset())
       })
 
       it('requires Resource ID', async () => {

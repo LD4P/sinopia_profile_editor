@@ -5,7 +5,7 @@ describe('Adding, editing and removing a new Profile', () => {
   const sourceInputSel = '#profile input[name="source"]'
 
   beforeAll(async () => {
-    return await page.goto('http://localhost:8000/#/profile/create/')
+    await page.goto('http://localhost:8000/#/profile/create/')
   })
 
   it('displays a new profile span', async () => {
@@ -19,7 +19,7 @@ describe('Adding, editing and removing a new Profile', () => {
     const profile_fields_table_sel = 'div[id="profile"] > div.panel-body > table'
 
     beforeAll(async () => {
-      return await page.waitForSelector(profile_fields_table_sel)
+      await page.waitForSelector(profile_fields_table_sel)
     })
 
     it('has eight input fields for the profile admin data', async () => {
@@ -110,7 +110,7 @@ describe('Adding, editing and removing a new Profile', () => {
     beforeAll(async () => {
       await page.waitForSelector('#addResource')
       await page.click('#addResource')
-      return await page.waitForSelector('div[name="resourceForm"]')
+      await page.waitForSelector('div[name="resourceForm"]')
     })
 
     it('displays a new resource template span', async () => {
@@ -147,7 +147,7 @@ describe('Adding, editing and removing a new Profile', () => {
       await page.waitForSelector('div[name="resourceForm"]')
       await page.waitForSelector('.propertyLink')
       await page.click('.propertyLink')
-      return await page.waitForSelector('div[name="propertyForm"]')
+      await page.waitForSelector('div[name="propertyForm"]')
     })
 
     it('has 6 top level attribute fields', async() => {

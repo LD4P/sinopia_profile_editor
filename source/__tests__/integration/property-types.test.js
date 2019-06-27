@@ -8,7 +8,7 @@ describe('Type of Property in Resource in Profile', () => {
     await page.click('a#addResource')
     await page.waitForSelector('a.propertyLink')
     await page.click('a.propertyLink')
-    return await page.waitForSelector('span[href="#property_1"]')
+    await page.waitForSelector('span[href="#property_1"]')
   })
 
   it('dropdown is correctly populated', async () => {
