@@ -4,12 +4,12 @@ const pupExpect = require('./jestPuppeteerHelper')
 describe('Validating the profile metadata', () => {
 
   beforeAll(async () => {
-    return await page.goto('http://localhost:8000/#/profile/create/')
+    await page.goto('http://localhost:8000/#/profile/create/')
   })
 
   describe('missing required profile metadata fields', () => {
     afterEach(async () => {
-      return await page.$eval('form[name="profileForm"]', e => e.reset())
+      await page.$eval('form[name="profileForm"]', e => e.reset())
     })
 
     it.each`

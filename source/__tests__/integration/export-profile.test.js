@@ -39,7 +39,7 @@ describe('Profiles Export', () => {
 
   describe('exports cleanly', () => {
     beforeAll(async () => {
-      return await page.goto('http://127.0.0.1:8000/#/profile/create/')
+      await page.goto('http://127.0.0.1:8000/#/profile/create/')
     })
 
     beforeEach(async () => {
@@ -67,7 +67,7 @@ describe('Profiles Export', () => {
     })
 
     afterEach(async() => {
-      return await page.reload('http://127.0.0.1:8000/#/profile/create/')
+      await page.reload('http://127.0.0.1:8000/#/profile/create/')
     })
 
     it.each`
@@ -99,7 +99,7 @@ describe('Profiles Export', () => {
     const rt009SchemaURL = 'https://ld4p.github.io/sinopia/schemas/0.0.9/resource-template.json'
 
     afterEach(async() => {
-      return await page.reload('http://127.0.0.1:8000/#/profile/create/')
+      await page.reload('http://127.0.0.1:8000/#/profile/create/')
     })
 
     test('0.0.9 when profile created from scratch', async () => {

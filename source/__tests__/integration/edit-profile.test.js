@@ -9,7 +9,7 @@ describe('edits an imported v0.0.2 profile', () => {
     await expect(page).toUploadFile('input[type="file"]', profilePath)
     const profileLoadedSel = 'div#profile-panel .panel-heading span[popover-title="Profile ID: profile:bf2:Item"]'
     await page.waitForSelector(profileLoadedSel, {visible: true})
-    return await expect(page).toClick(profileLoadedSel)
+    await expect(page).toClick(profileLoadedSel)
   })
 
   // FIXME: describe('edits imported profile' ... from import-profile tests should move here, but I had trouble
@@ -19,7 +19,7 @@ describe('edits an imported v0.0.2 profile', () => {
   describe('edit resource templates in profile', () => {
     beforeAll(async () => {
       await page.waitForSelector('a#addResource')
-      return await page.click('a#addResource')
+      await page.click('a#addResource')
     })
 
     test('add (Role) known resource template via Select Resource', async() => {

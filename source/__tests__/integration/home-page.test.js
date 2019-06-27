@@ -4,7 +4,7 @@ const pupExpect = require('./jestPuppeteerHelper')
 describe('Sinopia Profile Editor Homepage', () => {
 
   beforeAll(async () => {
-    return await page.goto('http://127.0.0.1:8000')
+    await page.goto('http://127.0.0.1:8000')
   })
 
   it('redirects to profile/sinopia', async () => {

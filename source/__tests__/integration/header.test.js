@@ -10,7 +10,7 @@ describe('Sinopia Profile Editor Header', () => {
   `('titles and links', ({pageUrl}) => {
 
     beforeAll(async () => {
-      return await page.goto(pageUrl)
+      await page.goto(pageUrl)
     })
 
     test('h2.sinopia-subtitle contains a link', async () => {

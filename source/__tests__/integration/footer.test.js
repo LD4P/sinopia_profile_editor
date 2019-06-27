@@ -8,7 +8,7 @@ describe('Sinopia Profile Editor Footer', () => {
   `('header titles and links', ({pageUrl}) => {
 
     beforeAll(async () => {
-      return await page.goto(pageUrl)
+      await page.goto(pageUrl)
     })
 
     test('funding statement', async () => {

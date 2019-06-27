@@ -3,7 +3,7 @@ const pupExpect = require('./jestPuppeteerHelper')
 
 describe('Sinopia Profile Editor Create Page', () => {
   beforeAll(async () => {
-    return await page.goto('http://127.0.0.1:8000/#/profile/create/')
+    await page.goto('http://127.0.0.1:8000/#/profile/create/')
   })
 
   it('text on page', async () => {

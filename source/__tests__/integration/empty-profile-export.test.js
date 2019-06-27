@@ -3,7 +3,7 @@
 describe('Sinopia Profile Editor does not export an invalid Profile', () => {
 
   beforeAll(async () => {
-    return await page.goto('http://localhost:8000/#/profile/create/true')
+    await page.goto('http://localhost:8000/#/profile/create/true')
   })
 
   describe('invalid profile exported', () => {

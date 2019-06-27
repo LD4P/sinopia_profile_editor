@@ -11,7 +11,7 @@ describe('Off-canvas Help Menu', () => {
     await page.waitForSelector(helpLinkSel)
     await page.click(helpLinkSel)
     await page.waitFor(500, {waitUntil: 'networkidle0'}) // it gets content from sinopia github pages
-    return await page.waitForSelector(menuIdSel, {visible: true})
+    await page.waitForSelector(menuIdSel, {visible: true})
   })
 
   // Note:  Help and Resources link is tested in header.test

@@ -9,7 +9,7 @@ describe('Select Resource Template Menu', () => {
     await page.click('a#addResource')
     await page.waitForSelector('a#resourceChoose')
     await page.click('a#resourceChoose')
-    return await page.waitForSelector(modalSel)
+    await page.waitForSelector(modalSel)
   })
 
   it('modal title says Choose Resource Template', async () => {
@@ -24,7 +24,7 @@ describe('Select Resource Template Menu', () => {
     const selectVocabSel = `${modalBodySel} > div#select_box_holder > select[name="chooseVocab"]`
 
     beforeAll( async() => {
-      return await page.waitForSelector(selectVocabSel)
+      await page.waitForSelector(selectVocabSel)
     })
 
     it('populated with ontologies (via versoSpoof)', async () => {
