@@ -69,6 +69,8 @@ describe('imports valid profile without included schema url from json file', () 
     beforeAll(async () => {
       await expect(page).toClick('a#addResource')
       await expect(page).toClick('#resourceTemplates_0 > div:last-child a.propertyLink')
+      const addValSel = 'div#value > #adValue'
+      await page.waitForSelector(addValSel, {visible: true, timeout: 5000})
     })
 
     const lastResTempPropTempSel = '#resourceTemplates_0 > div:last-child div[name="propertyForm"]'
@@ -105,7 +107,6 @@ describe('imports valid profile without included schema url from json file', () 
     test('"Values" Add Value allows URI selection', async() => {
       expect.assertions(5)
       const addValSel = 'div#value > #adValue'
-      await page.waitForSelector(addValSel, {visible: true, timeout: 5000})
       await page.click(addValSel)
       const useValuesFromSel = 'div#value select[popover-title="Use Values From"]'
       await page.waitForSelector(useValuesFromSel, {visible: true})
