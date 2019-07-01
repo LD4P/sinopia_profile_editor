@@ -106,7 +106,7 @@ describe('imports valid profile without included schema url from json file', () 
 
     test('"Values" Add Value allows URI selection', async() => {
       expect.assertions(5)
-      const addValSel = 'div#value > #adValue'
+      const addValSel = 'div#value > a#adValue'
       await page.click(addValSel)
       const useValuesFromSel = 'div#value select[popover-title="Use Values From"]'
       await page.waitForSelector(useValuesFromSel, {visible: true})
