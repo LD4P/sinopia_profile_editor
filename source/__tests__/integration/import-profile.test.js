@@ -69,7 +69,7 @@ describe('imports valid profile without included schema url from json file', () 
     beforeAll(async () => {
       await expect(page).toClick('a#addResource')
       await expect(page).toClick('#resourceTemplates_0 > div:last-child a.propertyLink')
-      const addValSel = 'div#value > #adValue'
+      const addValSel = 'div#value > a#adValue'
       await page.waitForSelector(addValSel, {visible: true, timeout: 5000})
     })
 
