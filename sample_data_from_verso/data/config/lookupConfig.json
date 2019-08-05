@@ -21,6 +21,15 @@
     "component": "lookup"
   },
   {
+      "label": "Discogs",
+      "uri": "urn:discogs",
+      "authority": "discogs",
+      "subauthority": "all",
+      "language": "en",
+      "component": "lookup",
+      "nonldLookup": true
+  },
+  {
     "label": "GEONAMES_all (QA)",
     "uri": "urn:ld4p:qa:geonames",
     "authority": "geonames_ld4l_cache",
@@ -421,50 +430,18 @@
     "component": "lookup"
   },
   {
-    "label": "LOC person [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:person",
+    "label": "LOC active [genres] (QA)",
+    "uri": "urn:ld4p:qa:genres:active",
     "authority": "locgenres_ld4l_cache",
-    "subauthority": "person",
+    "subauthority": "active",
     "language": "en",
     "component": "lookup"
   },
   {
-    "label": "LOC organization [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:organization",
+    "label": "LOC deprecated [genres] (QA)",
+    "uri": "urn:ld4p:qa:genres:deprecated",
     "authority": "locgenres_ld4l_cache",
-    "subauthority": "organization",
-    "language": "en",
-    "component": "lookup"
-  },
-  {
-    "label": "LOC place [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:place",
-    "authority": "locgenres_ld4l_cache",
-    "subauthority": "place",
-    "language": "en",
-    "component": "lookup"
-  },
-  {
-    "label": "LOC intangible [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:intangible",
-    "authority": "locgenres_ld4l_cache",
-    "subauthority": "intangible",
-    "language": "en",
-    "component": "lookup"
-  },
-  {
-    "label": "LOC geocoordinates [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:geocoordinates",
-    "authority": "locgenres_ld4l_cache",
-    "subauthority": "geocoordinates",
-    "language": "en",
-    "component": "lookup"
-  },
-  {
-    "label": "LOC work [genres] (QA)",
-    "uri": "urn:ld4p:qa:genres:work",
-    "authority": "locgenres_ld4l_cache",
-    "subauthority": "work",
+    "subauthority": "deprecated",
     "language": "en",
     "component": "lookup"
   },
@@ -846,18 +823,13 @@
     "component": "list"
   },
   {
-    "label": "applied material",
+    "label": "material",
     "uri": "https://id.loc.gov/vocabulary/mmaterial",
     "component": "list"
   },
   {
     "label": "aspect ratio",
     "uri": "https://id.loc.gov/vocabulary/maspect",
-    "component": "list"
-  },
-  {
-    "label": "base material",
-    "uri": "https://id.loc.gov/vocabulary/mmaterial",
     "component": "list"
   },
   {
@@ -928,11 +900,6 @@
   {
     "label": "sound content",
     "uri": "https://id.loc.gov/vocabulary/msoundcontent",
-    "component": "list"
-  },
-  {
-    "label": "special playback characteristics",
-    "uri": "https://id.loc.gov/vocabulary/mplayback",
     "component": "list"
   },
   {
