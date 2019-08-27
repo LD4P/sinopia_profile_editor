@@ -6,6 +6,7 @@
   "dependencies": {
     "angular-local-storage": "~0.2.2",
     "angular-spinner": "~0.6.1",
+    "eslint-utils": "^1.4.2",
     "event-stream": "3.3.4",
     "express": "^4.17.1",
     "findup-sync": "^4.0.0",
