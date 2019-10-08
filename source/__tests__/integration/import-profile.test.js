@@ -4,6 +4,7 @@ const pupExpect = require('./jestPuppeteerHelper')
 
 describe('imports valid profile without included schema url from json file', () => {
   beforeAll(async () => {
+    jest.setTimeout(10000)
     await page.goto('http://localhost:8000/#/profile/create/true')
     const profilePath = path.join(__dirname, "..", "__fixtures__", 'item_profile_lc_v0.0.2.json')
     await expect(page).toUploadFile('input[type="file"]', profilePath)
