@@ -32,7 +32,7 @@
     "grunt-ng-annotate": "^3.0.0",
     "jest": "^24.8.0",
     "jest-environment-node": "^24.8.0",
-    "jest-junit": "^6.4.0",
+    "jest-junit": "^8.0.0",
     "jest-puppeteer": "^4.3.0",
     "jest-resolve": "^24.8.0",
     "merge": "^1.2.1",
