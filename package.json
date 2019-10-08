@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "main": "Gruntfile.js",
   "dependencies": {
-    "angular-local-storage": "~0.2.2",
+    "angular-local-storage": "~0.7.1",
     "angular-spinner": "~0.6.1",
     "event-stream": "3.3.4",
     "express": "^4.17.1",
