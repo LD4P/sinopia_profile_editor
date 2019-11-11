@@ -3,7 +3,7 @@
 // spoof verso calls to get profiles, vocabularies and ontologies
 const path = require('path')
 const fs = require('fs')
-const valuesFromConfig = require('../sample_data_from_verso/data/config/lookupConfig.json')
+const valuesFromConfig = require('../sample_data_from_verso/data/config/authorityConfig.json')
 
 var profiles = []
 loadProfiles()
