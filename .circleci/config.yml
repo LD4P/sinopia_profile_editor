@@ -68,7 +68,6 @@ jobs:
             docker build -t ld4p/sinopia_profile_editor:latest .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push ld4p/sinopia_profile_editor:latest
-            docker push ld4p/sinopia_profile_editor:dev
 
   register_tag_image:
     <<: *defaults
