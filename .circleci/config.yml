@@ -53,7 +53,7 @@ jobs:
           path: coverage
           destination: jest-coverage
 
-  register_image:
+  register_latest_image:
     <<: *defaults
     steps:
       - checkout
@@ -68,6 +68,24 @@ jobs:
             docker build -t ld4p/sinopia_profile_editor:latest .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push ld4p/sinopia_profile_editor:latest
+            docker push ld4p/sinopia_profile_editor:dev
+
+  register_tag_image:
+    <<: *defaults
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache: # gives us back matching node_modules
+          key: dependency-cache-prod-{{ checksum "package.json" }}
+      - attach_workspace:
+          at: dist
+      - run:
+          name: Build & Register Image
+          command: |
+            docker build -t ld4p/sinopia_profile_editor:latest .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push ld4p/sinopia_profile_editor:$CIRCLE_TAG-stage
+            docker push ld4p/sinopia_profile_editor:$CIRCLE_TAG-prod
 
   update_ecs:
     working_directory: ~/sinopia_profile_editor
@@ -101,13 +119,26 @@ workflows:
       - build:
           requires:
             - dependencies
-      - register_image:
+      - register_latest_image:
           requires:
             - build
           filters:
             branches:
               only:
                 - master
+            tags:
+              ignore:
+                - /v.*/
+      - register_tag_image:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only:
+                - /v.*/
       - update_ecs:
           requires:
-            - register_image
+            - register_latest_image
