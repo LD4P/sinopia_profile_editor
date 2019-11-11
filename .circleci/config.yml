@@ -82,10 +82,9 @@ jobs:
       - run:
           name: Build & Register Image
           command: |
-            docker build -t ld4p/sinopia_profile_editor:latest .
+            docker build -t ld4p/sinopia_profile_editor:$CIRCLE_TAG .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push ld4p/sinopia_profile_editor:$CIRCLE_TAG-stage
-            docker push ld4p/sinopia_profile_editor:$CIRCLE_TAG-prod
+            docker push ld4p/sinopia_profile_editor:$CIRCLE_TAG
 
   update_ecs:
     working_directory: ~/sinopia_profile_editor
