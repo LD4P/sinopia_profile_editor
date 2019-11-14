@@ -43,6 +43,17 @@ angular.module('locApp.modules.profile.services')
         handler.getFormData = function(profile, removeDefault) {
             // TODO: add things here
             if(removeDefault) removeDefaults(profile);
+
+            // Remove the initialized valueDataType array if it is empty, schema validation requires that it be an object;
+            // if it has a value, it is rendered as an object.
+            angular.forEach(profile.resourceTemplates, function(resource){
+              angular.forEach(resource.propertyTemplates, function(properties){
+                if(properties.valueConstraint.valueDataType && properties.valueConstraint.valueDataType.length == 0) {
+                  delete properties.valueConstraint.valueDataType;
+                }
+              });
+            });
+
             addSchemaUrls(profile)
 
             obj = {};

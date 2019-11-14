@@ -415,8 +415,6 @@ angular.module('locApp.modules.profile.services').factory('Vocab', function($q, 
     fillDatatype = function(vocab) {
         var datatype = choosenDatatype;
         datatype.dataTypeURI = vocab.uri;
-        datatype.dataTypeLabel = vocab.label;
-        datatype.remark = vocab.comment;
     };
 
     return vocab;

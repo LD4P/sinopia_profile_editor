@@ -193,4 +193,69 @@ describe('Profiles Export', () => {
       expect(json['Profile']['resourceTemplates'][0]['schema']).toEqual(rt009SchemaURL)
     })
   })
+
+  describe('valueDataType redering', () => {
+    beforeAll(async() => {
+      await page.goto('http://localhost:8000/#/profile/create/true')
+      await page.waitForSelector('a#addResource', {visible: true})
+      await page.click('a#addResource')
+      await page.waitForSelector('a.propertyLink', {visible: true})
+      await page.click('a.propertyLink')
+      await page.waitForSelector('div[name="propertyForm"] input[name="propertyURI"]', {visible: true})
+    })
+
+    test('removes valueDataType from profile if empty', async() => {
+      expect.assertions(3)
+      await expect(page).toFillForm('form[name="profileForm"]', {
+        // all the required fields from profile, resource template, property template except dataTypeURI
+        id: "my:profile",
+        description: "Profile description",
+        author: "Me",
+        title: "My profile",
+        resourceId: "my:resource",
+        resourceURI: "http://www.example.org",
+        resourceLabel: 'rt label',
+        rtAuthor: 'rt author',
+        propertyLabel: 'propLabel',
+        propertyURI: "http://www.example.org/prop"
+      })
+      await expect(page).toClick('a.import-export')
+      await page.waitForSelector('a[download="My profile.json"]', {visible: true})
+      const data = await page.$eval('a[download="My profile.json"]', e => e.getAttribute('href'))
+      const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
+
+      expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['valueConstraint']['valueDataType']).not.toBeDefined()
+    })
+
+    test('generates the correct valueDataType for editor schema validation', async() => {
+      expect.assertions(4)
+      await page.waitFor(500)
+      await page.waitForSelector('a#addValueDataType')
+      await page.click('a#addValueDataType')
+      await page.waitForSelector('input[name="dataTypeURI"]')
+
+      await expect(page).toFillForm('form[name="profileForm"]', {
+        // all the required fields from profile, resource template, property template
+        id: "my:profile",
+        description: "Profile description",
+        author: "Me",
+        title: "My profile",
+        resourceId: "my:resource",
+        resourceURI: "http://www.example.org",
+        resourceLabel: 'rt label',
+        rtAuthor: 'rt author',
+        propertyLabel: 'propLabel',
+        propertyURI: "http://www.example.org/prop",
+        dataTypeURI: "http://example.com/test"
+      })
+
+      await expect(page).toClick('a.import-export')
+      await page.waitForSelector('a[download="My profile.json"]', {visible: true})
+      const data = await page.$eval('a[download="My profile.json"]', e => e.getAttribute('href'))
+      const json = JSON.parse(decodeURIComponent(data.substr(data.indexOf(',') + 1)))
+      expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['valueConstraint']['valueDataType']).toBeDefined()
+      expect(json['Profile']['resourceTemplates'][0]['propertyTemplates'][0]['valueConstraint']['valueDataType']['dataTypeURI']).toEqual('http://example.com/test')
+    })
+
+  })
 })

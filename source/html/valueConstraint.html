@@ -35,8 +35,14 @@
         Add Default
     </a>
 
+    <!-- Make ValueDataType a listItem that can be added and removed, but do not show if there is one object in the array -->
     <div id="valueDataType" class="propertyItems">
-        <div ng-repeat="field in constraintFields" sss-field item="{{field}}" html='html/valueDataType.html'></div>
+        <h5>Value Data Type</h5>
+        <div class="listItems" ng-repeat="field in valueDataType" sss-field item="{{field}}" html='html/valueDataType.html'></div>
+        <a id="addValueDataType" ng-show="!valueDataType.length" ng-click="addValueDataType()" style="display: block;">
+            <i class="fa fa-plus"></i>
+            Add Value Data Type
+        </a>
     </div>
 
     <div id="template" class="propertyItems">

@@ -98,20 +98,67 @@ describe('PropertyTemplate requirements', () => {
       })
 
       describe('Value Data Type', () => {
-        const vdtTableSel = `${vcFieldsTableSel} div[ng-controller="ValueDataTypeController"]`
+        const vdtTableSel = `${vcFieldsTableSel} div#valueDataType`
 
         test('header', async () => {
           expect.assertions(1)
           await expect(page).toMatch('Value Data Type')
         })
-        test('has one input field', async () => {
+
+        test('has no input fields', async () => {
           expect.assertions(1)
           const inputs = await page.$eval(vdtTableSel, e => e.getElementsByTagName('input').length)
-          expect(inputs).toBe(1)
-        })
-        test('has URI field', async () => {
+          expect(inputs).toBe(0)
+        });
+
+        test('has Add Value Data Type Link', async () => {
           expect.assertions(1)
-          await pupExpect.expectSelTextContentToBe(`${vdtTableSel} label[for="dataTypeURI"]`, "URI")
+          await pupExpect.expectSelTextContentTrimmedToMatch(`${vdtTableSel} > a#addValueDataType`, "Add Value Data Type")
+        })
+      })
+
+      describe('Adding a Value Data Type field', () => {
+        beforeAll(async() => {
+          await page.waitForSelector('a#addValueDataType')
+          await page.click('a#addValueDataType')
+        })
+
+        test('label for Value Data Type', async() => {
+          expect.assertions(1)
+          await pupExpect.expectSelTextContentToMatch('label[for="dataTypeURI"]', 'URI')
+        })
+
+        test('input field for Value Data Type', async() => {
+          expect.assertions(1)
+          expect(!!(await page.$('input[name="dataTypeURI"]'))).toBeTruthy()
+        })
+
+        test('delete icon for Value Data Type', async() => {
+          expect.assertions(1)
+          expect(!!(await page.$('a > i.fa-trash-o'))).toBeTruthy()
+        })
+
+        test('Select Data Type chooser link', async() => {
+          expect.assertions(2)
+          const sel = 'a#datatypeChoose'
+          expect(!!(await page.$(`${sel}  > i.fa-bars`))).toBeTruthy()
+          await pupExpect.expectSelTextContentTrimmedToBe(sel, 'Select Data Type')
+        })
+      })
+
+      describe('Removing a Value Data Type field', () => {
+        beforeAll(async() => {
+          await page.waitForSelector('a#valueDataTypeDelete')
+          await page.click('a#valueDataTypeDelete')
+        })
+
+        test('remove Value Data Type', async() => {
+          expect.assertions(2)
+          const modalConfirmDeleteSel = 'div#deleteModal div.modal-body > button[ng-click="confirm();"]'
+          await page.waitForSelector(modalConfirmDeleteSel, {visible: true})
+          await page.waitFor(500) // shameless green: it needs more time here; can't tell why
+          await expect(page).toClick(modalConfirmDeleteSel)
+          await pupExpect.expectSelNotToExist('input[name="dataTypeURI"]')
         })
       })
 

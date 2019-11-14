@@ -1,5 +1,4 @@
-<div ng-controller="ValueDataTypeController">
-    <h5>Value Data Type</h5>
+<div id="{{item}}_{{parentId}}" ng-controller="ValueDataTypeController">
     <table>
         <tbody>
             <tr>
@@ -7,15 +6,20 @@
                     <label for="dataTypeURI">URI</label>
                 </td>
                 <td>
-                    <input type="url" name="dataTypeURI" ng-model="valueDataType.dataTypeURI"
-                        popover="URI associated with the DataType"
-                        popover-title="Data Type URI" popover-trigger="mouseenter"
-                        popover-placement="right"/>
+                    <input id="valueDataTypeInput_{{item}}_{{parentId}}" type="url" name="dataTypeURI" ng-model="valueDataType.dataTypeURI"
+                           popover="URI associated with the DataType"
+                           popover-title="Data Type URI" popover-trigger="mouseenter"
+                           popover-placement="right"/>
+
+                    <a href="#" id="valueDataTypeDelete" onclick="event.returnValue = false; return false;" ng-click="verifyDelete(deleteValueDataType)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
 
                     <a id="datatypeChoose" data-toggle="modal" href="#chooseResource" ng-click="updateChosenDatatype(valueDataType);" onclick="event.returnValue = false; return false;">
                         <i class="fa fa-bars" style="margin-right: 10px;"></i>
                         {{!valueDataType.dataTypeURI ? "Select Data Type" : "Change Data Type" }}
                     </a>
+
 
                     <div class="error" ng-show="propertyForm.dataTypeURI.$dirty && propertyForm.dataTypeURI.$invalid">
                         <small class="error">url is invalid</small>

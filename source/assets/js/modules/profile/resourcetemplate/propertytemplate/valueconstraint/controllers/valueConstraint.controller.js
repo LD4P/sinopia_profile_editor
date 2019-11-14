@@ -10,6 +10,8 @@ angular.module('locApp.modules.profile.controllers')
         $scope.constraintFields = [];
         $scope.templateFields = [];
         $scope.valueFields = [];
+        // Add valueDataType array to the ValueConstraint Controller so it can be added and removed like the other valueConstraints
+        $scope.valueDataType = [];
 
         $scope.valueConstraint = {};
 
@@ -22,6 +24,8 @@ angular.module('locApp.modules.profile.controllers')
             if($scope.valueConstraint) {
                 $scope.importCascade($scope.templateFields, $scope.valueConstraint.valueTemplateRefs);
                 $scope.importCascade($scope.valueFields, $scope.valueConstraint.useValuesFrom);
+                // Add valueDataType scope so it can be added and removed like the other valueConstraints
+                $scope.importCascade($scope.valueDataType, $scope.valueConstraint.valueDataType);
 
                 if($scope.valueConstraint.useValuesFrom == null) {
                     $scope.valueConstraint.useValuesFrom = [];
@@ -29,12 +33,18 @@ angular.module('locApp.modules.profile.controllers')
                 if($scope.valueConstraint.valueTemplateRefs == null) {
                     $scope.valueConstraint.valueTemplateRefs = [];
                 }
+                // Add valueDataType scope so it can be added and removed like the other valueConstraints
+                if($scope.valueConstraint.valueDataType == null) {
+                  $scope.valueConstraint.valueDataType = [];
+                }
             }
             else {
                 // create an empty one if none exists
                 $scope.valueConstraint = {};
                 $scope.valueConstraint.valueTemplateRefs = [];
                 $scope.valueConstraint.useValuesFrom = [];
+                // Add valueDataType scope so it can be added and removed like the other valueConstraints
+                $scope.valueConstraint.valueDataType = [];
                 $scope.propertyTemplate.valueConstraint = $scope.valueConstraint;
             }
 
@@ -44,6 +54,8 @@ angular.module('locApp.modules.profile.controllers')
         else {
             $scope.valueConstraint.valueTemplateRefs = [];
             $scope.valueConstraint.useValuesFrom = [];
+            // Add valueDataType scope so it can be added and removed like the other valueConstraints
+            $scope.valueConstraint.valueDataType = [];
 
             $scope.propertyTemplate.valueConstraint = $scope.valueConstraint;
 
@@ -145,5 +157,28 @@ angular.module('locApp.modules.profile.controllers')
         $scope.deleteDefault = function(index) {
             $scope.valueConstraint.defaults.splice(index,1);
         };
+
+      // Add valueDataType add and delete functions
+      /**
+       * @ngdoc function
+       * @name addValueDataType
+       * @description
+       * Adds a value data type to the value constraint
+       */
+      $scope.addValueDataType = function() {
+        $scope.importy = false;
+        $scope.valueDataType.push("");
+      };
+
+      /**
+       * @ngdoc function
+       * @name deleteValueDataType
+       * @description
+       * Deletes the value data type reference from the list
+       */
+      $scope.deleteValueDataType = function() {
+        $scope.valueDataType = [];
+        $scope.valueConstraint.valueDataType = [];
+      };
     });
     
