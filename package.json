@@ -1,7 +1,7 @@
 {
   "name": "sinopia_profile_editor",
   "description": "Editor for BIBFRAME *profiles* forked from http://github.com/lcnetdev/profile-edit",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "Gruntfile.js",
   "dependencies": {
     "angular-local-storage": "~0.7.1",
@@ -11,7 +11,9 @@
     "findup-sync": "^4.0.0",
     "grunt": "^1.0.4",
     "grunt-contrib-uglify-es": "^3.3.0",
+    "kind-of": ">=6.0.3",
     "lodash": "^4.17.15",
+    "minimist": ">=1.2.3",
     "mixin-deep": "^2.0.1",
     "spin.js": "~2.3.1",
     "taffydb": "^2.7.3",
@@ -20,6 +22,7 @@
     "x2js": "^3.3.1"
   },
   "devDependencies": {
+    "acorn": ">=5.74",
     "coveralls": "^3.0.5",
     "eslint": "^6.5.1",
     "eslint-plugin-jest": "^22.21.0",
