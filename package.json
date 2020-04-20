@@ -1,7 +1,7 @@
 {
   "name": "sinopia_profile_editor",
   "description": "Editor for BIBFRAME *profiles* forked from http://github.com/lcnetdev/profile-edit",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "main": "Gruntfile.js",
   "dependencies": {
     "angular-local-storage": "~0.7.1",
