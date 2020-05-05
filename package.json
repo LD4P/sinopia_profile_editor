@@ -34,7 +34,7 @@
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-jsdoc": "^2.4.0",
     "grunt-ng-annotate": "^3.0.0",
-    "jest": "^25.2.7",
+    "jest": "^26.0.0",
     "jest-environment-node": "^25.2.4",
     "jest-junit": "^10.0.0",
     "jest-puppeteer": "^4.3.0",
