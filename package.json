@@ -24,7 +24,7 @@
   "devDependencies": {
     "acorn": ">=5.74",
     "coveralls": "^3.0.5",
-    "eslint": "^6.5.1",
+    "eslint": "^7.0.0",
     "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-security": "^1.4.0",
