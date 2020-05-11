@@ -38,7 +38,7 @@
     "jest-environment-node": "^25.2.4",
     "jest-junit": "^10.0.0",
     "jest-puppeteer": "^4.3.0",
-    "jest-resolve": "^25.1.0",
+    "jest-resolve": "^26.0.1",
     "merge": "^1.2.1",
     "puppeteer": "^1.19.0"
   },
