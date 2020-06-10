@@ -1,0 +1,68 @@
+<div ng-controller="marcTemplateController" class="panel-heading">
+    <h4 class="panel-property-title profile-header">
+
+        <span style="font-size: 14px" data-toggle="collapse" data-parent="#marcTemplates_{{propNest}}" href="#marc_{{item}}" style="display: inline-block">
+            <span popover="Type: {{marcTemplate.type || 'None'}}"
+        popover-title="MARC Tag: {{marcTemplate.marcFields || 'Undefined'}}"
+        popover-placement="right" popover-trigger="mouseenter">
+            <i class="fa fa-caret-right" style="color: black"></i>
+            MARC mapping: {{ marcTemplate.marcTag }}
+            </span>
+        </span>
+        <span class="pull-right">
+          <a id="deleteIcon" href="#" ng-click="verifyDelete(deleteMarcMapping)" class="" onclick="event.returnValue = false; return false;">
+              <i class="fa fa-trash-o"></i>Delete
+          </a>
+        </span>
+    </h4>
+</div>
+
+<div ng-controller="marcTemplateController" id="marc_{{item}}" class="panel-collapse collapse">
+    <div class="panel-body">
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="marcTag">MARC Field</label>
+                    </td>
+                    <td>
+                        <input type="text" name="marcTag" ng-model="marcTemplate.marcTag" required />
+                    </td>
+                </tr>
+                <tr>
+                  <td>
+                      <label for="indicator0">Indicator 0</label>
+                  </td>
+                  <td>
+                      <input type="text" name="indicator0" ng-model="marcTemplate.indicator0" />
+                  </td>
+                  <td>
+                      <label for="indicator0">Indicator 1</label>
+                  </td>
+                  <td>
+                      <input type="text" name="indicator1" ng-model="marcTemplate.indicator1" />
+                  </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="repeatable">repeatable</label>
+                    </td>
+                    <td>
+                        <select name="repeatable" ng-options="option.key as option.label for option in options"
+                                ng-required ng-model="marcTemplate.repeatable"
+                                popover="Indication that the marc mapping is repeatable"
+                                popover-title="Repeatable" popover-trigger="mouseenter"
+                                popover-placement="left">
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="marcConstraints" class="propertyItems">
+            <div ng-repeat="field in marcFields" sss-field item={{field}} html='html/marcConstraint.html'></div>
+        </div>
+
+    </div>
+</div>

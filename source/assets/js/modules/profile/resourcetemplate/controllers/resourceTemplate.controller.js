@@ -7,9 +7,12 @@
 angular.module('locApp.modules.profile.controllers')
     .controller('resourceTemplateController', function($scope, Scrub, localStorageService, $http) {
         $scope.resourceFields = [];
+        $scope.resourceFieldsMarc = [];
         $scope.resourceTemplate = {};
         $scope.addIndexResource = 0;
+        $scope.addIndexResourceMarc = 0;
         $scope.propertyTemplatesBase = [];
+        $scope.marcTemplatesBase = [];
 
         $scope.item = Scrub.getIndex();
         $scope.collapsing = "";
@@ -26,21 +29,24 @@ angular.module('locApp.modules.profile.controllers')
                 // override fields
                 $scope.resourceTemplate = $scope.profile.resourceTemplates[$scope.parentId];
                 $scope.importCascade($scope.resourceFields, $scope.resourceTemplate.propertyTemplates);
+                $scope.importCascade($scope.resourceFieldsMarc, $scope.resourceTemplate.marcTemplates);
                 if ($.inArray($scope.resourceTemplate, $scope.resourceTemplatesBase)==-1)
                     $scope.resourceTemplatesBase.push($scope.resourceTemplate)
                 $scope.addIndexResource = $scope.resourceTemplate.propertyTemplates.length;
+                $scope.addIndexResourceMarc = $scope.resourceTemplate.marcTemplates.length;
             }
             // if this is the second instance of this item appearing then reference it from the profiles array.
-            else if(($scope.item / 0.5) % 2 === 1) {
+            else if(($scope.item / 0.5) % 2 === 1){
                 $scope.item = Math.floor($scope.item);
                 $scope.resourceTemplate = $scope.profile.resourceTemplates[$scope.profile.resourceTemplates.length -1];
             }
             // default case: first instance of the cotnroller.
             else {
-                $scope.item = Math.floor($scope.item);
-                $scope.resourceTemplate.propertyTemplates = [];
-                $scope.profile.resourceTemplates.push($scope.resourceTemplate);
-                $scope.resourceTemplatesBase.push($scope.resourceTemplate);
+              $scope.item = Math.floor($scope.item);
+              $scope.resourceTemplate.propertyTemplates = [];
+              $scope.resourceTemplate.marcTemplates = [];
+              $scope.profile.resourceTemplates.push($scope.resourceTemplate);
+              $scope.resourceTemplatesBase.push($scope.resourceTemplate);
             }
 
             $scope.collapsing = "resourceTemplates";
@@ -64,7 +70,7 @@ angular.module('locApp.modules.profile.controllers')
             else if(($scope.item / 0.5) % 2 === 1) {
                 $scope.item = Math.floor($scope.item);
                 $scope.resourceTemplate = $scope.propertyTemplate.resourceTemplates[$scope.propertyTemplate.resourceTemplates.length -1];
-            }
+              }
             // default case: first instance of the cotnroller.
             else {
                 $scope.item = Math.floor($scope.item);
@@ -78,7 +84,7 @@ angular.module('locApp.modules.profile.controllers')
 
         if($scope.propertyTemplate) {
             createFromProperties();
-        }else {
+        } else {
             createFromProfile();
         }
 
@@ -97,6 +103,19 @@ angular.module('locApp.modules.profile.controllers')
 
         /**
          * @ngdoc function
+         * @name addMarcMapping
+         * @description
+         * Adds a marc map template to this resource template
+         */
+        $scope.addMarcMapping = function() {
+            $scope.importy = false;
+            $scope.resourceFieldsMarc.push($scope.addIndexResourceMarc);
+            $scope.addIndexResourceMarc++;
+            $scope.addNew = true;
+        };
+
+        /**
+         * @ngdoc function
          * @name delete
          * @description
          * Deletes this resource template
@@ -105,6 +124,10 @@ angular.module('locApp.modules.profile.controllers')
             if($scope.propertyTemplate) {
                 $scope.deleteItem($scope.parentId, $scope.resources);
                 $scope.deleteItem($scope.resourceTemplate, $scope.propertyTemplate.resourceTemplates);
+            }
+            else if($scope.marcTemplate) {
+                $scope.deleteItem($scope.parentId, $scope.resources);
+                $scope.deleteItem($scope.resourceTemplate, $scope.marcTemplate.resourceTemplates);
             }
             else {
                 $scope.deleteItem($scope.parentId, $scope.fields);

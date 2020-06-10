@@ -1,0 +1,56 @@
+<div ng-controller="MarcConstraintController">
+
+    <h5 id="constraintHeader">Subfields</h5>
+
+    <table ng-repeat="s in subfields">
+        <tbody>
+            <tr>
+                <td>
+                    <label for="editable">Subfield code</label>
+                </td>
+                <td>
+                    <input name="code" ng-model="s.code"
+                            popover="Subfield code"
+                            popover-title="Subfield code" popover-trigger="mouseenter"
+                            popover-placement="right"/>
+                </td>
+            </tr>
+            <tr>
+              <td>
+                  <label for="editable">repeatable</label>
+              </td>
+              <td>
+                  <select name="repeatable" ng-options="option.key as option.label for option in options"
+                          ng-required ng-model="s.repeatable"
+                          popover="Indication that the MARC subfield is repeatable"
+                          popover-title="Repeatable" popover-trigger="mouseenter"
+                          popover-placement="left">
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="editable">Property URI</label>
+              </td>
+              <td>
+                  <input name="propertyURI" ng-model="s.propertyURI"
+                          popover="The property URI that is mapped to this MARC subfield."
+                          popover-title="Property URI" popover-trigger="mouseenter"
+                          popover-placement="left"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="#" onclick="event.returnValue = false; return false;" ng-click="deleteSubfield($index)">
+                    <i class="fa fa-trash-o">&nbsp;remove subfield</i>
+                </a>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a id="addSubfield" ng-click="addSubfield()" style="display: block;">
+        <i class="fa fa-plus"></i>
+        Add a Subfield
+    </a>
+</div>

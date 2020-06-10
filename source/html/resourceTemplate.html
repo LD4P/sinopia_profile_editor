@@ -100,7 +100,17 @@
             <div ng-form name="propertyForm" class="panel propertyItem" ng-repeat="resourceField in resourceFields" sss-field item={{resourceField}} html='html/propertyTemplate.html'></div>
             <a href="#" onclick="event.returnValue = false; return false;" ng-click="addProperty()" class="propertyLink sss-add-margin-top">
                 <i class="fa fa-plus"></i>
-                Add Property Template
+                Add a Property Template
+            </a>
+
+        </div>
+
+        <div id="marcTemplates_{{propNest}}" class="propertyTemplates panel-group accordion-simple" ui-sortable="marcSortOption" ng-model="resourceFieldsMarc">
+
+            <div ng-form name="marcForm" class="panel propertyItem" ng-repeat="resourceFieldMarc in resourceFieldsMarc" sss-field item={{resourceFieldMarc}} html='html/marcTemplate.html'></div>
+            <a href="#" onclick="event.returnValue = false; return false;" ng-click="addMarcMapping()" class="propertyLink sss-add-margin-top">
+                <i class="fa fa-plus"></i>
+                Add a MARC mapping
             </a>
 
         </div>
