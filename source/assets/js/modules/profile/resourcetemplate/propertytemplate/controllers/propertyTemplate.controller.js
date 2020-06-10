@@ -13,21 +13,21 @@ angular.module('locApp.modules.profile.controllers')
             type:       'literal'
         };
         $scope.item = Scrub.getIndex();
-
+        
         $scope.resources = [];
         $scope.propResourceBase = [];
         $scope.addIndexProperty = 0;
 
         $scope.resNest = $scope.getResNest();
-
+        
         // Logic for creating/retreveing object
-        //
+        // 
         // if we are importing then we done need to do worry about
         // the floating point numbers.
         if($scope.importy){
             // override fields
             $scope.propertyTemplate.resourceTemplates = [];
-
+            
             // Loop through the data and add the values in it.
             $scope.propertyTemplate = $scope.resourceTemplate.propertyTemplates[$scope.parentId];
             if($scope.propertyTemplate) {
@@ -41,7 +41,7 @@ angular.module('locApp.modules.profile.controllers')
                     $scope.propertyTemplate.type = 'literal';
                 }
             }
-
+            
             $scope.importCascade($scope.resources, $scope.propertyTemplate.resourceTemplates);
             $scope.addIndexProperty = $scope.propertyTemplate.resourceTemplates ? $scope.propertyTemplate.resourceTemplates.length : 0;
             $scope.propertyFields.push(-1);
@@ -77,7 +77,7 @@ angular.module('locApp.modules.profile.controllers')
             $scope.resourceTemplate.propertyTemplates.push($scope.propertyTemplate);
             $scope.propertyTemplatesBase.push($scope.propertyTemplate);
         }
-
+        
         /**
          * @ngdoc function
          * @name addConstraint
@@ -105,8 +105,8 @@ angular.module('locApp.modules.profile.controllers')
             $scope.deleteItem($scope.parentId, $scope.resourceFields);
             $scope.deleteItem($scope.propertyTemplate, $scope.resourceTemplate.propertyTemplates);
         };
-
-
+        
+        
         $scope.propResourceSortOption = {
             stop: function() {
                 $scope.propertyTemplate.resourceTemplates = $scope.rearrangeData($scope.resources, $scope.propResourceBase);
@@ -122,7 +122,7 @@ angular.module('locApp.modules.profile.controllers')
          */
         $scope.checkPropertyURI = function() {
             if($scope.propertyTemplate.propertyURI){
-                $scope.propertyForm.propertyURI.$warn = false;
+                $scope.propertyForm.propertyURI.$warn = false;            
                 var url = $scope.propertyTemplate.propertyURI;
                 $http({
                     method: 'HEAD',
@@ -136,5 +136,6 @@ angular.module('locApp.modules.profile.controllers')
                 });
             }
         };
-
+        
     });
+
