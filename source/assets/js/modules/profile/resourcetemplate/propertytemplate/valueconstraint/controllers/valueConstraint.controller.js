@@ -141,7 +141,7 @@ angular.module('locApp.modules.profile.controllers')
          * @ngdoc function
          * @name addDefault
          * @description
-         * Adds a row to defaults
+         * Adds a row to defaults 
          */
         $scope.addDefault = function() {
             var defaults = {"defaultURI":"", "defaultLiteral":""};
@@ -181,3 +181,4 @@ angular.module('locApp.modules.profile.controllers')
         $scope.valueConstraint.valueDataType = [];
       };
     });
+    
