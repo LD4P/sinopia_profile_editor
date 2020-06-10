@@ -23,6 +23,8 @@ angular.module('locApp.modules.profile.controllers')
           }
 
           $scope.loadCount++;
+        } else {
+          $scope.marcTemplate.subfields = $scope.subfields;
         }
 
         /**

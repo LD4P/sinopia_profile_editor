@@ -19,7 +19,6 @@ angular.module('locApp.modules.profile.controllers')
         if($scope.importy){
             // Loop through the data and add the values in it.
             $scope.marcTemplate = $scope.resourceTemplate.marcTemplates[$scope.parentId];
-
             $scope.importCascade($scope.resources, $scope.marcTemplate.subfields);
             $scope.addIndexMarc = $scope.marcTemplate.subfields ? $scope.marcTemplate.subfields.length : 0;
             $scope.marcFields.push(-1);
