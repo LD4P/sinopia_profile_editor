@@ -5,7 +5,7 @@
  * Handles the scope variable for marc mapping templates
 */
 angular.module('locApp.modules.profile.controllers')
-    .controller('marcTemplateController', function($scope, $state, $stateParams, Scrub, $http) {
+    .controller('marcTemplateController', function($scope, $state, $stateParams, Scrub) {
         $scope.marcFields = [];
         $scope.marcTemplate = { repeatable: 'true' };
         $scope.item = Scrub.getIndex();

@@ -5,7 +5,7 @@
  * Handles the scope variable for subfield constraints
  */
 angular.module('locApp.modules.profile.controllers')
-    .controller('MarcConstraintController', function($scope, Server, localStorageService) {
+    .controller('MarcConstraintController', function($scope) {
         $scope.subfields = [];
 
         // Method to check for import
